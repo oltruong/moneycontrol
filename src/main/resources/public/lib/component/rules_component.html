@@ -1,0 +1,65 @@
+<div class="col-md-12">
+    <button class="btn btn-success" ng-click="refresh();"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Recharger
+        classification
+    </button>
+    <br/>
+
+    <form>
+        <div class="form-group">
+            <input type="text" ng-model="filterText" placeholder="Recherche">
+        </div>
+
+    </form>
+</div>
+<div class="col-md-12">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Montant</th>
+            <th>Cat&eacute;gorie</th>
+            <th>Ss. Cat.</th>
+            <th>Destinataire</th>
+            <th>Commentaire</th>
+            <th colspan="2"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="rule in rules | ruleFilter:filterText | orderBy:['category','subcategory','nameCondition']">
+            <td>
+                <celledit object="rule" value="rule.nameCondition"></celledit>
+            </td>
+            <td>
+                <numberedit object="rule" value="rule.amountCondition"></numberedit>
+            </td>
+            <td>
+                <celledit object="rule" value="rule.category"></celledit>
+            </td>
+            <td>
+                <celledit object="rule" value="rule.subcategory"></celledit>
+            </td>
+            <td>
+                <celledit object="rule" value="rule.recipient"></celledit>
+            </td>
+            <td>
+                <celledit object="rule" value="rule.comment"></celledit>
+            </td>
+            <td>
+                <button ng-click="duplicate(rule)" class="btn btn-info"><span
+                        class="glyphicon glyphicon-plus"></span></button>
+            </td>
+            <td>
+                <button ng-click="delete(rule)" class="btn btn-danger"><span
+                        class="glyphicon glyphicon-trash"></span></button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-success" ng-click="refresh();"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Recharger
+        classification
+    </button>
+
+</div>
+
+
+
