@@ -1,17 +1,20 @@
 package fr.oltruong.moneycontrol.controller;
 
+import fr.oltruong.moneycontrol.exception.ResourceNotFoundException;
 import fr.oltruong.moneycontrol.model.Operation;
 import fr.oltruong.moneycontrol.repository.OperationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 /**
  * @author Olivier Truong
  */
 @RestController
 public class OperationController {
-
 
     @Autowired
     private OperationRepository operationRepository;
@@ -21,12 +24,17 @@ public class OperationController {
         return operationRepository.findByYearAndMonth(year, month);
     }
 
+    @RequestMapping("/rest/operation/period/unclassified")
+    Iterable<Operation> findUnClassified() {
+        return operationRepository.findByCategoryNotEmpty();
+    }
+
     @RequestMapping("/rest/operation/period/{year}")
     Iterable<Operation> findByYear(@PathVariable int year) {
         return operationRepository.findByYear(year);
     }
 
-    @RequestMapping("/rest/operation")
+    @RequestMapping(value = "/rest/operation", method = RequestMethod.GET)
     Iterable<Operation> findAll() {
         return operationRepository.findAll();
     }
@@ -34,7 +42,45 @@ public class OperationController {
     @RequestMapping(value = "/rest/operation/{id}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void editOperation(@RequestBody Operation operation, @PathVariable Long id) {
+
+        if (operationRepository.findOne(id) == null) {
+            throw new ResourceNotFoundException();
+        }
         operation.setId(id);
         operationRepository.save(operation);
+
+    }
+
+    @RequestMapping(value = "/rest/operation", method = RequestMethod.POST)
+    ResponseEntity<?> createOperation(@RequestBody Operation operation) {
+        operation.setId(null);
+
+        Operation operationSaved = operationRepository.save(operation);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(operationSaved.getId()).toUri());
+
+        return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/rest/operation/{id}", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.OK)
+    Operation get(@PathVariable Long id) {
+        Operation operation = operationRepository.findOne(id);
+        if (operation == null) {
+            throw new ResourceNotFoundException();
+        }
+        return operation;
+    }
+
+    @RequestMapping(value = "/rest/operation/{id}", method = RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    void delete(@PathVariable Long id) {
+        Operation operation = operationRepository.findOne(id);
+        if (operation == null) {
+            throw new ResourceNotFoundException();
+        }
+        operationRepository.delete(id);
     }
 }

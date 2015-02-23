@@ -30,6 +30,8 @@ class Operation extends Object with Serializable {
   int id;
   String name;
   DateTime creationDate;
+  int month;
+  int year;
   String category;
   String subcategory;
   String recipient;
@@ -37,12 +39,12 @@ class Operation extends Object with Serializable {
 
   Float amount;
 
-  Operation(this.id, this.name, this.creationDate, this.category,
+  Operation(this.id, this.name, this.creationDate, this.month, this.year, this.category,
             this.subcategory, this.recipient, this.amount, this.comment);
 
 
   Operation.fromJson(Map<String, dynamic> json) : this(json['id'],
-  json['name'], new DateTime.fromMillisecondsSinceEpoch(json['creationDate']), json['category'], json['subcategory'],
+  json['name'], new DateTime.fromMillisecondsSinceEpoch(json['creationDate']), json['month'], json['year'], json['category'], json['subcategory'],
   json['recipient'], json['amount'], json['comment']);
 
 

@@ -13,4 +13,7 @@ public interface OperationRepository extends CrudRepository<Operation, Long> {
     List<Operation> findByYearAndMonth(int year, int month);
 
     List<Operation> findByYear(int year);
+
+    List<Operation> findByCategoryNotEmpty();
+
 }
