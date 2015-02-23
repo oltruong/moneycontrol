@@ -19,6 +19,7 @@
         <java.version>1.8</java.version>
         <mysql-connector-java.version>5.1.34</mysql-connector-java.version>
         <maven-compiler-plugin.version>3.2</maven-compiler-plugin.version>
+        <guava.version>18.0</guava.version>
     </properties>
 
 
@@ -46,6 +47,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
 
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
     </dependencies>
 
