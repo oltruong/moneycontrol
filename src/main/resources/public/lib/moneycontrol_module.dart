@@ -1,4 +1,4 @@
-library moneymag.moneymag_module;
+library moneycontrol.moneycontrol_module;
 
 import 'package:angular/angular.dart';
 import 'package:moneycontrol/component/navbar.dart';
@@ -13,8 +13,8 @@ import 'package:moneycontrol/service/global_service.dart';
 import 'package:moneycontrol/routing/moneycontrol_router.dart';
 import 'package:moneycontrol/formatter/operation_filter.dart';
 
-class MoneyMagModule extends Module {
-  MoneyMagModule() {
+class MoneyControlModule extends Module {
+  MoneyControlModule() {
     bind(QueryService);
     bind(GlobalService);
     bind(OperationFilter);

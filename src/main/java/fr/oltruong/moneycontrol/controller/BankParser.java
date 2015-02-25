@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -61,7 +62,10 @@ public class BankParser {
 
     private static Operation parseOperation(String[] str) {
         Operation operation = new Operation();
-        operation.setCreationDate(Date.from(LocalDate.parse(str[0], DateTimeFormatter.ofPattern("dd/MM/yyyy")).atStartOfDay().toInstant(ZoneOffset.UTC)));
+        LocalDateTime localDate = LocalDate.parse(str[0], DateTimeFormatter.ofPattern("dd/MM/yyyy")).atStartOfDay();
+        operation.setCreationDate(Date.from(localDate.toInstant(ZoneOffset.UTC)));
+        operation.setMonth(localDate.getMonthValue());
+        operation.setYear(localDate.getYear());
         operation.setName(str[1].replace("\"", ""));
         operation.setAmount(Float.valueOf(str[2].replace(',', '.')));
         return operation;

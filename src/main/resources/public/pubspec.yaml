@@ -1,4 +1,4 @@
-name: moneyControl
+name: moneycontrol
 description: moneyControl frontend
 dependencies:
   angular: "1.0.0"

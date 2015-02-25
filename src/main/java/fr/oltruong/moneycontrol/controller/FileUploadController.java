@@ -8,6 +8,7 @@ import fr.oltruong.moneycontrol.repository.RuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.ZoneOffset;
@@ -26,7 +27,7 @@ public class FileUploadController {
     @Autowired
     private RuleRepository ruleRepository;
 
-    @RequestMapping("/rest/bankfileupload")
+    @RequestMapping(value = "/rest/bankfileupload", method = RequestMethod.POST)
     public void upload(@RequestBody String fileContent) {
 
         if (fileContent == null) {
@@ -52,24 +53,27 @@ public class FileUploadController {
 
         Iterable<Operation> allOperations = operationRepository.findAll();
         List<String> operationList = new ArrayList<>();
-        allOperations.forEach(operation -> operationList.add(operation.getCreationDate() + operation.getName()));
+        allOperations.forEach(operation -> operationList.add(generateKey(operation)));
 
         return operationList;
 
     }
 
-    private static boolean operationMustBeAdded(Operation operation, List<String> existingOperationList) {
+    private boolean operationMustBeAdded(Operation operation, List<String> existingOperationList) {
         return operationDoesNotExist(operation, existingOperationList) && operationIsNotTooOld(operation);
     }
 
-    private static boolean operationDoesNotExist(Operation operation, List<String> existingOperationList) {
+    private boolean operationDoesNotExist(Operation operation, List<String> existingOperationList) {
 
-        String operationKey = operation.getCreationDate() + operation.getName();
-        return !existingOperationList.contains(operationKey);
+        return !existingOperationList.contains(generateKey(operation));
 
     }
 
-    private static boolean operationIsNotTooOld(Operation operation) {
+    private boolean operationIsNotTooOld(Operation operation) {
         return operation.getCreationDate().toInstant().atOffset(ZoneOffset.UTC).getYear() >= 2015;
+    }
+
+    private String generateKey(Operation operation) {
+        return operation.getCreationDate().getTime() + operation.getName();
     }
 }

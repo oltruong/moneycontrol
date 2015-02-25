@@ -29,13 +29,11 @@ class FileUploadComponent {
     reader.readAsText(files[0]);
     reader.onLoadEnd.listen((e) {
 
-
       HttpRequest.request("/rest/bankfileupload", method: "POST", sendData: reader.result).then((req) {
         redirectUnclassified();
       }).catchError((e) {
         print('error on post');
         print(e);
-        print('pas marché :(');
       });
     });
 

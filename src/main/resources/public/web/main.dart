@@ -19,6 +19,6 @@ class GlobalController {
 }
 
 void main() {
-  applicationFactory().rootContextType(GlobalController).addModule(new MoneyMagModule())
+  applicationFactory().rootContextType(GlobalController).addModule(new MoneyControlModule())
   .run();
 }
