@@ -51,7 +51,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="operation in operations | operationFilter:filterText  | orderBy:['-creationDate','name','-id']">
+                <tr ng-repeat="operation in operations | operationFilter:filterText  | orderBy:['-creationDate','name']">
                     <td>{{operation.creationDate | date:'dd/MM/yyyy'}}
                     </td>
                     <td>
