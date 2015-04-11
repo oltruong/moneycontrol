@@ -1,6 +1,6 @@
-package fr.oltruong.moneycontrol.repository;
+package com.oltruong.moneycontrol.repository;
 
-import fr.oltruong.moneycontrol.model.Rule;
+import com.oltruong.moneycontrol.model.Rule;
 import org.springframework.data.repository.CrudRepository;
 
 /**

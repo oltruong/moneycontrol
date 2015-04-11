@@ -1,4 +1,4 @@
-package fr.oltruong.moneycontrol;
+package com.oltruong.moneycontrol;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

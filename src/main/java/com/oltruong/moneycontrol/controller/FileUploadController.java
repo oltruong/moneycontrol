@@ -1,10 +1,10 @@
-package fr.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.controller;
 
-import fr.oltruong.moneycontrol.exception.BadRequestException;
-import fr.oltruong.moneycontrol.model.Operation;
-import fr.oltruong.moneycontrol.model.Rule;
-import fr.oltruong.moneycontrol.repository.OperationRepository;
-import fr.oltruong.moneycontrol.repository.RuleRepository;
+import com.oltruong.moneycontrol.exception.BadRequestException;
+import com.oltruong.moneycontrol.repository.RuleRepository;
+import com.oltruong.moneycontrol.model.Operation;
+import com.oltruong.moneycontrol.model.Rule;
+import com.oltruong.moneycontrol.repository.OperationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

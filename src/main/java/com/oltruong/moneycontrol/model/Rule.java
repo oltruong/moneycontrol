@@ -1,4 +1,4 @@
-package fr.oltruong.moneycontrol.model;
+package com.oltruong.moneycontrol.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

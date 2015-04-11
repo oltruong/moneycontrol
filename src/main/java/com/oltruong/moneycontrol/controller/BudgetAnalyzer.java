@@ -1,7 +1,7 @@
-package fr.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.controller;
 
-import fr.oltruong.moneycontrol.model.Operation;
-import fr.oltruong.moneycontrol.model.Rule;
+import com.oltruong.moneycontrol.model.Operation;
+import com.oltruong.moneycontrol.model.Rule;
 
 /**
  * @author Olivier Truong

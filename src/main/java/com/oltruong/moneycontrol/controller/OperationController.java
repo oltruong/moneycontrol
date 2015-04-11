@@ -1,8 +1,8 @@
-package fr.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.controller;
 
-import fr.oltruong.moneycontrol.exception.ResourceNotFoundException;
-import fr.oltruong.moneycontrol.model.Operation;
-import fr.oltruong.moneycontrol.repository.OperationRepository;
+import com.oltruong.moneycontrol.exception.ResourceNotFoundException;
+import com.oltruong.moneycontrol.model.Operation;
+import com.oltruong.moneycontrol.repository.OperationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

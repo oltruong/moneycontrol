@@ -1,4 +1,4 @@
-package fr.oltruong.moneycontrol.exception;
+package com.oltruong.moneycontrol.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

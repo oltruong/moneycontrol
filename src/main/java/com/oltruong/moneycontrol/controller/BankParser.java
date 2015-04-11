@@ -1,7 +1,7 @@
-package fr.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.controller;
 
 import com.google.common.collect.Lists;
-import fr.oltruong.moneycontrol.model.Operation;
+import com.oltruong.moneycontrol.model.Operation;
 
 import java.io.BufferedReader;
 import java.io.File;
