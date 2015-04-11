@@ -12,7 +12,7 @@
     <groupId>com.oltruong</groupId>
     <artifactId>moneycontrol</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <description>Simple web-app to manage budget</description>
+    <description>Simple web-app to manage budget using spring boot and angulardart</description>
 
 
     <properties>
