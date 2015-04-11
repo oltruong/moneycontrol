@@ -9,7 +9,7 @@
         <version>1.2.1.RELEASE</version>
     </parent>
 
-    <groupId>fr.oltruong</groupId>
+    <groupId>com.oltruong</groupId>
     <artifactId>moneycontrol</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <description>Simple web-app to manage budget</description>
