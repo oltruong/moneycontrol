@@ -1,14 +1,18 @@
 package com.oltruong.moneycontrol.model;
 
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import java.util.Date;
 
 /**
  * @author Olivier Truong
  */
 @Entity
-@NamedQuery(name = "Operation.findByCategoryNotEmpty",
+@NamedQuery(name = "Operation.findByCategoryEmpty",
         query = "select o from Operation o where o.category is null or o.category='' or o.category='null'")
 public class Operation {
 

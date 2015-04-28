@@ -2,7 +2,9 @@ package com.oltruong.moneycontrol.controller;
 
 import com.oltruong.moneycontrol.exception.ResourceNotFoundException;
 import com.oltruong.moneycontrol.model.Operation;
+import com.oltruong.moneycontrol.model.Rule;
 import com.oltruong.moneycontrol.repository.OperationRepository;
+import com.oltruong.moneycontrol.repository.RuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,9 @@ public class OperationController {
     @Autowired
     private OperationRepository operationRepository;
 
+    @Autowired
+    private RuleRepository ruleRepository;
+
     @RequestMapping("/rest/operation/period/{year}/{month}")
     Iterable<Operation> findByYearAndMonth(@PathVariable int year, @PathVariable int month) {
         return operationRepository.findByYearAndMonth(year, month);
@@ -31,7 +36,7 @@ public class OperationController {
 
     @RequestMapping("/rest/operation/period/unclassified")
     Iterable<Operation> findUnClassified() {
-        return operationRepository.findByCategoryNotEmpty();
+        return operationRepository.findByCategoryEmpty();
     }
 
     @RequestMapping("/rest/operation/period/{year}")
@@ -88,4 +93,16 @@ public class OperationController {
         }
         operationRepository.delete(id);
     }
+
+    @RequestMapping(value = "/rest/operation/refresh", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.OK)
+    void refresh() {
+        Iterable<Rule> ruleList = ruleRepository.findAll();
+
+        operationRepository.findByCategoryEmpty().forEach(operation -> {
+            operationRepository.save(BudgetAnalyzer.analyzeOperation(operation, ruleList));
+        });
+
+    }
+
 }

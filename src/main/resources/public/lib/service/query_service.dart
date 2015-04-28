@@ -81,10 +81,13 @@ class QueryService {
   }
 
 
-  void refreshClassification() {
-    _http.post('/rest/operation/refresh', null).catchError((e) {
+  Future<int> refreshClassification() {
+    return _http.post('/rest/operation/refresh', null).then((HttpResponse response) {
+      return response.status;
+    }).catchError((e) {
       print('error on refresh classification');
       print(e);
+      return 500;
     });
 
   }

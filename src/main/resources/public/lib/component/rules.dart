@@ -72,13 +72,12 @@ class RuleComponent {
 
   redirectUnclassified() {
     _router.go("operationsByYear", {
-        'year': 'unclassified'
+      'year': 'unclassified'
     });
   }
 
   void refresh() {
-    queryService.refreshClassification();
-    redirectUnclassified();
+    queryService.refreshClassification().then((status) => redirectUnclassified());
   }
 
   get rules => _rules;
