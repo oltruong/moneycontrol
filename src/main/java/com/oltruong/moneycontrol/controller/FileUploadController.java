@@ -1,16 +1,17 @@
 package com.oltruong.moneycontrol.controller;
 
 import com.oltruong.moneycontrol.exception.BadRequestException;
-import com.oltruong.moneycontrol.repository.RuleRepository;
 import com.oltruong.moneycontrol.model.Operation;
 import com.oltruong.moneycontrol.model.Rule;
 import com.oltruong.moneycontrol.repository.OperationRepository;
+import com.oltruong.moneycontrol.repository.RuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +75,8 @@ public class FileUploadController {
     }
 
     private String generateKey(Operation operation) {
-        return operation.getCreationDate().getTime() + operation.getName();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(operation.getCreationDate()) + operation.getName();
     }
 }

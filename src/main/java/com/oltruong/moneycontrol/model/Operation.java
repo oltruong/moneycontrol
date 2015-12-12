@@ -20,6 +20,8 @@ public class Operation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    private String account;
+
     private Date creationDate;
 
     private Integer year;
