@@ -1,10 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta http-equiv="refresh" content="0; url=/web/index.html"/>
+<!doctype html>
+<html lang="en" ng-app="moneyControlApp">
+<head>
+    <meta charset="utf-8">
+    <title>MoneyControl</title>
+    <link href='http://fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" media="screen" href="css/main.css">
+    <link rel="stylesheet" media="screen" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 
 </head>
 <body>
+<navbar></navbar>
+
+<div ng-view class="container-fluid"></div>
+
+<br/><br/>
+
+
+<div class="container text-center">&copy;&nbsp;MoneyControl-2016
+</div>
+
+<script src="bower_components/angularjs/angular.min.js"></script>
+<script src="bower_components/angular-route/angular-route.min.js"></script>
+<script src="js/application.js"></script>
+<script src="js/home/HomeController.js"></script>
+
 
 </body>
 </html>
