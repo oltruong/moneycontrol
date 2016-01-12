@@ -1,5 +1,5 @@
 'use strict';
 
-teamagApp.controller('HomeController', [
+moneyControlApp.controller('HomeController', [
     function HomeController() {
     }]);

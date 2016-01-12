@@ -3,6 +3,7 @@
   "dependencies": {
     "angularjs": "latest",
     "angular-route": "latest",
-    "bootstrap": "latest"
+    "bootstrap": "latest",
+    "angular-moment": "latest"
   }
 }
