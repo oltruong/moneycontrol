@@ -1,7 +1,7 @@
 'use strict';
 
 
-var moneyControlApp = angular.module('moneyControlApp', ['ngRoute', 'angularMoment']);
+var moneyControlApp = angular.module('moneyControlApp', ['ngRoute', 'ngResource', 'angularMoment']);
 
 moneyControlApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/home', {templateUrl: 'partials/views/home.html', controller: 'HomeController'});

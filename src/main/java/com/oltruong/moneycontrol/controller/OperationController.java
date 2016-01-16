@@ -29,27 +29,27 @@ public class OperationController {
     @Autowired
     private RuleRepository ruleRepository;
 
-    @RequestMapping("/rest/operation/period/{year}/{month}")
+    @RequestMapping("/rest/operations/period/{year}/{month}")
     Iterable<Operation> findByYearAndMonth(@PathVariable int year, @PathVariable int month) {
         return operationRepository.findByYearAndMonth(year, month);
     }
 
-    @RequestMapping("/rest/operation/period/unclassified")
+    @RequestMapping("/rest/operations/period/unclassified")
     Iterable<Operation> findUnClassified() {
         return operationRepository.findByCategoryEmpty();
     }
 
-    @RequestMapping("/rest/operation/period/{year}")
+    @RequestMapping("/rest/operations/period/{year}")
     Iterable<Operation> findByYear(@PathVariable int year) {
         return operationRepository.findByYear(year);
     }
 
-    @RequestMapping(value = "/rest/operation", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/operations", method = RequestMethod.GET)
     Iterable<Operation> findAll() {
         return operationRepository.findAll();
     }
 
-    @RequestMapping(value = "/rest/operation/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void editOperation(@RequestBody Operation operation, @PathVariable Long id) {
 
@@ -61,7 +61,7 @@ public class OperationController {
 
     }
 
-    @RequestMapping(value = "/rest/operation", method = RequestMethod.POST)
+    @RequestMapping(value = "/rest/operations", method = RequestMethod.POST)
     ResponseEntity<?> createOperation(@RequestBody Operation operation) {
         operation.setId(null);
 
@@ -74,7 +74,7 @@ public class OperationController {
         return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/rest/operation/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     Operation get(@PathVariable Long id) {
         Operation operation = operationRepository.findOne(id);
@@ -84,7 +84,7 @@ public class OperationController {
         return operation;
     }
 
-    @RequestMapping(value = "/rest/operation/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void delete(@PathVariable Long id) {
         Operation operation = operationRepository.findOne(id);
@@ -94,8 +94,8 @@ public class OperationController {
         operationRepository.delete(id);
     }
 
-    @RequestMapping(value = "/rest/operation/refresh", method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.OK)
+    @RequestMapping(value = "/rest/operations/refresh", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void refresh() {
         Iterable<Rule> ruleList = ruleRepository.findAll();
 

@@ -1,6 +1,254 @@
 <div class="col-md-12">
     <datebar></datebar>
 </div>
-Operations
 <br/><br/>
-<operations></operations>
+<div class="col-md-12">
+    <div class="page-header"><h1>{{totalOperations()}}&nbsp;Op&eacute;rations</h1></div>
+</div>
+<br/><br/>
+<ul class="nav nav-tabs" role="tablist" id="tabs">
+    <li role="presentation" ng-class="showTab(0)?'active':''"><a ng-click="setTab(0)" role="tab"
+                                                                 data-toggle="tab">Op&eacute;rations</a>
+    </li>
+    <li role="presentation" ng-class="showTab(1)?'active':''"><a ng-click="setTab(1)"
+                                                                 role="tab"
+                                                                 data-toggle="tab">Cat&eacute;gories</a>
+    </li>
+    <li role="presentation" ng-class="showTab(2)?'active':''"><a ng-click="setTab(2)"
+                                                                 role="tab"
+                                                                 data-toggle="tab">D&eacute;tail
+        D&eacute;penses</a>
+    </li>
+    <li role="presentation" ng-class="showTab(3)?'active':''"><a ng-click="setTab(3)"
+                                                                 role="tab"
+                                                                 data-toggle="tab">D&eacute;tail
+        Recettes</a>
+    </li>
+</ul>
+<br/>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" ng-show="showTab(0)">
+        <div class="col-md-2">
+            <form>
+                <div class="form-group">
+                    <input type="text" ng-model="filterText" placeholder="Recherche">
+                </div>
+                <div class="form-group lead">
+                    Total:&nbsp;{{total() |number:2}}
+                </div>
+            </form>
+        </div>
+        <div class="col-md-10">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Nom</th>
+                    <th>Montant</th>
+                    <th>Cat&eacute;gorie</th>
+                    <th>Ss. Cat.</th>
+                    <th>Destinataire</th>
+                    <th>Commentaire</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="operation in operations  | orderBy:['-creationDate','name']">
+                    <td>{{operation.creationDate | date:'dd/MM/yyyy'}}
+                    </td>
+                    <td>{{operation.name}}
+                        <celledit object="operation" value="operation.name"></celledit>
+                    </td>
+                    <td>{{operation.amount}}
+                        <numberedit object="operation" value="operation.amount"></numberedit>
+                    </td>
+                    <td>{{operation.category}}
+                        <celledit object="operation" value="operation.category"></celledit>
+                    </td>
+                    <td>{{operation.subcategory}}
+                        <celledit object="operation" value="operation.subcategory"></celledit>
+                    </td>
+                    <td>{{operation.recipient}}
+                        <celledit object="operation" value="operation.recipient"></celledit>
+                    </td>
+                    <td>{{operation.comment}}
+                        <celledit object="operation" value="operation.comment"></celledit>
+                    </td>
+
+                    <td>
+                        <button ng-click="duplicate(operation)" class="btn btn-info"><span
+                                class="glyphicon glyphicon-plus"></span></button>
+                    </td>
+                    <td>
+                        <button ng-click="delete(operation)" class="btn btn-danger"><span
+                                class="glyphicon glyphicon-trash"></span></button>
+                    </td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th style="text-align : right" colspan="2">TOTAL&nbsp;:</th>
+                    <th>{{total()|number:2}}</th>
+                    <th colspan="4"></th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+    <div role="tabpanel" class="tab-pane active" ng-show="showTab(1)">
+
+        <div class="col-md-2">
+            <div class="lead">
+                Solde&nbsp;:&nbsp;{{balance() |number:2}}
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="page-header no-margin-top"><h2>Dépenses</h2></div>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Montant</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="category in negative_categories | orderBy:'amount' ">
+                    <td>{{category.name}}
+                    </td>
+                    <td>{{-category.amount|number:2}}</td>
+                    <td>{{ category.amount*100/sum(negative_categories)|number:2}}%</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>TOTAL</th>
+                    <th>{{-sum(negative_categories)|number:2}}</th>
+                    <th></th>
+                </tr>
+
+                </tfoot>
+
+            </table>
+        </div>
+
+        <div class="col-md-5">
+            <div class="page-header  no-margin-top"><h2>Recettes</h2></div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Montant</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="category in positive_categories | orderBy:'-amount' ">
+                    <td>{{category.name}}
+                    </td>
+                    <td>{{category.amount|number:2}}</td>
+                    <td>{{ category.amount*100/sum(positive_categories)|number:2}}%</td>
+                </tr>
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>TOTAL</th>
+                    <th>{{sum(positive_categories)|number:2}}</th>
+                    <th></th>
+                </tr>
+
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+    <div role="tabpanel" class="tab-pane active" ng-show="showTab(2)">
+
+
+        <div class="col-md-12">
+            <div class="page-header no-margin-top"><h2>Détail Dépenses</h2></div>
+
+
+            <div class="col-md-4"></div>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th ng-click="setCategoryOrder('categoryName')">Catégorie</th>
+                    <th ng-click="setCategoryOrder('name')">Sous catégorie</th>
+                    <th ng-click="setCategoryOrder('amount')">Montant</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="subcategory in negative_subCategories | orderBy:categoryOrder ">
+                    <td>{{subcategory.categoryName}}</td>
+                    <td>{{subcategory.name}}
+                    </td>
+                    <td>{{-subcategory.amount|number:2}}</td>
+                    <td>{{ subcategory.amount*100/sum(negative_subCategories)|number:2}}%</td>
+                </tr>
+
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>TOTAL</th>
+                    <th></th>
+                    <th>{{-sum(negative_subCategories)|number:2}}</th>
+                    <th></th>
+                </tr>
+
+                </tfoot>
+
+            </table>
+        </div>
+
+    </div>
+    <div role="tabpanel" class="tab-pane active" ng-show="showTab(3)">
+
+
+        <div class="col-md-12">
+            <div class="page-header no-margin-top"><h2>Détail Recettes</h2></div>
+
+
+            <div class="col-md-4"></div>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th ng-click="setCategoryOrder('categoryName')">Catégorie</th>
+                    <th ng-click="setCategoryOrder('name')">Sous catégorie</th>
+                    <th ng-click="setCategoryOrder('amount')">Montant</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="subcategory in positive_subCategories | orderBy:categoryOrder ">
+                    <td>{{subcategory.categoryName}}</td>
+                    <td>{{subcategory.name}}
+                    </td>
+                    <td>{{subcategory.amount|number:2}}</td>
+                    <td>{{ subcategory.amount*100/sum(positive_subCategories)|number:2}}%</td>
+                </tr>
+
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>TOTAL</th>
+                    <th></th>
+                    <th>{{sum(positive_subCategories)|number:2}}</th>
+                    <th></th>
+                </tr>
+
+                </tfoot>
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+
