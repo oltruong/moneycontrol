@@ -21,14 +21,14 @@ moneyControlApp.controller('OperationController', ['$scope', 'Operation',
             "month": 9,
             "name": "TEST",
             "amount": 330.67,
-          "category": "Category",
+            "category": "Category",
             "subcategory": "SubCategory",
-              "recipient": null,
+            "recipient": null,
             "comment": null
         }];
 
         $scope.totalOperations = function () {
-            return 10;
+            return $scope.operations.length;
         };
 
         $scope.showTab = function (tab) {

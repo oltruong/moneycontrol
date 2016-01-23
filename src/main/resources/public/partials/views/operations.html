@@ -54,25 +54,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="operation in operations  | orderBy:['-creationDate','name']">
+                <tr ng-repeat="operation in operations  | filter:filterText |  orderBy:['-creationDate','name']">
                     <td>{{operation.creationDate | date:'dd/MM/yyyy'}}
                     </td>
-                    <td>{{operation.name}}
+                    <td>
                         <celledit object="operation" value="operation.name"></celledit>
                     </td>
-                    <td>{{operation.amount}}
+                    <td>
                         <numberedit object="operation" value="operation.amount"></numberedit>
                     </td>
-                    <td>{{operation.category}}
+                    <td>
                         <celledit object="operation" value="operation.category"></celledit>
                     </td>
-                    <td>{{operation.subcategory}}
+                    <td>
                         <celledit object="operation" value="operation.subcategory"></celledit>
                     </td>
-                    <td>{{operation.recipient}}
+                    <td>
                         <celledit object="operation" value="operation.recipient"></celledit>
                     </td>
-                    <td>{{operation.comment}}
+                    <td>
                         <celledit object="operation" value="operation.comment"></celledit>
                     </td>
 

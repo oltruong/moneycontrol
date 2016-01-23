@@ -1,0 +1,7 @@
+<span ng-hide="editMode" ng-click="editMode=true;"><span ng-hide="value==null">{{value}}</span><span
+        ng-hide="value!=null"><button class="btn btn-link"><span class="glyphicon glyphicon-pencil"></span>
+</button></span></span><input type="text"
+                              ng-model="value"
+                              ng-show="editMode"
+                              ng-blur="edit()"/>
+
