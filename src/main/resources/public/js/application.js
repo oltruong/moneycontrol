@@ -14,7 +14,15 @@ moneyControlApp.config(['$routeProvider', function ($routeProvider) {
         templateUrl: 'partials/views/operations.html',
         controller: 'OperationController'
     });
-    $routeProvider.when('/operations/:any', {
+    $routeProvider.when('/operations/:year', {
+        templateUrl: 'partials/views/operations.html',
+        controller: 'OperationController'
+    });
+    $routeProvider.when('/operations/unclassified', {
+        templateUrl: 'partials/views/operations.html',
+        controller: 'OperationController'
+    });
+    $routeProvider.when('/operations', {
         templateUrl: 'partials/views/operations.html',
         controller: 'OperationController'
     });

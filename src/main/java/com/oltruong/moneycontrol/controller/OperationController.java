@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,24 +30,20 @@ public class OperationController {
     @Autowired
     private RuleRepository ruleRepository;
 
-    @RequestMapping("/rest/operations/period/{year}/{month}")
-    Iterable<Operation> findByYearAndMonth(@PathVariable int year, @PathVariable int month) {
-        return operationRepository.findByYearAndMonth(year, month);
-    }
-
-    @RequestMapping("/rest/operations/period/unclassified")
-    Iterable<Operation> findUnClassified() {
-        return operationRepository.findByCategoryEmpty();
-    }
-
-    @RequestMapping("/rest/operations/period/{year}")
-    Iterable<Operation> findByYear(@PathVariable int year) {
-        return operationRepository.findByYear(year);
-    }
 
     @RequestMapping(value = "/rest/operations", method = RequestMethod.GET)
-    Iterable<Operation> findAll() {
-        return operationRepository.findAll();
+    Iterable<Operation> findAll(@RequestParam(value = "year", required = false) Integer year, @RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "category", required = false) String category) {
+
+        if ("empty".equals(category)) {
+            return operationRepository.findByCategoryEmpty();
+        } else if (year != null && month != null) {
+            return operationRepository.findByYearAndMonth(year, month);
+        } else if (year != null) {
+            return operationRepository.findByYear(year);
+        } else {
+            return operationRepository.findAll();
+        }
+
     }
 
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.PUT)
