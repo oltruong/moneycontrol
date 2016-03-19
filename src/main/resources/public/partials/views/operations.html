@@ -54,7 +54,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="operation in operations  | filter:filterText |  orderBy:['-creationDate','name']">
+                <tr ng-repeat="operation in (filteredOperations= (operations  | filter:filterText |  orderBy:['-creationDate','name']))">
                     <td>{{operation.creationDate | date:'dd/MM/yyyy'}}
                     </td>
                     <td>
@@ -90,7 +90,7 @@
                 <tr>
                     <th style="text-align : right" colspan="2">TOTAL&nbsp;:</th>
                     <th>{{total()|number:2}}</th>
-                    <th colspan="4"></th>
+                    <th colspan="6"></th>
                 </tr>
                 </tfoot>
             </table>
@@ -101,7 +101,7 @@
 
         <div class="col-md-2">
             <div class="lead">
-                Solde&nbsp;:&nbsp;{{balance() |number:2}}
+                Solde&nbsp;:&nbsp;{{total() |number:2}}
             </div>
         </div>
         <div class="col-md-5">
@@ -116,7 +116,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="category in negative_categories | orderBy:'amount' ">
+
+                <tr ng-repeat="category in negative_categories| orderBy:'amount' ">
                     <td>{{category.name}}
                     </td>
                     <td>{{-category.amount|number:2}}</td>
@@ -146,7 +147,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="category in positive_categories | orderBy:'-amount' ">
+                <tr ng-repeat="category in positive_categories| orderBy:'-amount' ">
                     <td>{{category.name}}
                     </td>
                     <td>{{category.amount|number:2}}</td>

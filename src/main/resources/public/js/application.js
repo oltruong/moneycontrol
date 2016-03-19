@@ -8,7 +8,7 @@ moneyControlApp.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/rules', {templateUrl: 'partials/views/rules.html', controller: 'RuleController'});
     $routeProvider.when('/fileupload', {
         templateUrl: 'partials/views/fileupload.html',
-        controller: 'UploadFileController'
+        controller: 'FileUploadController'
     });
     $routeProvider.when('/operations/:year/:month', {
         templateUrl: 'partials/views/operations.html',
