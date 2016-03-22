@@ -6,12 +6,29 @@ moneyControlApp.controller('RuleController', ['$scope', 'Rule',
 
 
         $scope.delete = function (rule) {
-            console.log("Delete rule" + rule.id);
+            Rule.delete(rule).$promise.then(function () {
+                var index = $scope.rules.indexOf(rule);
+                if (index > -1) {
+                    $scope.rules.splice(index, 1);
+                }
+            });
         };
 
         $scope.duplicate = function (rule) {
-            console.log("Duplicate rule" + rule.id);
-        };
 
+            var newRule = {};
+            newRule.ruleOrder = rule.ruleOrder;
+            newRule.nameCondition = rule.nameCondition;
+            newRule.amountCondition = rule.amountCondition;
+            newRule.category = rule.category;
+            newRule.subcategory = rule.subcategory;
+            newRule.recipient = rule.recipient;
+            newRule.comment = rule.comment;
+
+
+            Rule.save(newRule).$promise.then(function (savedRule) {
+                $scope.rules.push(savedRule);
+            });
+        };
 
     }]);

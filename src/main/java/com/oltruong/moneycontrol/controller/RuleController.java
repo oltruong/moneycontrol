@@ -42,7 +42,7 @@ public class RuleController {
     }
 
     @RequestMapping(value = "/rest/rules", method = RequestMethod.POST)
-    ResponseEntity<?> createRule(@RequestBody Rule rule) {
+    ResponseEntity<Rule> createRule(@RequestBody Rule rule) {
         rule.setId(null);
 
         Rule ruleSaved = ruleRepository.save(rule);
@@ -51,7 +51,7 @@ public class RuleController {
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(ruleSaved.getId()).toUri());
 
-        return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(ruleSaved, httpHeaders, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/rest/rules/{id}", method = RequestMethod.GET)

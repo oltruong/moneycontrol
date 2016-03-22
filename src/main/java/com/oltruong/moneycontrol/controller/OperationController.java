@@ -59,7 +59,7 @@ public class OperationController {
     }
 
     @RequestMapping(value = "/rest/operations", method = RequestMethod.POST)
-    ResponseEntity<?> createOperation(@RequestBody Operation operation) {
+    ResponseEntity<Operation> createOperation(@RequestBody Operation operation) {
         operation.setId(null);
 
         Operation operationSaved = operationRepository.save(operation);
@@ -68,7 +68,7 @@ public class OperationController {
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(operationSaved.getId()).toUri());
 
-        return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(operationSaved, httpHeaders, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.GET)

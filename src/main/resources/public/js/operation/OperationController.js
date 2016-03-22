@@ -72,6 +72,35 @@ moneyControlApp.controller('OperationController', ['$scope', '$routeParams', '$l
             return total;
         };
 
+
+        $scope.delete = function (operation) {
+            Operation.delete(operation).$promise.then(function () {
+                var index = $scope.operations.indexOf(operation);
+                if (index > -1) {
+                    $scope.operations.splice(index, 1);
+                }
+            });
+        };
+
+
+        $scope.duplicate = function (operation) {
+
+            var newOperation = {};
+            newOperation.creationDate = operation.creationDate;
+            newOperation.year = operation.year;
+            newOperation.month = operation.month;
+            newOperation.name = operation.name;
+            newOperation.amount = operation.amount;
+            newOperation.category = operation.category;
+            newOperation.subcategory = operation.subcategory;
+            newOperation.recipient = operation.recipient;
+            newOperation.comment = operation.comment;
+
+            Operation.save(newOperation).$promise.then(function (savedOperation) {
+                $scope.operations.push(savedOperation);
+            });
+        };
+
         function loadCategories() {
             var categoryMap = {};
 

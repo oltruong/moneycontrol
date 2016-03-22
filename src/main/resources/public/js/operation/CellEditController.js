@@ -1,13 +1,17 @@
 'use strict';
 
-moneyControlApp.controller('CellEditController', ['$scope', 'Operation',
-    function CellEditController($scope, Operation) {
+moneyControlApp.controller('CellEditController', ['$scope', 'Operation', 'Rule',
+    function CellEditController($scope, Operation, Rule) {
 
         $scope.editMode = false;
 
         $scope.edit = function () {
-            console.log("Edit value" + $scope.value + "cell operation id" + $scope.object.id);
-                $scope.editMode = false;
+            if ($scope.object.nameCondition != undefined) {
+                Rule.update($scope.object);
+            } else {
+                Operation.update($scope.object);
+            }
+            $scope.editMode = false;
         }
 
     }]);
