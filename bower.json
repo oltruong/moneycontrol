@@ -1,0 +1,10 @@
+{
+  "name": "moneycontrol",
+  "dependencies": {
+    "angularjs": "latest",
+    "angular-route": "latest",
+    "angular-resource": "latest",
+    "bootstrap": "latest",
+    "angular-moment": "latest"
+  }
+}
