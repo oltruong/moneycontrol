@@ -119,7 +119,12 @@ public class Operation {
         this.comment = comment;
     }
 
-//    public static List<Operation> all() {
+    @Override
+    public String toString() {
+        return "name" + name;
+    }
+
+    //    public static List<Operation> all() {
 //        return find.orderBy("creationDate desc, name").findList();
 //    }
 //
