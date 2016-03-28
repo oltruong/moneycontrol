@@ -1,4 +1,4 @@
-package com.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.parser;
 
 import com.oltruong.moneycontrol.model.Operation;
 import org.junit.Test;
@@ -12,13 +12,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author oltruong
  */
-public class BankParserTest {
+public class LBPBankParserTest extends BankParserTest {
 
     @Test
     public void testParseString() throws Exception {
         String fileContent = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("lbp.csv").toURI())));
 
-        List<Operation> operationList = BankParser.parseString(fileContent);
+        LBPBankParser bankParser = new LBPBankParser();
+        List<Operation> operationList = bankParser.parseString(fileContent);
 
         assertThat(operationList).hasSize(3);
 
@@ -29,10 +30,5 @@ public class BankParserTest {
 
     }
 
-    private void checkOperation(Operation operation, String name, float amount, int year, int month) {
-        assertThat(operation.getName()).isEqualTo(name);
-        assertThat(operation.getAmount()).isEqualTo(amount);
-        assertThat(operation.getYear()).isEqualTo(year);
-        assertThat(operation.getMonth()).isEqualTo(month);
-    }
+
 }

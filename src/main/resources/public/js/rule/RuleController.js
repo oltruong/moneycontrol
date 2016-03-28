@@ -1,7 +1,7 @@
 'use strict';
 
-moneyControlApp.controller('RuleController', ['$scope', 'Rule',
-    function RuleController($scope, Rule) {
+moneyControlApp.controller('RuleController', ['$scope', '$location', '$http', 'Rule',
+    function RuleController($scope, $location, $http, Rule) {
         $scope.rules = Rule.query();
 
 
@@ -31,4 +31,11 @@ moneyControlApp.controller('RuleController', ['$scope', 'Rule',
             });
         };
 
+        $scope.refresh = function () {
+            $http.post("/rest/operations/refresh").then(function successCallback(response) {
+                $location.path('/operations/unclassified');
+            }, function errorCallback(response) {
+                console.log(response);
+            });
+        };
     }]);

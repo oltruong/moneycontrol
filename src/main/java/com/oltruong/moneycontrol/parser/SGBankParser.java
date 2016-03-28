@@ -13,9 +13,9 @@ import java.util.List;
 /**
  * @author oltruong
  */
-public class LBPBankParser implements BankParser {
+public class SGBankParser implements BankParser {
 
-    static final int FIRST_ACTIVE_LINE = 8;
+    static final int FIRST_ACTIVE_LINE = 3;
 
     @Override
     public List<Operation> parseString(String fileContent) {
@@ -38,8 +38,8 @@ public class LBPBankParser implements BankParser {
         operation.setCreationDate(Date.from(localDate.toInstant(ZoneOffset.UTC)));
         operation.setMonth(localDate.getMonthValue());
         operation.setYear(localDate.getYear());
-        operation.setName(str[1].replace("\"", ""));
-        operation.setAmount(Float.valueOf(str[2].replace(',', '.')));
+        operation.setName(str[2].replace("\"", ""));
+        operation.setAmount(Float.valueOf(str[3].replace(',', '.')));
         return operation;
     }
 }

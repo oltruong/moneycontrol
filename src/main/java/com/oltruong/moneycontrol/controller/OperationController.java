@@ -30,7 +30,6 @@ public class OperationController {
     @Autowired
     private RuleRepository ruleRepository;
 
-
     @RequestMapping(value = "/rest/operations", method = RequestMethod.GET)
     Iterable<Operation> findAll(@RequestParam(value = "year", required = false) Integer year, @RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "category", required = false) String category) {
 
