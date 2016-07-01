@@ -3,3 +3,5 @@ pubspec.lock
 build/
 .pub/
 bower_components
+.log
+node_modules

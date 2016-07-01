@@ -28,5 +28,3 @@ moneyControlApp.config(['$routeProvider', function ($routeProvider) {
     });
     $routeProvider.otherwise({redirectTo: '/home'});
 }]);
-
-//var moneyControlApp = angular.module('moneyControlApp', ['ngRoute', 'ngResource', 'ngCookies', 'ui.calendar', 'colorpicker.module', 'angular-md5']);

@@ -1,10 +1,13 @@
 {
   "name": "moneycontrol",
   "dependencies": {
-    "angularjs": "latest",
+    "angular": "1.5.7",
     "angular-route": "latest",
     "angular-resource": "latest",
     "bootstrap": "latest",
     "angular-moment": "latest"
+  },
+  "resolutions": {
+    "angular": "1.5.7"
   }
 }

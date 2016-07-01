@@ -1,0 +1,16 @@
+{
+  "name": "moneycontrol",
+  "private": true,
+  "version": "0.0.2",
+  "description": "A starter project for AngularJS",
+  "repository": "https://github.com/oltruong/moneycontrol",
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "connect": "^3.4.1"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+    "prestart": "npm install"
+  }
+}
