@@ -37,7 +37,7 @@ public class BouBankParser implements BankParser {
         operation.setMonth(localDate.getMonthValue());
         operation.setYear(localDate.getYear());
         operation.setName(str[2].replace("\"", "").trim());
-        operation.setAmount(Float.valueOf(str[4].replace(',', '.').replace("\"", "").replace(" ", "")));
+        operation.setAmount(Float.valueOf(str[6].replace(',', '.').replace("\"", "").replace(" ", "")));
         return operation;
     }
 }
