@@ -1,3 +1,22 @@
 language: java
+sudo: false
+
 jdk:
-  - oraclejdk8
+- oraclejdk8
+
+
+addons:
+  sonarqube:
+      token:
+        secure: "d8v7HS303Ya1KtFP2MFhPmhi5XO1ju1QK4/i8VaEWTyIGJyikMi+yHAKA78YkwbFGmpREn1enJdJiFL8QpWsQCdijq0/LR3Er5R7RKRbKYUgK9RtRuQgZXs+ekXYBa1dMgEIQUHojZPhpLGc5zmiZWI0xts6P2qCh5FSa7CoUSHbxzKc8eXz2I899TO24emTn+EijAnVVMXHvla5/jseCOWobK5gpDbrZguMVSsQsWvPlSV++PMKnO7w4inU9fm5Vgj867F8ilJBcaiotMQsrLeaxT6p5oJ8vKovmzsEemegmQWynIK7dckWvdVFvnbFQLhI5orEdtV1zORgp1UY+ei0qV6R9pz6JQA4CO9wwn7ZIh1i3W+ownJrbbJ+F2SNleg2f9ST4OXmlMrOdKyuDMYN9woaL+XeMaNtm7mIC9vx78ZCip+LV5wEHeC7+42K1OKXA13SVX1IOxqcme1JZv4e8xLQ3A0Azsp3V1737tpZySxKvR3AFtd6GND5ZIJJ9AZlFaEC3w5pJRDmyKaErJIczyP3pde1f8A7eVOhamjPuO2kxHVg5ZpmGoQZB+aq3Y2qvwBZCgGCJyO8LlfFl1ystkgwAaEvIlxpTMwTG5IC006Pc3i0r7MZ3D2gU9gRXD8GA5agz1/Bep6WKpW6SGaJcsgM6mzUkk3JsG2rLIM="
+script:
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
+
+after_success:
+- mvn cobertura:cobertura
+- bash <(curl -s https://codecov.io/bash)
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
