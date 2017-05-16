@@ -33,7 +33,7 @@ moneyControlApp.controller('RuleController', ['$scope', '$location', '$http', 'R
 
         $scope.refresh = function () {
             $http.post("/rest/operations/refresh").then(function successCallback(response) {
-                $location.path('/operations/unclassified');
+
             }, function errorCallback(response) {
                 console.log(response);
             });

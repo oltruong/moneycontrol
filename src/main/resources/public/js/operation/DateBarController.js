@@ -15,7 +15,7 @@ moneyControlApp.controller('DateBarController', ['$scope', '$routeParams', '$loc
         var count = 0;
         $scope.months = [];
         while (count < 12) $scope.months.push(count++);
-        $scope.years = ["2014","2015","2016"];
+        $scope.years = ["2014","2015","2016","2017"];
 
         $scope.year = $routeParams.year;
         $scope.currentMonth =  $routeParams.month;
