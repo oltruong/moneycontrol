@@ -31,9 +31,9 @@ public class RuleController {
 
     @RequestMapping(value = "/rest/rules/{id}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    void editRule(@RequestBody Rule rule, @PathVariable Long id) {
+    void editRule(@RequestBody Rule rule, @PathVariable String id) {
 
-        if (ruleRepository.findOne(id) == null) {
+        if (ruleRepository.findById(id) == null) {
             throw new ResourceNotFoundException();
         }
         rule.setId(id);
