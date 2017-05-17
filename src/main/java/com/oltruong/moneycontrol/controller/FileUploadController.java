@@ -3,9 +3,10 @@ package com.oltruong.moneycontrol.controller;
 import com.oltruong.moneycontrol.exception.BadRequestException;
 import com.oltruong.moneycontrol.model.Operation;
 import com.oltruong.moneycontrol.model.Rule;
-import com.oltruong.moneycontrol.parser.BankFileAnalyzer;
+import com.oltruong.moneycontrol.parser.BankParser;
 import com.oltruong.moneycontrol.repository.OperationRepository;
 import com.oltruong.moneycontrol.repository.RuleRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,8 @@ public class FileUploadController {
     @Autowired
     private RuleRepository ruleRepository;
 
+    @Autowired
+    private BankParser bankParser;
 
     @RequestMapping(value = "/rest/bankfileupload", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
@@ -38,7 +41,7 @@ public class FileUploadController {
         if (fileContent == null) {
             throw new BadRequestException();
         } else {
-            List<Operation> operationList = BankFileAnalyzer.parseString(fileContent);
+            List<Operation> operationList = bankParser.parseString(fileContent);
             List<String> existingOperationList = buildOperationList();
 
             Iterable<Rule> ruleList = ruleRepository.findAll();

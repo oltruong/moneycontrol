@@ -3,6 +3,8 @@ package com.oltruong.moneycontrol.parser;
 import com.google.common.collect.Lists;
 import com.oltruong.moneycontrol.model.Operation;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -13,7 +15,8 @@ import java.util.List;
 /**
  * @author oltruong
  */
-public class BouBankParser implements BankParser {
+@Component
+public class BankParserImpl implements BankParser {
     static final int FIRST_ACTIVE_LINE = 1;
 
     @Override
