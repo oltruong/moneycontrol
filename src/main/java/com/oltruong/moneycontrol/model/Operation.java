@@ -1,26 +1,22 @@
 package com.oltruong.moneycontrol.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.Date;
+
 
 /**
  * @author Olivier Truong
  */
-@Entity
-@NamedQuery(name = "Operation.findByCategoryEmpty",
-        query = "select o from Operation o where o.category is null or o.category='' or o.category='null'")
+
+@Document
 public class Operation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
 
-    private String account;
 
     private Date creationDate;
 
@@ -39,11 +35,11 @@ public class Operation {
 
     private String comment;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

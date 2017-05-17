@@ -47,9 +47,9 @@ public class OperationController {
 
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    void editOperation(@RequestBody Operation operation, @PathVariable Long id) {
+    void editOperation(@RequestBody Operation operation, @PathVariable String id) {
 
-        if (operationRepository.findOne(id) == null) {
+        if (operationRepository.findById(id) == null) {
             throw new ResourceNotFoundException();
         }
         operation.setId(id);
