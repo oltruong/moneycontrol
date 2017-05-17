@@ -12,15 +12,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author oltruong
  */
-public class BouBankParserTest extends BankParserTest {
+public class BankParserImplTest extends BankParserTest {
 
     @Test
     public void testParseString() throws Exception {
         String fileContent = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("bou.csv").toURI())));
 
-        BouBankParser bouBankParser = new BouBankParser();
+        BankParserImpl bankParserImpl = new BankParserImpl();
 
-        List<Operation> operationList = bouBankParser.parseString(fileContent);
+        List<Operation> operationList = bankParserImpl.parseString(fileContent);
 
         assertThat(operationList).hasSize(4);
         checkOperation(operationList.get(0), "SUPERMARKET", -16.8f, 2017, 03);
