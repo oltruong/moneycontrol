@@ -5,7 +5,7 @@ import com.oltruong.moneycontrol.model.Operation;
 import com.oltruong.moneycontrol.model.Rule;
 import com.oltruong.moneycontrol.repository.OperationRepository;
 import com.oltruong.moneycontrol.repository.RuleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +24,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 public class OperationController {
 
-    @Autowired
-    private OperationRepository operationRepository;
+    private final OperationRepository operationRepository;
 
-    @Autowired
-    private RuleRepository ruleRepository;
+    private final RuleRepository ruleRepository;
+
+    public OperationController(OperationRepository operationRepository, RuleRepository ruleRepository) {
+        this.operationRepository = operationRepository;
+        this.ruleRepository = ruleRepository;
+    }
 
     @RequestMapping(value = "/rest/operations", method = RequestMethod.GET)
     Iterable<Operation> findAll(@RequestParam(value = "year", required = false) Integer year, @RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "category", required = false) String category) {
@@ -48,13 +51,9 @@ public class OperationController {
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void editOperation(@RequestBody Operation operation, @PathVariable String id) {
-
-        if (operationRepository.findById(id) == null) {
-            throw new ResourceNotFoundException();
-        }
+        getOperationOrThrowException(id);
         operation.setId(id);
         operationRepository.save(operation);
-
     }
 
     @RequestMapping(value = "/rest/operations", method = RequestMethod.POST)
@@ -73,20 +72,19 @@ public class OperationController {
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     Operation get(@PathVariable String id) {
-        Operation operation = operationRepository.findById(id);
-        if (operation == null) {
-            throw new ResourceNotFoundException();
-        }
-        return operation;
+        return getOperationOrThrowException(id);
+    }
+
+    private Operation getOperationOrThrowException(String id) {
+        return operationRepository
+                .findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void delete(@PathVariable String id) {
-        Operation operation = operationRepository.findById(id);
-        if (operation == null) {
-            throw new ResourceNotFoundException();
-        }
+        Operation operation = getOperationOrThrowException(id);
         operationRepository.delete(operation);
     }
 

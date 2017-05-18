@@ -6,11 +6,13 @@ import com.oltruong.moneycontrol.model.Rule;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Optional;
+
 /**
  * @author Olivier Truong
  */
 public interface RuleRepository extends MongoRepository<Rule, Long> {
-    Rule findById(String id);
+    Optional<Rule> findById(String id);
 
 
 }

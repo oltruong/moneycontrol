@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Olivier Truong
@@ -18,6 +19,6 @@ public interface OperationRepository extends MongoRepository<Operation, Long> {
 
     List<Operation> findByCategoryNull();
 
-    Operation findById(String id);
+    Optional<Operation> findById(String id);
 
 }
