@@ -16,7 +16,7 @@ public interface OperationRepository extends MongoRepository<Operation, Long> {
 
     List<Operation> findByYear(int year);
 
-    List<Operation> findByCategoryEmpty();
+    List<Operation> findByCategoryNull();
 
     Operation findById(String id);
 

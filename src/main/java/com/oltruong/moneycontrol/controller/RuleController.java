@@ -56,8 +56,8 @@ public class RuleController {
 
     @RequestMapping(value = "/rest/rules/{id}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
-    Rule get(@PathVariable Long id) {
-        Rule rule = ruleRepository.findOne(id);
+    Rule get(@PathVariable String id) {
+        Rule rule = ruleRepository.findById(id);
         if (rule == null) {
             throw new ResourceNotFoundException();
         }
@@ -66,11 +66,11 @@ public class RuleController {
 
     @RequestMapping(value = "/rest/rules/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    void delete(@PathVariable Long id) {
-        Rule rule = ruleRepository.findOne(id);
+    void delete(@PathVariable String id) {
+        Rule rule = ruleRepository.findById(id);
         if (rule == null) {
             throw new ResourceNotFoundException();
         }
-        ruleRepository.delete(id);
+        ruleRepository.delete(rule);
     }
 }

@@ -34,7 +34,7 @@ public class OperationController {
     Iterable<Operation> findAll(@RequestParam(value = "year", required = false) Integer year, @RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "category", required = false) String category) {
 
         if ("empty".equals(category)) {
-            return operationRepository.findByCategoryEmpty();
+            return operationRepository.findByCategoryNull();
         } else if (year != null && month != null) {
             return operationRepository.findByYearAndMonth(year, month);
         } else if (year != null) {
@@ -72,8 +72,8 @@ public class OperationController {
 
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
-    Operation get(@PathVariable Long id) {
-        Operation operation = operationRepository.findOne(id);
+    Operation get(@PathVariable String id) {
+        Operation operation = operationRepository.findById(id);
         if (operation == null) {
             throw new ResourceNotFoundException();
         }
@@ -82,12 +82,12 @@ public class OperationController {
 
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    void delete(@PathVariable Long id) {
-        Operation operation = operationRepository.findOne(id);
+    void delete(@PathVariable String id) {
+        Operation operation = operationRepository.findById(id);
         if (operation == null) {
             throw new ResourceNotFoundException();
         }
-        operationRepository.delete(id);
+        operationRepository.delete(operation);
     }
 
     @RequestMapping(value = "/rest/operations/refresh", method = RequestMethod.POST)
@@ -95,7 +95,7 @@ public class OperationController {
     void refresh() {
         Iterable<Rule> ruleList = ruleRepository.findAll();
 
-        operationRepository.findByCategoryEmpty().forEach(operation -> {
+        operationRepository.findByCategoryNull().forEach(operation -> {
             operationRepository.save(BudgetAnalyzer.analyzeOperation(operation, ruleList));
         });
 
