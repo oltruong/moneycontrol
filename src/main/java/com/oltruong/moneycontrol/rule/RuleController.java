@@ -1,8 +1,6 @@
-package com.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.rule;
 
 import com.oltruong.moneycontrol.exception.ResourceNotFoundException;
-import com.oltruong.moneycontrol.model.Rule;
-import com.oltruong.moneycontrol.repository.RuleRepository;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

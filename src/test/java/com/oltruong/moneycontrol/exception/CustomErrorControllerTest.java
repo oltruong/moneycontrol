@@ -1,4 +1,6 @@
-package com.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.exception;
+
+import com.oltruong.moneycontrol.exception.CustomErrorController;
 
 import org.junit.Before;
 import org.junit.Test;

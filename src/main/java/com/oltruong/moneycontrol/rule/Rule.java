@@ -1,4 +1,4 @@
-package com.oltruong.moneycontrol.model;
+package com.oltruong.moneycontrol.rule;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

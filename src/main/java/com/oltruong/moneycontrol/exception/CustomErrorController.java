@@ -1,4 +1,4 @@
-package com.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.exception;
 
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;

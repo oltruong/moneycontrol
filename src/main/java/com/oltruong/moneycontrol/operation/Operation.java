@@ -1,4 +1,4 @@
-package com.oltruong.moneycontrol.model;
+package com.oltruong.moneycontrol.operation;
 
 
 import org.springframework.data.annotation.Id;

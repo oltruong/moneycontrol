@@ -1,10 +1,6 @@
-package com.oltruong.moneycontrol.repository;
-
-import com.oltruong.moneycontrol.model.Operation;
-import com.oltruong.moneycontrol.model.Rule;
+package com.oltruong.moneycontrol.rule;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 

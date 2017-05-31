@@ -1,6 +1,7 @@
-package com.oltruong.moneycontrol.service;
+package com.oltruong.moneycontrol.parser;
 
-import com.oltruong.moneycontrol.model.Operation;
+import com.oltruong.moneycontrol.operation.Operation;
+
 import org.junit.Test;
 
 import java.nio.file.Files;
@@ -16,7 +17,7 @@ public class BankParserImplTest {
 
     @Test
     public void testParseString() throws Exception {
-        String fileContent = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("bou.csv").toURI())));
+        String fileContent = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("bank.csv").toURI())));
 
         BankParserImpl bankParserImpl = new BankParserImpl();
 

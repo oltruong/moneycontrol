@@ -1,7 +1,7 @@
-package com.oltruong.moneycontrol.service;
+package com.oltruong.moneycontrol.analyzer;
 
-import com.oltruong.moneycontrol.model.Operation;
-import com.oltruong.moneycontrol.model.Rule;
+import com.oltruong.moneycontrol.operation.Operation;
+import com.oltruong.moneycontrol.rule.Rule;
 
 import org.springframework.stereotype.Service;
 

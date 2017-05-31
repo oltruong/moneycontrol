@@ -1,4 +1,4 @@
-package com.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.fileupload;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
