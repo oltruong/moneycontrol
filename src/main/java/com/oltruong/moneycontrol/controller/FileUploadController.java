@@ -3,9 +3,10 @@ package com.oltruong.moneycontrol.controller;
 import com.oltruong.moneycontrol.exception.BadRequestException;
 import com.oltruong.moneycontrol.model.Operation;
 import com.oltruong.moneycontrol.model.Rule;
-import com.oltruong.moneycontrol.parser.BankParser;
 import com.oltruong.moneycontrol.repository.OperationRepository;
 import com.oltruong.moneycontrol.repository.RuleRepository;
+import com.oltruong.moneycontrol.service.BankParser;
+import com.oltruong.moneycontrol.service.BudgetAnalyzer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,14 +27,22 @@ import java.util.List;
 @RestController
 public class FileUploadController {
 
-    @Autowired
-    private OperationRepository operationRepository;
+    private final OperationRepository operationRepository;
+
+    private final RuleRepository ruleRepository;
+
+    private final BankParser bankParser;
+
+    private final BudgetAnalyzer budgetAnalyzer;
+
 
     @Autowired
-    private RuleRepository ruleRepository;
-
-    @Autowired
-    private BankParser bankParser;
+    public FileUploadController(OperationRepository operationRepository, RuleRepository ruleRepository, BankParser bankParser, BudgetAnalyzer budgetAnalyzer) {
+        this.operationRepository = operationRepository;
+        this.ruleRepository = ruleRepository;
+        this.bankParser = bankParser;
+        this.budgetAnalyzer = budgetAnalyzer;
+    }
 
     @RequestMapping(value = "/rest/bankfileupload", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
@@ -48,7 +57,7 @@ public class FileUploadController {
 
             for (Operation operation : operationList) {
                 if (operationMustBeAdded(operation, existingOperationList)) {
-                    operation = BudgetAnalyzer.analyzeOperation(operation, ruleList);
+                    operation = budgetAnalyzer.analyzeOperation(operation, ruleList);
                     operationRepository.save(operation);
                 }
             }

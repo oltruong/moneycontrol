@@ -5,7 +5,9 @@ import com.oltruong.moneycontrol.model.Operation;
 import com.oltruong.moneycontrol.model.Rule;
 import com.oltruong.moneycontrol.repository.OperationRepository;
 import com.oltruong.moneycontrol.repository.RuleRepository;
+import com.oltruong.moneycontrol.service.BudgetAnalyzer;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +30,14 @@ public class OperationController {
 
     private final RuleRepository ruleRepository;
 
-    public OperationController(OperationRepository operationRepository, RuleRepository ruleRepository) {
+    private final BudgetAnalyzer budgetAnalyzer;
+
+
+    @Autowired
+    public OperationController(OperationRepository operationRepository, RuleRepository ruleRepository, BudgetAnalyzer budgetAnalyzer) {
         this.operationRepository = operationRepository;
         this.ruleRepository = ruleRepository;
+        this.budgetAnalyzer = budgetAnalyzer;
     }
 
     @RequestMapping(value = "/rest/operations", method = RequestMethod.GET)
@@ -93,9 +100,9 @@ public class OperationController {
     void refresh() {
         Iterable<Rule> ruleList = ruleRepository.findAll();
 
-        operationRepository.findByCategoryNull().forEach(operation -> {
-            operationRepository.save(BudgetAnalyzer.analyzeOperation(operation, ruleList));
-        });
+        operationRepository.findByCategoryNull().forEach(operation ->
+                operationRepository.save(budgetAnalyzer.analyzeOperation(operation, ruleList))
+        );
 
     }
 

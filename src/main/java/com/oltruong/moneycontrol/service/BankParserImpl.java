@@ -1,9 +1,10 @@
-package com.oltruong.moneycontrol.parser;
+package com.oltruong.moneycontrol.service;
 
 import com.google.common.collect.Lists;
 import com.oltruong.moneycontrol.model.Operation;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,9 +14,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author oltruong
+ * @author Olivier Truong
  */
-@Component
+@Service
 public class BankParserImpl implements BankParser {
     static final int FIRST_ACTIVE_LINE = 1;
 

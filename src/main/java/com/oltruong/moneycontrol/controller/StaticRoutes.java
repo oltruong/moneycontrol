@@ -17,8 +17,6 @@ public class StaticRoutes {
             "/operations/{year:\\w+}"
     })
     public String index() {
-
-        System.out.println("hello index");
         return "forward:/index2.html";
     }
 }

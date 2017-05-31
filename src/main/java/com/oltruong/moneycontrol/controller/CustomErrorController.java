@@ -16,9 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 public class CustomErrorController implements ErrorController {
 
     @RequestMapping(value = "/error")
-    public void error(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        System.out.println("Error Mapping " + req);
-        resp.sendRedirect("/index.html");
+    public void error(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/index.html");
     }
 
     @Override
