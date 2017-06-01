@@ -115,10 +115,6 @@ public class Operation {
         this.comment = comment;
     }
 
-    @Override
-    public String toString() {
-        return "name" + name;
-    }
 
 
 }

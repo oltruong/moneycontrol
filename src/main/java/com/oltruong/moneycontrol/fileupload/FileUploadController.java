@@ -81,7 +81,6 @@ public class FileUploadController {
     }
 
     private boolean operationDoesNotExist(Operation operation, List<String> existingOperationList) {
-
         return !existingOperationList.contains(generateKey(operation));
 
     }
@@ -91,7 +90,6 @@ public class FileUploadController {
     }
 
     private String generateKey(Operation operation) {
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return dateFormat.format(operation.getCreationDate()) + operation.getName();
     }

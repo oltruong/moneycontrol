@@ -112,6 +112,30 @@
                     <aggregate>true</aggregate>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-assertions-generator-maven-plugin</artifactId>
+                <version>2.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate-assertions</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <classes>
+                        <param>com.oltruong.moneycontrol.operation.Operation</param>
+                        <param>com.oltruong.moneycontrol.rule.Rule</param>
+                    </classes>
+                    <hierarchical>true</hierarchical>
+                    <entryPointClassPackage>org.assertj</entryPointClassPackage>
+                    <generateAssertions>true</generateAssertions>
+                    <generateBddAssertions>false</generateBddAssertions>
+                    <generateSoftAssertions>true</generateSoftAssertions>
+                    <generateJUnitSoftAssertions>true</generateJUnitSoftAssertions>
+                </configuration>
+            </plugin>
         </plugins>
 
     </build>
