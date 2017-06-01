@@ -9,6 +9,4 @@ import java.util.Optional;
  */
 public interface RuleRepository extends MongoRepository<Rule, Long> {
     Optional<Rule> findById(String id);
-
-
 }
