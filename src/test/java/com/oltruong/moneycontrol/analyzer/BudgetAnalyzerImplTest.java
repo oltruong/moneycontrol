@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Date;
 
-import static com.oltruong.moneycontrol.operation.OperationAssert.assertThat;
+import static com.oltruong.moneycontrol.operation.OperationAsserter.assertThat;
 
 
 public class BudgetAnalyzerImplTest {

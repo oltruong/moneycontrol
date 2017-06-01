@@ -9,7 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static org.assertj.Assertions.assertThat;
+import static com.oltruong.moneycontrol.operation.OperationAsserter.assertThat;
 
 
 /**
