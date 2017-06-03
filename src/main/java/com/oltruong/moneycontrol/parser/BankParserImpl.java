@@ -25,7 +25,7 @@ public class BankParserImpl implements BankParser {
         String[] lines = fileContent.split("\n");
         List<Operation> operationList = Lists.newArrayListWithExpectedSize(lines.length - -FIRST_ACTIVE_LINE + 1);
         for (int i = FIRST_ACTIVE_LINE; i < lines.length; i++) {
-            String str[] = lines[i].split(";");
+            String[] str = lines[i].split(";");
             if (str.length > 4) {
                 Operation operation = parseOperation(str);
                 operationList.add(operation);
