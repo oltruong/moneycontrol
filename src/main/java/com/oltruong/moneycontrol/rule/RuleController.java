@@ -1,9 +1,7 @@
-package com.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.rule;
 
 import com.oltruong.moneycontrol.exception.ResourceNotFoundException;
-import com.oltruong.moneycontrol.model.Rule;
-import com.oltruong.moneycontrol.repository.RuleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +19,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 public class RuleController {
 
-    @Autowired
-    private RuleRepository ruleRepository;
+    private final RuleRepository ruleRepository;
+
+    public RuleController(RuleRepository ruleRepository) {
+        this.ruleRepository = ruleRepository;
+    }
 
     @RequestMapping(value = "/rest/rules", method = RequestMethod.GET)
     Iterable<Rule> findAll() {
@@ -33,9 +34,7 @@ public class RuleController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void editRule(@RequestBody Rule rule, @PathVariable String id) {
 
-        if (ruleRepository.findById(id) == null) {
-            throw new ResourceNotFoundException();
-        }
+        getRuleOrThrowException(id);
         rule.setId(id);
         ruleRepository.save(rule);
 
@@ -57,20 +56,17 @@ public class RuleController {
     @RequestMapping(value = "/rest/rules/{id}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     Rule get(@PathVariable String id) {
-        Rule rule = ruleRepository.findById(id);
-        if (rule == null) {
-            throw new ResourceNotFoundException();
-        }
-        return rule;
+        return getRuleOrThrowException(id);
+    }
+
+    private Rule getRuleOrThrowException(@PathVariable String id) {
+        return ruleRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     @RequestMapping(value = "/rest/rules/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void delete(@PathVariable String id) {
-        Rule rule = ruleRepository.findById(id);
-        if (rule == null) {
-            throw new ResourceNotFoundException();
-        }
+        Rule rule = getRuleOrThrowException(id);
         ruleRepository.delete(rule);
     }
 }

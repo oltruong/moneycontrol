@@ -1,4 +1,4 @@
-package com.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.staticroute;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +17,6 @@ public class StaticRoutes {
             "/operations/{year:\\w+}"
     })
     public String index() {
-
-        System.out.println("hello index");
         return "forward:/index2.html";
     }
 }

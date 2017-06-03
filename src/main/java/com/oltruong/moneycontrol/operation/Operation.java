@@ -1,4 +1,4 @@
-package com.oltruong.moneycontrol.model;
+package com.oltruong.moneycontrol.operation;
 
 
 import org.springframework.data.annotation.Id;
@@ -115,54 +115,6 @@ public class Operation {
         this.comment = comment;
     }
 
-    @Override
-    public String toString() {
-        return "name" + name;
-    }
-
-    //    public static List<Operation> all() {
-//        return find.orderBy("creationDate desc, name").findList();
-//    }
-//
-//
-//    public static List<Operation> unclassified() {
-//
-//        Query<Operation> query = Ebean.createQuery(Operation.class);
-//        query.where(
-//                Expr.or(Expr.isNull("category"),
-//                        Expr.eq("category", ""))
-//        );
-//
-//        return query.findList();
-//
-//    }
-//
-//    public static List<Operation> findByMonth(Integer month) {
-//        List<Operation> operationList = all();
-//
-//        List<Operation> operationListMonth = Lists.newArrayListWithCapacity(operationList.size());
-//
-//        for (Operation operation : operationList) {
-//            if (operation.creationDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue() == month.intValue()) {
-//                operationListMonth.add(operation);
-//            }
-//        }
-//
-//
-//        return operationListMonth;
-//    }
-//
-//    public static void save(Operation operation) {
-//        operation.save();
-//    }
-//
-//    public static void delete(Long id) {
-//        find.ref(id).delete();
-//    }
-//
-//    public static Operation find(Long id) {
-//        return find.byId(id);
-//    }
 
 
 }

@@ -1,10 +1,10 @@
-package com.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.operation;
 
 import com.oltruong.moneycontrol.exception.ResourceNotFoundException;
-import com.oltruong.moneycontrol.model.Operation;
-import com.oltruong.moneycontrol.model.Rule;
-import com.oltruong.moneycontrol.repository.OperationRepository;
-import com.oltruong.moneycontrol.repository.RuleRepository;
+import com.oltruong.moneycontrol.rule.Rule;
+import com.oltruong.moneycontrol.rule.RuleRepository;
+import com.oltruong.moneycontrol.analyzer.BudgetAnalyzer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,11 +24,19 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 public class OperationController {
 
-    @Autowired
-    private OperationRepository operationRepository;
+    private final OperationRepository operationRepository;
+
+    private final RuleRepository ruleRepository;
+
+    private final BudgetAnalyzer budgetAnalyzer;
+
 
     @Autowired
-    private RuleRepository ruleRepository;
+    public OperationController(OperationRepository operationRepository, RuleRepository ruleRepository, BudgetAnalyzer budgetAnalyzer) {
+        this.operationRepository = operationRepository;
+        this.ruleRepository = ruleRepository;
+        this.budgetAnalyzer = budgetAnalyzer;
+    }
 
     @RequestMapping(value = "/rest/operations", method = RequestMethod.GET)
     Iterable<Operation> findAll(@RequestParam(value = "year", required = false) Integer year, @RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "category", required = false) String category) {
@@ -48,13 +56,9 @@ public class OperationController {
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void editOperation(@RequestBody Operation operation, @PathVariable String id) {
-
-        if (operationRepository.findById(id) == null) {
-            throw new ResourceNotFoundException();
-        }
+        getOperationOrThrowException(id);
         operation.setId(id);
         operationRepository.save(operation);
-
     }
 
     @RequestMapping(value = "/rest/operations", method = RequestMethod.POST)
@@ -73,20 +77,19 @@ public class OperationController {
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     Operation get(@PathVariable String id) {
-        Operation operation = operationRepository.findById(id);
-        if (operation == null) {
-            throw new ResourceNotFoundException();
-        }
-        return operation;
+        return getOperationOrThrowException(id);
+    }
+
+    private Operation getOperationOrThrowException(String id) {
+        return operationRepository
+                .findById(id)
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void delete(@PathVariable String id) {
-        Operation operation = operationRepository.findById(id);
-        if (operation == null) {
-            throw new ResourceNotFoundException();
-        }
+        Operation operation = getOperationOrThrowException(id);
         operationRepository.delete(operation);
     }
 
@@ -95,9 +98,9 @@ public class OperationController {
     void refresh() {
         Iterable<Rule> ruleList = ruleRepository.findAll();
 
-        operationRepository.findByCategoryNull().forEach(operation -> {
-            operationRepository.save(BudgetAnalyzer.analyzeOperation(operation, ruleList));
-        });
+        operationRepository.findByCategoryNull().forEach(operation ->
+                operationRepository.save(budgetAnalyzer.analyzeOperation(operation, ruleList))
+        );
 
     }
 

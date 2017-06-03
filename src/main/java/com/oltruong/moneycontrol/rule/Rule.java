@@ -1,4 +1,4 @@
-package com.oltruong.moneycontrol.model;
+package com.oltruong.moneycontrol.rule;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,7 +13,6 @@ public class Rule {
     @Id
     private String id;
 
-    private int ruleOrder;
     private String nameCondition;
     private Float amountCondition;
     private String category;
@@ -28,14 +27,6 @@ public class Rule {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public int getRuleOrder() {
-        return ruleOrder;
-    }
-
-    public void setRuleOrder(int ruleOrder) {
-        this.ruleOrder = ruleOrder;
     }
 
     public String getNameCondition() {

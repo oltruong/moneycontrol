@@ -1,11 +1,12 @@
-package com.oltruong.moneycontrol.controller;
+package com.oltruong.moneycontrol.fileupload;
 
+import com.oltruong.moneycontrol.analyzer.BudgetAnalyzer;
 import com.oltruong.moneycontrol.exception.BadRequestException;
-import com.oltruong.moneycontrol.model.Operation;
-import com.oltruong.moneycontrol.model.Rule;
+import com.oltruong.moneycontrol.operation.Operation;
+import com.oltruong.moneycontrol.operation.OperationRepository;
 import com.oltruong.moneycontrol.parser.BankParser;
-import com.oltruong.moneycontrol.repository.OperationRepository;
-import com.oltruong.moneycontrol.repository.RuleRepository;
+import com.oltruong.moneycontrol.rule.Rule;
+import com.oltruong.moneycontrol.rule.RuleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Olivier Truong
@@ -26,14 +27,22 @@ import java.util.List;
 @RestController
 public class FileUploadController {
 
-    @Autowired
-    private OperationRepository operationRepository;
+    private final OperationRepository operationRepository;
+
+    private final RuleRepository ruleRepository;
+
+    private final BankParser bankParser;
+
+    private final BudgetAnalyzer budgetAnalyzer;
+
 
     @Autowired
-    private RuleRepository ruleRepository;
-
-    @Autowired
-    private BankParser bankParser;
+    public FileUploadController(OperationRepository operationRepository, RuleRepository ruleRepository, BankParser bankParser, BudgetAnalyzer budgetAnalyzer) {
+        this.operationRepository = operationRepository;
+        this.ruleRepository = ruleRepository;
+        this.bankParser = bankParser;
+        this.budgetAnalyzer = budgetAnalyzer;
+    }
 
     @RequestMapping(value = "/rest/bankfileupload", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
@@ -42,28 +51,24 @@ public class FileUploadController {
             throw new BadRequestException();
         } else {
             List<Operation> operationList = bankParser.parseString(fileContent);
-            List<String> existingOperationList = buildOperationList();
+            List<String> existingOperationKeyList = buildOperationKeyList();
 
             Iterable<Rule> ruleList = ruleRepository.findAll();
 
-            for (Operation operation : operationList) {
-                if (operationMustBeAdded(operation, existingOperationList)) {
-                    operation = BudgetAnalyzer.analyzeOperation(operation, ruleList);
-                    operationRepository.save(operation);
-                }
-            }
-
+            operationList.stream()
+                    .filter(operation -> operationMustBeAdded(operation, existingOperationKeyList))
+                    .forEach(operation -> addOperation(ruleList, operation));
         }
     }
 
+    private void addOperation(Iterable<Rule> ruleList, Operation operation) {
+        Operation analyzeOperation = budgetAnalyzer.analyzeOperation(operation, ruleList);
+        operationRepository.save(analyzeOperation);
+    }
 
-    private List<String> buildOperationList() {
 
-        Iterable<Operation> allOperations = operationRepository.findAll();
-        List<String> operationList = new ArrayList<>();
-        allOperations.forEach(operation -> operationList.add(generateKey(operation)));
-
-        return operationList;
+    private List<String> buildOperationKeyList() {
+        return operationRepository.findAll().stream().map(this::generateKey).collect(Collectors.toList());
 
     }
 
@@ -72,7 +77,6 @@ public class FileUploadController {
     }
 
     private boolean operationDoesNotExist(Operation operation, List<String> existingOperationList) {
-
         return !existingOperationList.contains(generateKey(operation));
 
     }
@@ -82,7 +86,6 @@ public class FileUploadController {
     }
 
     private String generateKey(Operation operation) {
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         return dateFormat.format(operation.getCreationDate()) + operation.getName();
     }
