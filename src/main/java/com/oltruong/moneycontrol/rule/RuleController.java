@@ -34,9 +34,7 @@ public class RuleController {
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void editRule(@RequestBody Rule rule, @PathVariable String id) {
 
-        if (ruleRepository.findById(id) == null) {
-            throw new ResourceNotFoundException();
-        }
+        getRuleOrThrowException(id);
         rule.setId(id);
         ruleRepository.save(rule);
 
