@@ -1,28 +1,33 @@
 language: java
 sudo: false
 
-jdk:
-- oraclejdk8
+#
+#
+#jdk:
+# - oraclejdk8
+#
+#node_js:
+# - "iojs"
 
-#matrix:
-#  include:
-#    - language: nodejs
-#      node_js:
-#        - "iojs"
-#      before_script:
-#        - cd client
-#        - npm install && yarn install
-#      script:
-#        - ng test --watch=false
-#
-#    - language: java
-#      jdk: oraclejdk8
-#      before_script:
-#        - cd server
-#        - gradle assemble
-#      script:
-#        - gradle check
-#
+matrix:
+  include:
+    - language: nodejs
+      node_js: "iojs"
+      before_script:
+        - cd client
+        - npm install -g @angular/cli
+        - npm install && yarn install
+      script:
+        - ng test --watch=false
+
+    - language: java
+      jdk: oraclejdk8
+      before_script:
+        - cd server
+        - gradle assemble
+      script:
+        - gradle check
+
 
 #
 #addons:

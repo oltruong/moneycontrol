@@ -2,7 +2,7 @@
 task assemble(type:Exec){
 
   executable "bash"
-  args "-c", "npm install -g angular-cli"
+  args "-c", "npm install -g @angular/cli"
 
   executable "bash"
   args "-c", "npm install && yarn install"
