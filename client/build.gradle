@@ -1,0 +1,12 @@
+task check(type:Exec) {
+
+ executable "bash"
+  args "-c", "ng test --watch=false"
+}
+
+task assemble(type:Exec){
+
+  executable "bash"
+  args "-c", "npm install  && yarn install"
+}
+

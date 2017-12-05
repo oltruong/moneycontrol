@@ -1,0 +1,24 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Date</th>
+    <th scope="col">Nom</th>
+    <th scope="col">Montant</th>
+    <th scope="col">Cat&eacute;gorie</th>
+    <th scope="col">Ss. Cat.</th>
+    <th scope="col">Destinataire</th>
+    <th scope="col">Commentaire</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let operation of operations">
+    <td>{{operation.creationDate | date:'dd/MM/yyyy'}}</td>
+    <td>{{operation.name}}</td>
+    <td>{{operation.amount}}</td>
+    <td>{{operation.category}}</td>
+    <td>{{operation.subcategory}}</td>
+    <td>{{operation.recipient}}</td>
+    <td>{{operation.comment}}</td>
+  </tr>
+  </tbody>
+</table>

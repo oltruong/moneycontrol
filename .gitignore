@@ -5,3 +5,6 @@ build/
 bower_components
 .log
 node_modules
+\.gradle/
+
+server/out/
