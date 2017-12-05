@@ -11,15 +11,17 @@ matrix:
         - "iojs"
       before_script:
         - cd client
-      script:
         - npm install && yarn install
+      script:
+        - ng test --watch=false
 
-#    - language: java
-#      jdk: oraclejdk8
-#      before_script:
-#        - cd server
-#      script:
-#        - gradle check
+    - language: java
+      jdk: oraclejdk8
+      before_script:
+        - cd server
+        - gradle assemble
+      script:
+        - gradle check
 #
 
 #
