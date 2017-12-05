@@ -1,14 +1,50 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="moneyControlApp">
 <head>
-  <meta charset="utf-8">
-  <title>Client</title>
-  <base href="/">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MoneyControl</title>
+    <link href='http://fonts.googleapis.com/css?family=Oxygen:400,700,300' rel='stylesheet'
+          type='text/css'>
+    <link rel="stylesheet" media="screen" href="css/main.css">
+    <link rel="stylesheet" media="screen"
+          href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <app-root></app-root>
-<script type="text/javascript" src="inline.bundle.js"></script><script type="text/javascript" src="polyfills.bundle.js"></script><script type="text/javascript" src="styles.bundle.js"></script><script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>
+<navbar></navbar>
+
+<div ng-view class="container-fluid"></div>
+
+<br/><br/>
+
+
+<div class="container text-center">&copy;&nbsp;MoneyControl-2017
+</div>
+
+<script src="bower_components/moment/moment.js"></script>
+<script src="bower_components/moment/locale/fr.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-moment/angular-moment.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="js/application.js"></script>
+<script src="js/filter.js"></script>
+<script src="js/home/HomeController.js"></script>
+<script src="js/operation/OperationController.js"></script>
+<script src="js/service.js"></script>
+<script src="js/common/CellEditDirective.js"></script>
+<script src="js/common/NumberEditDirective.js"></script>
+<script src="js/common/OnReadFileDirective.js"></script>
+<script src="js/operation/CellEditController.js"></script>
+<script src="js/navbar/NavBarController.js"></script>
+<script src="js/navbar/NavBarDirective.js"></script>
+<script src="js/operation/DateBarDirective.js"></script>
+<script src="js/operation/DateBarController.js"></script>
+<script src="js/fileupload/FileUploadController.js"></script>
+<script src="js/rule/RuleController.js"></script>
+<script src="js/rule/RuleDirective.js"></script>
+
+
+</body>
 </html>
