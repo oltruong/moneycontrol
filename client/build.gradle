@@ -1,16 +1,18 @@
-
-task assemble(type:Exec){
+task assemble(type: Exec) {
 
   executable "bash"
   args "-c", "npm install -g @angular/cli"
 
   executable "bash"
+  args "-c", "npm install -g karma"
+
+  executable "bash"
   args "-c", "npm install && yarn install"
 }
 
-task check(type:Exec) {
+task check(type: Exec) {
 
- executable "bash"
+  executable "bash"
   args "-c", "ng test --watch=false"
 }
 
