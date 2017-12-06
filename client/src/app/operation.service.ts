@@ -12,7 +12,6 @@ export class OperationService {
   list(): Observable<Array<OperationModel>> {
     const params = {month: '08', year: '2016'};
 //    params["robert"]="dd";
-    return this.http.get<Array<OperationModel>>('/rest/operations');
+    return this.http.get<Array<OperationModel>>('./rest/operations');
   }
-
 }

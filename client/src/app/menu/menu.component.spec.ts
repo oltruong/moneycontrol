@@ -32,25 +32,4 @@ describe('MenuComponent', () => {
     expect(menu.navbarCollapsed)
       .toBe(true, '`toggleNavbar()` should change `navbarCollapsed` from false to true`');
   });
-  //
-  // it('should toggle the class on click', () => {
-  //   const fixture = TestBed.createComponent(MenuComponent);
-  //   const element = fixture.nativeElement;
-  //
-  //   fixture.detectChanges();
-  //
-  //   const navbarCollapsed = element.querySelector('#navbar');
-  //   expect(navbarCollapsed).not.toBeNull('No element with the id `#navbar`');
-  //   expect(navbarCollapsed.classList).toContain('collapse', 'The element with the id `#navbar` should have the class `collapse`');
-  //
-  //   const button = element.querySelector('button');
-  //   expect(button).not.toBeNull('No `button` element to collapse the menu');
-  //   button.dispatchEvent(new Event('click'));
-  //
-  //   fixture.detectChanges();
-  //
-  //   const navbar = element.querySelector('#navbar');
-  //   expect(navbar.classList).not
-  //     .toContain('collapse', 'The element with the id `#navbar` should have not the class `collapse` after a click');
-  // });
 });
