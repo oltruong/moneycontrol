@@ -4,24 +4,26 @@ import {AppComponent} from './app.component';
 import {AppModule} from './app.module';
 import {OperationsComponent} from "./operations/operations.component";
 import {By} from "@angular/platform-browser";
+import {DebugElement} from "@angular/core";
 
 describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [AppModule]
-  }));
+  let debugElement: DebugElement;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [AppModule]
+    });
+    const fixture = TestBed.createComponent(AppComponent);
+    debugElement = fixture.debugElement;
+  });
 
   it('should have a title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const element = fixture.nativeElement;
-    expect(element.querySelector('h1').textContent).toContain("MoneyControl");
+    const title = debugElement.query(By.css('h1')).nativeElement;
+    expect(title.textContent).toContain("MoneyControl");
   });
 
   it('should use the operations component', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const element = fixture.debugElement;
-    expect(element.query(By.directive(OperationsComponent)))
+    expect(debugElement.query(By.directive(OperationsComponent)))
       .toBeDefined('You probably forgot to add OperationsComponent to the AppComponent template');
   });
 });
