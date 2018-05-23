@@ -5,7 +5,7 @@ module.exports = function (config) {
   config.set({
                basePath: '',
                browserNoActivityTimeout: 30000,
-               frameworks: ['jasmine', '@angular/cli'],
+               frameworks: ['jasmine', '@angular-devkit/build-angular'],
                plugins: [
                  require('karma-jasmine'),
                  require('karma-chrome-launcher'),
@@ -13,13 +13,13 @@ module.exports = function (config) {
                  require('karma-coverage-istanbul-reporter'),
                  require('karma-firefox-launcher'),
                  require('karma-json-reporter'),
-                 require('@angular/cli/plugins/karma')
+                 require('@angular-devkit/build-angular/plugins/karma')
                ],
                client: {
                  clearContext: false // leave Jasmine Spec Runner output visible in browser
                },
                coverageIstanbulReporter: {
-                 reports: ['html', 'json-summary'],
+                 dir: require('path').join(__dirname, 'coverage'), reports: ['html', 'json-summary'],
                  fixWebpackSourcePaths: true
                },
                jsonReporter: {

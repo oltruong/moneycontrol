@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import {of} from 'rxjs';
+import {RouterTestingModule} from '@angular/router/testing';
 
 import {AppModule} from '../app.module';
 import {OperationsComponent} from "./operations.component";
@@ -12,12 +12,12 @@ describe('OperationsComponent', () => {
   const service = jasmine.createSpyObj('OperationService', ['list']);
 
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [AppModule],
+    imports: [AppModule, RouterTestingModule],
     providers: [{provide: OperationService, useValue: service}]
   }));
 
   it('should display every operation name in a title', () => {
-    service.list.and.returnValue(Observable.of([
+    service.list.and.returnValue(of([
       {name: 'SuperMarket'},
       {name: 'Rent'},
       {name: 'Salary'},
