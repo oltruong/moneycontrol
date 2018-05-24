@@ -32,9 +32,9 @@ matrix:
 
       before_script:
         - cd client
-        - npm install -g @angular/cli@6.0.3
-        - npm install -g karma
-        - npm install && yarn install
+        - yarn global add @angular/cli@6.0.3
+        - yarn global add karma
+        - yarn install
       script:
         - ng test --watch=false --browsers=ChromeHeadlessNoSandbox
 
