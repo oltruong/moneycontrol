@@ -36,7 +36,7 @@ matrix:
         - npm install -g karma
         - npm install && yarn install
       script:
-        - ng test --watch=false --browsers PhantomJS
+        - ng test --watch=false
 
     - language: java
       jdk: oraclejdk8
