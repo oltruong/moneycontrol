@@ -25,10 +25,12 @@
         <a class="nav-link" href="" routerLink="/operations">Toutes Op&eacute;rations</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="" routerLink="/operations">Op&eacute;rations du mois</a>
+        <a class="nav-link" href="" routerLink="/operations" [queryParams]="{ year: 2018,month:5 }">
+          Op&eacute;rations du mois
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="" routerLink="/operations">Op&eacute;rations non classées</a>
+        <a class="nav-link" href="" routerLink="/operations" [queryParams]="{ category: 'unclassified' }">Op&eacute;rations non classées</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="" routerLink="/operations">Charger un fichier</a>

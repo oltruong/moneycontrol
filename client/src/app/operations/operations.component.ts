@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {OperationModel} from "../models/operation.model";
 import {OperationService} from "../operation.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-operations',
@@ -10,11 +11,23 @@ import {OperationService} from "../operation.service";
 export class OperationsComponent implements OnInit {
 
   operations: Array<OperationModel> = [];
+  private router: Router;
+  private year: Number;
+  private month: Number;
+  private category: String;
 
-  constructor(private operationService: OperationService) {}
+  constructor(private operationService: OperationService, private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
-    this.operationService.list().subscribe(operations => this.operations = operations);
+    this.route
+      .queryParams
+      .subscribe(params => {
+        this.year = +params['year'];
+        this.month = +params['month'];
+        this.category = params['category'];
+      });
 
+    this.operationService.list().subscribe(operations => this.operations = operations);
   }
 }
