@@ -6,23 +6,26 @@ import {MenuComponent} from './menu/menu.component';
 import {OperationsComponent} from './operations/operations.component';
 import {OperationService} from "./operation.service";
 import {HttpClientModule} from "@angular/common/http";
-import { HomeComponent } from './home/home.component';
+import {HomeComponent} from './home/home.component';
 import {RouterModule} from '@angular/router';
 import {ROUTES} from './app.routes';
+import {RulesComponent} from './rules/rules.component';
+import {RuleService} from "./rule.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     OperationsComponent,
-    HomeComponent
+    HomeComponent,
+    RulesComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [OperationService],
+  providers: [OperationService, RuleService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,0 +1,24 @@
+<h1>Règles</h1>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Nom</th>
+    <th scope="col">Montant</th>
+    <th scope="col">Cat&eacute;gorie</th>
+    <th scope="col">Ss. Cat.</th>
+    <th scope="col">Destinataire</th>
+    <th scope="col">Commentaire</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let rule of rules">
+    <td>{{rule.name}}</td>
+    <td>{{rule.amount}}</td>
+    <td>{{rule.category}}</td>
+    <td>{{rule.subcategory}}</td>
+    <td>{{rule.recipient}}</td>
+    <td>{{rule.comment}}</td>
+  </tr>
+  </tbody>
+</table>

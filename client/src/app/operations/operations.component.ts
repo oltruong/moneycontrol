@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {OperationModel} from "../models/operation.model";
 import {OperationService} from "../operation.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-operations',
@@ -11,7 +11,6 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class OperationsComponent implements OnInit {
 
   operations: Array<OperationModel> = [];
-  private router: Router;
   private year: Number;
   private month: Number;
   private category: String;
