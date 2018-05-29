@@ -10,6 +10,8 @@ export class RuleService {
   }
 
   list(): Observable<Array<RuleModel>> {
-    return this.http.get<Array<RuleModel>>('./rest/rules');
+    // return this.http.get<Array<RuleModel>>('./rest/rules');
+
+    return this.http.get<Array<RuleModel>>('http://localhost:8080/rest/rules');
   }
 }

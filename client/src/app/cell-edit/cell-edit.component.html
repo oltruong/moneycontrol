@@ -1,0 +1,4 @@
+<span [hidden]="editMode" (click)="edit()">{{value}}</span>
+<input *ngIf="editMode" (blur)="clear()" (change)="update()"
+       #valueChanged>
+

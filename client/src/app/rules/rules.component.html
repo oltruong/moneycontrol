@@ -13,12 +13,24 @@
   </thead>
   <tbody>
   <tr *ngFor="let rule of rules">
-    <td>{{rule.name}}</td>
-    <td>{{rule.amount}}</td>
-    <td>{{rule.category}}</td>
-    <td>{{rule.subcategory}}</td>
-    <td>{{rule.recipient}}</td>
-    <td>{{rule.comment}}</td>
+    <td>
+      <app-cell-edit [value]="rule.name"></app-cell-edit>
+    </td>
+    <td>
+      <app-cell-edit [value]="rule.amount"></app-cell-edit>
+    </td>
+    <td>
+      <app-cell-edit [value]="rule.category"></app-cell-edit>
+    </td>
+    <td>
+      <app-cell-edit [value]="rule.subcategory"></app-cell-edit>
+    </td>
+    <td>
+      <app-cell-edit [value]="rule.recipient"></app-cell-edit>
+    </td>
+    <td>
+      <app-cell-edit [value]="rule.comment"></app-cell-edit>
+    </td>
   </tr>
   </tbody>
 </table>

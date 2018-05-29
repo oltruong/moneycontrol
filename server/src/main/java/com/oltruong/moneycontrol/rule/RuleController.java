@@ -5,6 +5,7 @@ import com.oltruong.moneycontrol.exception.ResourceNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class RuleController {
         this.ruleRepository = ruleRepository;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/rest/rules", method = RequestMethod.GET)
     Iterable<Rule> findAll() {
         return ruleRepository.findAll();
