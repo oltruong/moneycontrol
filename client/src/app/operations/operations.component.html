@@ -1,4 +1,7 @@
-<h1>Opérations</h1>
+<h1>{{totalOperation()}} Opération<span *ngIf="totalOperation()>1">s</span></h1>
+
+
+<input class="form-control" [(ngModel)]="query">
 
 <table class="table table-striped">
   <thead>
@@ -13,7 +16,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let operation of operations">
+  <tr *ngFor="let operation of getOperations()">
     <td>
       <app-cell-edit [value]="operation.creationDate | date:'dd/MM/yyyy'"></app-cell-edit>
     </td>

@@ -26,8 +26,8 @@ export class CellEditComponent implements OnInit {
     this.editMode = false;
   }
 
-  update() {
-    console.log("UPDATE");
+  update(newValue: String) {
+    this.value = newValue;
   }
 
 }

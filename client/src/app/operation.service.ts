@@ -10,7 +10,8 @@ export class OperationService {
   }
 
   list(): Observable<Array<OperationModel>> {
-    const params = {month: '5', year: '2017'};
+    const params = {year: '2017'};
+    // const params = {month: '5', year: '2017'};
     const url = './rest/operations';
     // const url = 'http://localhost:8080/rest/operations';
     // return this.http.get<Array<OperationModel>>(url, {params});

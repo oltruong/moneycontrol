@@ -13,7 +13,7 @@ export class RuleService {
 
 
     const url = './rest/rules';
-    // const url = ''http://localhost:8080/rest/rules'';
+    // const url = 'http://localhost:8080/rest/rules';
     return this.http.get<Array<RuleModel>>(url);
   }
 }

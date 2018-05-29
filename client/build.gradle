@@ -1,13 +1,13 @@
 task assemble(type: Exec) {
 
   executable "bash"
-  args "-c", "npm install -g @angular/cli"
+  args "-c", "yarn install -g @angular/cli"
 
   executable "bash"
-  args "-c", "npm install -g karma"
+  args "-c", "yarn install -g karma"
 
   executable "bash"
-  args "-c", "npm install && yarn install"
+  args "-c", "yarn install && yarn install"
 }
 
 task check(type: Exec) {

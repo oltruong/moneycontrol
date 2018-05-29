@@ -1,6 +1,6 @@
 export interface RuleModel {
   id: number;
-  name: string;
+  nameCondition: string;
   amount: number;
   category: string;
   subcategory: string;

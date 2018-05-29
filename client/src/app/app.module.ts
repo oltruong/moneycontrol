@@ -11,7 +11,8 @@ import {RouterModule} from '@angular/router';
 import {ROUTES} from './app.routes';
 import {RulesComponent} from './rules/rules.component';
 import {RuleService} from "./rule.service";
-import { CellEditComponent } from './cell-edit/cell-edit.component';
+import {CellEditComponent} from './cell-edit/cell-edit.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { CellEditComponent } from './cell-edit/cell-edit.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     RouterModule.forRoot(ROUTES)
   ],
   providers: [OperationService, RuleService],

@@ -17,11 +17,11 @@ describe('RulesComponent', () => {
 
   it('should display every rule name in a title', () => {
     service.list.and.returnValue(of([
-      {name: 'SuperMarket'},
-      {name: 'Rent'},
-      {name: 'Salary'},
-      {name: 'Phone'},
-      {name: 'Restaurant'}
+      {nameCondition: 'SuperMarket'},
+      {nameCondition: 'Rent'},
+      {nameCondition: 'Salary'},
+      {nameCondition: 'Phone'},
+      {nameCondition: 'Restaurant'}
     ]));
 
     const fixture = TestBed.createComponent(RulesComponent);
@@ -31,11 +31,11 @@ describe('RulesComponent', () => {
 
     expect(fixture.componentInstance.rules).not.toBeNull('You need to have a field `rules` initialized with 5 rules');
     expect(fixture.componentInstance.rules.length).toBe(5, 'You need to have a field `rules` initialized with 5 rules');
-    expect(fixture.componentInstance.rules[0].name).toBe('SuperMarket');
-    expect(fixture.componentInstance.rules[1].name).toBe('Rent');
-    expect(fixture.componentInstance.rules[2].name).toBe('Salary');
-    expect(fixture.componentInstance.rules[3].name).toBe('Phone');
-    expect(fixture.componentInstance.rules[4].name).toBe('Restaurant');
+    expect(fixture.componentInstance.rules[0].nameCondition).toBe('SuperMarket');
+    expect(fixture.componentInstance.rules[1].nameCondition).toBe('Rent');
+    expect(fixture.componentInstance.rules[2].nameCondition).toBe('Salary');
+    expect(fixture.componentInstance.rules[3].nameCondition).toBe('Phone');
+    expect(fixture.componentInstance.rules[4].nameCondition).toBe('Restaurant');
 
   });
 });
