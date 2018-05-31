@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-cell-edit',
@@ -7,7 +7,8 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class CellEditComponent implements OnInit {
 
-  @Input() value: String;
+  @Input() editableValue: string;
+  @Output() valueClicked = new EventEmitter<string>();
 
   private editMode: Boolean;
 
@@ -24,10 +25,14 @@ export class CellEditComponent implements OnInit {
 
   clear() {
     this.editMode = false;
+    console.log("CLEEE " + this.editableValue);
+    this.valueClicked.emit(this.editableValue);
+
   }
 
-  update(newValue: String) {
-    this.value = newValue;
+  changed() {
+    console.log("EEEEMIT " + this.editableValue);
+    this.valueClicked.emit(this.editableValue);
   }
 
 }

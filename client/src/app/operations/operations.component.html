@@ -18,25 +18,26 @@
   <tbody>
   <tr *ngFor="let operation of getOperations()">
     <td>
-      <app-cell-edit [value]="operation.creationDate | date:'dd/MM/yyyy'"></app-cell-edit>
+      <app-cell-edit [editableValue]="operation.creationDate | date:'dd/MM/yyyy'"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [value]="operation.name"></app-cell-edit>
+      <app-cell-edit [editableValue]="operation.name"
+                     (valueClicked)="updateName($event,operation)"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [value]="operation.amount"></app-cell-edit>
+      <app-cell-edit [editableValue]="operation.amount"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [value]="operation.category"></app-cell-edit>
+      <app-cell-edit [editableValue]="operation.category"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [value]="operation.subcategory"></app-cell-edit>
+      <app-cell-edit [editableValue]="operation.subcategory"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [value]="operation.recipient"></app-cell-edit>
+      <app-cell-edit [editableValue]="operation.recipient"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [value]="operation.comment"></app-cell-edit>
+      <app-cell-edit [editableValue]="operation.comment"></app-cell-edit>
     </td>
   </tr>
   </tbody>

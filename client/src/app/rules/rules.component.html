@@ -14,22 +14,22 @@
   <tbody>
   <tr *ngFor="let rule of rules">
     <td>
-      <app-cell-edit [value]="rule.nameCondition"></app-cell-edit>
+      <app-cell-edit [editableValue]="rule.nameCondition"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [value]="rule.amount"></app-cell-edit>
+      <app-cell-edit [editableValue]="rule.amount"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [value]="rule.category"></app-cell-edit>
+      <app-cell-edit [editableValue]="rule.category"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [value]="rule.subcategory"></app-cell-edit>
+      <app-cell-edit [editableValue]="rule.subcategory"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [value]="rule.recipient"></app-cell-edit>
+      <app-cell-edit [editableValue]="rule.recipient"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [value]="rule.comment"></app-cell-edit>
+      <app-cell-edit [editableValue]="rule.comment"></app-cell-edit>
     </td>
   </tr>
   </tbody>

@@ -58,6 +58,11 @@ export class OperationsComponent implements OnInit {
     return operations;
   }
 
+  updateName(event: string, operation: OperationModel) {
+    operation.name = event;
+    console.log("UUUPDATE " + event + " " + operation.name);
+  }
+
   // private sortoperations(operations: OperationModel[]) {
   //   if (operations && this.orderProp) {
   //     return operations

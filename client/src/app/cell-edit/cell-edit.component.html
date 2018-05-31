@@ -1,5 +1,4 @@
-<span [hidden]="editMode" (click)="edit()">{{value}}</span>
-<form><input *ngIf="editMode" (blur)="clear()" (change)="update(valueInput.value)" value="{{value}}"
-             #valueInput>
-</form>
+<span [hidden]="editMode" (click)="edit()">{{editableValue}}</span>
+<input class="form-control" *ngIf="editMode" (blur)="clear()" (changed)="changed()"
+       [(ngModel)]="editableValue">
 
