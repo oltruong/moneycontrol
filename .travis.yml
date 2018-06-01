@@ -41,10 +41,9 @@ matrix:
     - language: java
       jdk: oraclejdk8
       before_script:
-        - cd server
-        - gradle assemble
+        - (cd server; gradle assemble)
       script:
-        - gradle check
+        - (cd server; gradle check)
 
 
 #

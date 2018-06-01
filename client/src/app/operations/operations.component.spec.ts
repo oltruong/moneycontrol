@@ -5,6 +5,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {AppModule} from '../app.module';
 import {OperationsComponent} from "./operations.component";
 import {OperationService} from "../operation.service";
+import {FormsModule} from "@angular/forms";
 
 
 describe('OperationsComponent', () => {
@@ -12,7 +13,7 @@ describe('OperationsComponent', () => {
   const service = jasmine.createSpyObj('OperationService', ['list']);
 
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [AppModule, RouterTestingModule],
+    imports: [AppModule, RouterTestingModule, FormsModule],
     providers: [{provide: OperationService, useValue: service}]
   }));
 

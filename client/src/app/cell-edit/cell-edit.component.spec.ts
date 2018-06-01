@@ -1,6 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CellEditComponent } from './cell-edit.component';
+import {CellEditComponent} from './cell-edit.component';
+import {FormsModule} from "@angular/forms";
 
 describe('CellEditComponent', () => {
   let component: CellEditComponent;
@@ -8,9 +9,10 @@ describe('CellEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CellEditComponent ]
+      imports: [FormsModule],
+      declarations: [CellEditComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
