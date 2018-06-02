@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {MenuComponent} from './menu/menu.component';
@@ -13,6 +13,7 @@ import {RulesComponent} from './rules/rules.component';
 import {RuleService} from "./rule.service";
 import {CellEditComponent} from './cell-edit/cell-edit.component';
 import {FormsModule} from "@angular/forms";
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {FormsModule} from "@angular/forms";
     OperationsComponent,
     HomeComponent,
     RulesComponent,
-    CellEditComponent
+    CellEditComponent,
+    FileUploadComponent
   ],
   imports: [
     BrowserModule,

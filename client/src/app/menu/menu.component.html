@@ -21,9 +21,6 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="" routerLink="/operations">Toutes Op&eacute;rations</a>
-      </li>
       <li class="nav-item">
         <a class="nav-link" href="" routerLink="/operations" [queryParams]="{ year: 2018,month:5 }">
           Op&eacute;rations du mois
@@ -31,11 +28,11 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="" routerLink="/operations"
-           [queryParams]="{ category: 'unclassified' }">Op&eacute;rations non classées
+           [queryParams]="{ category: 'empty' }">Op&eacute;rations non classées
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="" routerLink="">Charger un fichier</a>
+        <a class="nav-link" href="" routerLink="/fileupload">Charger un fichier</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="" routerLink="/rules">Règles</a>

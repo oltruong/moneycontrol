@@ -11,8 +11,8 @@ import {ActivatedRoute} from "@angular/router";
 export class OperationsComponent implements OnInit {
 
   operations: Array<OperationModel> = [];
-  private year: Number;
-  private month: Number;
+  private year: number;
+  private month: number;
   private category: string;
 
   private query: string;
@@ -24,22 +24,51 @@ export class OperationsComponent implements OnInit {
     this.route
       .queryParams
       .subscribe(params => {
+
+        const paramsSent = {};
+        console.log("UUUU " + params);
+        console.log("UUUU " + params['year']);
+        if (params['year'] != undefined) {
+          paramsSent['year'] = params['year']
+        }
+        if (params['month'] != undefined) {
+          paramsSent['month'] = params['month']
+        }
+
+        if (params['category'] != undefined) {
+          paramsSent['category'] = params['category']
+        }
+
         this.year = +params['year'];
         this.month = +params['month'];
         this.category = params['category'];
+        this.operationService.list(paramsSent).subscribe(operations => this.operations = operations);
+
       });
     this.query = "";
 
-    this.operationService.list().subscribe(operations => this.operations = operations);
   }
 
   getOperations(): Array<OperationModel> {
     return this.filterOperations(this.operations);
   }
 
-  totalOperation() {
+  totalOperation(): number {
     return this.getOperations().length;
   }
+
+  sumTotal(): number {
+    let total = 0;
+    this.operations.forEach(operation => total += operation.amount);
+    return total;
+  }
+
+  sumFiltered(): number {
+    let total = 0;
+    this.getOperations().forEach(operation => total += operation.amount);
+    return total;
+  }
+
 
   private filterOperations(operations: OperationModel[]) {
     if (operations && this.query && this.query.length > 2) {
@@ -59,8 +88,39 @@ export class OperationsComponent implements OnInit {
   }
 
   updateName(event: string, operation: OperationModel) {
-    operation.name = event;
-    console.log("UUUPDATE " + event + " " + operation.name);
+    if (operation.name != event) {
+      operation.name = event;
+      this.operationService.update(operation);
+    }
+  }
+
+  updateCategory(event: string, operation: OperationModel) {
+    if (operation.category != event) {
+      operation.category = event;
+      this.operationService.update(operation);
+    }
+  }
+
+  updateSubcategory(event: string, operation: OperationModel) {
+    if (operation.subcategory != event) {
+      operation.subcategory = event;
+      this.operationService.update(operation);
+    }
+  }
+
+  updateRecipient(event: string, operation: OperationModel) {
+    if (operation.recipient != event) {
+      operation.recipient = event;
+      this.operationService.update(operation);
+    }
+  }
+
+  updateComment(event: string, operation: OperationModel) {
+    if (operation.comment != event) {
+
+      operation.comment = event;
+      this.operationService.update(operation);
+    }
   }
 
   // private sortoperations(operations: OperationModel[]) {

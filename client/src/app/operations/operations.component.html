@@ -1,44 +1,62 @@
-<h1>{{totalOperation()}} Opération<span *ngIf="totalOperation()>1">s</span></h1>
+<div class="row">
+  <div class="col-12">
+    <h1>{{operations.length}} Opération<span *ngIf="operations.length>1">s</span> - Total :
+      {{sumTotal() | number:'.2'}} &euro;
+    </h1>
 
+  </div>
+  <div class="col-2">
+    <h2>Filtre</h2>
+    <input class="form-control" [(ngModel)]="query">
+    <h5>{{getOperations().length}} opération<span *ngIf="getOperations().length>1">s</span></h5>
+    <h5>{{sumFiltered() | number:'.2'}} &euro;</h5>
 
-<input class="form-control" [(ngModel)]="query">
+  </div>
+  <div class="col-10">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Montant</th>
+        <th scope="col">Cat&eacute;gorie</th>
+        <th scope="col">Ss. Cat.</th>
+        <th scope="col">Destinataire</th>
+        <th scope="col">Commentaire</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let operation of getOperations()">
+        <td>
+          <app-cell-edit
+            [editableValue]="operation.creationDate | date:'dd/MM/yyyy'"></app-cell-edit>
+        </td>
+        <td>
+          <app-cell-edit [editableValue]="operation.name"
+                         (valueClicked)="updateName($event,operation)"></app-cell-edit>
+        </td>
+        <td>
+          <app-cell-edit [editableValue]="operation.amount"></app-cell-edit>
+        </td>
+        <td>
+          <app-cell-edit [editableValue]="operation.category"
+                         (valueClicked)="updateCategory($event,operation)"></app-cell-edit>
+        </td>
+        <td>
+          <app-cell-edit [editableValue]="operation.subcategory"
+                         (valueClicked)="updateSubcategory($event,operation)"></app-cell-edit>
+        </td>
+        <td>
+          <app-cell-edit [editableValue]="operation.recipient"
+                         (valueClicked)="updateRecipient($event,operation)"></app-cell-edit>
+        </td>
+        <td>
+          <app-cell-edit [editableValue]="operation.comment"
+                         (valueClicked)="updateComment($event,operation)"></app-cell-edit>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-<table class="table table-striped">
-  <thead>
-  <tr>
-    <th scope="col">Date</th>
-    <th scope="col">Nom</th>
-    <th scope="col">Montant</th>
-    <th scope="col">Cat&eacute;gorie</th>
-    <th scope="col">Ss. Cat.</th>
-    <th scope="col">Destinataire</th>
-    <th scope="col">Commentaire</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let operation of getOperations()">
-    <td>
-      <app-cell-edit [editableValue]="operation.creationDate | date:'dd/MM/yyyy'"></app-cell-edit>
-    </td>
-    <td>
-      <app-cell-edit [editableValue]="operation.name"
-                     (valueClicked)="updateName($event,operation)"></app-cell-edit>
-    </td>
-    <td>
-      <app-cell-edit [editableValue]="operation.amount"></app-cell-edit>
-    </td>
-    <td>
-      <app-cell-edit [editableValue]="operation.category"></app-cell-edit>
-    </td>
-    <td>
-      <app-cell-edit [editableValue]="operation.subcategory"></app-cell-edit>
-    </td>
-    <td>
-      <app-cell-edit [editableValue]="operation.recipient"></app-cell-edit>
-    </td>
-    <td>
-      <app-cell-edit [editableValue]="operation.comment"></app-cell-edit>
-    </td>
-  </tr>
-  </tbody>
-</table>

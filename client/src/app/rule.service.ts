@@ -5,15 +5,17 @@ import {RuleModel} from "./models/rule.model";
 
 @Injectable()
 export class RuleService {
+  private url: string;
 
   constructor(private http: HttpClient) {
+    this.url = 'http://localhost:8080/rest/rules';
   }
 
   list(): Observable<Array<RuleModel>> {
+    return this.http.get<Array<RuleModel>>(this.url);
+  }
 
-
-    const url = './rest/rules';
-    // const url = 'http://localhost:8080/rest/rules';
-    return this.http.get<Array<RuleModel>>(url);
+  update(rule: RuleModel) {
+    this.http.put(this.url + "/" + rule.id, rule);
   }
 }

@@ -25,7 +25,7 @@ describe('RuleService', () => {
     let actualRules = [];
     ruleService.list().subscribe((operations: Array<RuleModel>) => actualRules = operations);
 
-    http.expectOne('./rest/rules')
+    http.expectOne('http://localhost:8080/rest/rules')
       .flush(hardcodedRules);
 
     expect(actualRules).toEqual(hardcodedRules, 'The `list` method should return an array of RuleModel wrapped in an Observable');

@@ -55,6 +55,7 @@ public class OperationController {
 
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void editOperation(@RequestBody Operation operation, @PathVariable String id) {

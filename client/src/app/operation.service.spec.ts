@@ -24,9 +24,9 @@ describe('OperationService', () => {
     const hardcodedOperations = [{name: 'Paris'}, {name: 'Tokyo'}, {name: 'Lyon'}];
 
     let actualOperations = [];
-    operationService.list().subscribe((operations: Array<OperationModel>) => actualOperations = operations);
+    operationService.list(null).subscribe((operations: Array<OperationModel>) => actualOperations = operations);
 
-    http.expectOne('./rest/operations')
+    http.expectOne('http://localhost:8080/rest/operations', null)
       .flush(hardcodedOperations);
 
     expect(actualOperations).toEqual(hardcodedOperations, 'The `list` method should return an array of OperationModel wrapped in an Observable');

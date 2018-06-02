@@ -10,12 +10,16 @@ import com.oltruong.moneycontrol.rule.RuleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -44,10 +48,13 @@ public class FileUploadController {
         this.budgetAnalyzer = budgetAnalyzer;
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/rest/bankfileupload", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void upload(@RequestBody String fileContent) {
-        if (fileContent == null) {
+    public void upload(@RequestParam("operations") MultipartFile multipartFile) throws IOException {
+
+        String fileContent = new String(multipartFile.getBytes(), "ISO-8859-15");
+        if (fileContent.isEmpty()) {
             throw new BadRequestException();
         } else {
             List<Operation> operationList = bankParser.parseString(fileContent);
@@ -56,8 +63,8 @@ public class FileUploadController {
             Iterable<Rule> ruleList = ruleRepository.findAll();
 
             operationList.stream()
-                    .filter(operation -> operationMustBeAdded(operation, existingOperationKeyList))
-                    .forEach(operation -> addOperation(ruleList, operation));
+                         .filter(operation -> operationMustBeAdded(operation, existingOperationKeyList))
+                         .forEach(operation -> addOperation(ruleList, operation));
         }
     }
 
