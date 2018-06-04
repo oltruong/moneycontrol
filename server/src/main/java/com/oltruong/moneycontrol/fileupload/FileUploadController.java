@@ -11,7 +11,6 @@ import com.oltruong.moneycontrol.rule.RuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,20 +51,27 @@ public class FileUploadController {
     @RequestMapping(value = "/rest/bankfileupload", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void upload(@RequestParam("operations") MultipartFile multipartFile) throws IOException {
+        String fileContent = checkInput(multipartFile);
 
+        List<Operation> operationList = bankParser.parseString(fileContent);
+        List<String> existingOperationKeyList = buildOperationKeyList();
+
+        Iterable<Rule> ruleList = ruleRepository.findAll();
+
+        operationList.stream()
+                     .filter(operation -> operationMustBeAdded(operation, existingOperationKeyList))
+                     .forEach(operation -> addOperation(ruleList, operation));
+    }
+
+    private String checkInput(MultipartFile multipartFile) throws IOException {
+        if (multipartFile == null) {
+            throw new BadRequestException();
+        }
         String fileContent = new String(multipartFile.getBytes(), "ISO-8859-15");
         if (fileContent.isEmpty()) {
             throw new BadRequestException();
-        } else {
-            List<Operation> operationList = bankParser.parseString(fileContent);
-            List<String> existingOperationKeyList = buildOperationKeyList();
-
-            Iterable<Rule> ruleList = ruleRepository.findAll();
-
-            operationList.stream()
-                         .filter(operation -> operationMustBeAdded(operation, existingOperationKeyList))
-                         .forEach(operation -> addOperation(ruleList, operation));
         }
+        return fileContent;
     }
 
     private void addOperation(Iterable<Rule> ruleList, Operation operation) {
