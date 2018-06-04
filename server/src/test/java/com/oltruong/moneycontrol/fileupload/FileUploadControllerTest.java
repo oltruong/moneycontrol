@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.mock.web.MockMultipartFile;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -80,7 +81,8 @@ public class FileUploadControllerTest {
         when(mockBudgetAnalyzer.analyzeOperation(operation,ruleList)).thenReturn(transformedOperation);
 
 
-        fileUploadController.upload("fileContent");
+        MockMultipartFile mockMultipartFile =  new MockMultipartFile("fileContent","fileContent".getBytes());
+        fileUploadController.upload(mockMultipartFile);
 
         verify(mockOperationRepository).save(eq(transformedOperation));
 
