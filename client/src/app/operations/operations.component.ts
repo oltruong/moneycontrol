@@ -72,7 +72,6 @@ export class OperationsComponent implements OnInit {
 
   private filterOperations(operations: OperationModel[]) {
     if (operations && this.query && this.query.length > 2) {
-
       const query = this.query.toLowerCase();
       return operations.filter(operation => {
         let name = operation.name.toLowerCase();

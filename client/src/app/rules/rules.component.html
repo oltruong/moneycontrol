@@ -1,4 +1,6 @@
 <h1>Règles</h1>
+<h2>Filtre</h2>
+<input class="form-control" [(ngModel)]="query">
 
 <table class="table table-striped">
   <thead>
@@ -8,28 +10,38 @@
     <th scope="col">Cat&eacute;gorie</th>
     <th scope="col">Ss. Cat.</th>
     <th scope="col">Destinataire</th>
-    <th scope="col">Commentaire</th>
+    <th scope="col" colspan="2">Commentaire</th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let rule of rules">
+  <tr *ngFor="let rule of getRules()">
     <td>
-      <app-cell-edit [editableValue]="rule.nameCondition"></app-cell-edit>
+      <app-cell-edit [editableValue]="rule.nameCondition"
+                     (valueClicked)="updateNameCondition($event,rule)"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [editableValue]="rule.amount"></app-cell-edit>
+      <app-cell-edit [editableValue]="rule.amount"
+                     (valueClicked)="updateAmount($event,rule)"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [editableValue]="rule.category"></app-cell-edit>
+      <app-cell-edit [editableValue]="rule.category"
+                     (valueClicked)="updateCategory($event,rule)"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [editableValue]="rule.subcategory"></app-cell-edit>
+      <app-cell-edit [editableValue]="rule.subcategory"
+                     (valueClicked)="updateSubcategory($event,rule)"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [editableValue]="rule.recipient"></app-cell-edit>
+      <app-cell-edit [editableValue]="rule.recipient"
+                     (valueClicked)="updateRecipient($event,rule)"></app-cell-edit>
     </td>
     <td>
-      <app-cell-edit [editableValue]="rule.comment"></app-cell-edit>
+      <app-cell-edit [editableValue]="rule.comment"
+                     (valueClicked)="updateComment($event,rule)"></app-cell-edit>
+    </td>
+    <td>
+      <button type="button" class="btn btn-info" (click)="duplicate(rule)">+</button>
+      <button type="button" class="btn btn-danger" (click)="delete(rule)">Del</button>
     </td>
   </tr>
   </tbody>
