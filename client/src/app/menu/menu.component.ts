@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-menu',
@@ -9,9 +10,16 @@ export class MenuComponent implements OnInit {
 
   navbarCollapsed = true;
 
-  constructor() {}
+  year: string;
+  month: number;
+
+  constructor() {
+
+  }
 
   ngOnInit() {
+    this.year = moment().format('YYYY');
+    this.month = +moment().format('MM');
   }
 
   toggleNavbar() {

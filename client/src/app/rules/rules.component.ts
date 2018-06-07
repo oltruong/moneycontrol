@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {RuleModel} from "../models/rule.model";
 import {RuleService} from "../rule.service";
+import {OperationService} from "../operation.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-rules',
@@ -14,7 +16,7 @@ export class RulesComponent implements OnInit {
   private orderProp: string = 'nameCondition';
   private query: string;
 
-  constructor(private ruleService: RuleService) {
+  constructor(private ruleService: RuleService, private operationService:OperationService, private router:Router) {
   }
 
   ngOnInit() {
@@ -110,6 +112,12 @@ export class RulesComponent implements OnInit {
   delete(rule: RuleModel) {
     this.ruleService.delete(rule);
     this.rules = this.rules.filter(obj => obj !== rule);
+  }
+
+  refresh(){
+    this.operationService.refresh();
+    this.router.navigate(['/operations'], {queryParams: {category: 'empty'}});
+
   }
 
 }

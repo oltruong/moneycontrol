@@ -8,6 +8,7 @@ export class RuleService {
   private url: string;
 
   constructor(private http: HttpClient) {
+    // this.url = './rest/rules';
     this.url = 'http://localhost:8080/rest/rules';
   }
 
@@ -18,8 +19,6 @@ export class RuleService {
   update(rule: RuleModel) {
     this.http.put(this.url + "/" + rule.id, rule).subscribe((response: HttpResponse<Object>) => {
       console.log("retour " + response);
-      console.log(response.status); // logs 200
-      console.log(response.headers.keys()); // logs []
     });
   }
 

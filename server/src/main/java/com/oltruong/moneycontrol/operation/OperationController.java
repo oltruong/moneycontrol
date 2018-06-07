@@ -96,6 +96,7 @@ public class OperationController {
         operationRepository.delete(operation);
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/rest/operations/refresh", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void refresh() {
