@@ -3,11 +3,12 @@ package com.oltruong.moneycontrol.rule;
 import com.oltruong.moneycontrol.HttpUtils;
 import com.oltruong.moneycontrol.exception.ResourceNotFoundException;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
@@ -19,22 +20,21 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class RuleControllerTest {
 
     @Mock
     private RuleRepository mockRuleRepository;
 
-
     private RuleController ruleController;
 
-    @Before
-    public void setup() throws Exception {
+    @BeforeEach
+    public void setup() {
         ruleController = new RuleController(mockRuleRepository);
     }
 
     @Test
-    public void findAll() throws Exception {
+    public void findAll() {
 
         List<Rule> ruleList = Collections.singletonList(new Rule());
         when(mockRuleRepository.findAll()).thenReturn(ruleList);
@@ -46,28 +46,29 @@ public class RuleControllerTest {
     }
 
     @Test
-    public void editRule() throws Exception {
+    public void editRule() {
         Rule rule = new Rule();
         when(mockRuleRepository.findById("id")).thenReturn(Optional.of(new Rule()));
 
-        ruleController.editRule(rule,"id");
+        ruleController.editRule(rule, "id");
 
         verify(mockRuleRepository).findById(eq("id"));
         verify(mockRuleRepository).save(eq(rule));
     }
 
-    @Test(expected = ResourceNotFoundException.class)
-    public void editRule_notfound() throws Exception {
+    @Test
+    public void editRule_notfound() {
         when(mockRuleRepository.findById("id")).thenReturn(Optional.empty());
-        ruleController.editRule(null, "id");
+        Assertions.assertThrows(ResourceNotFoundException.class, () ->
+                ruleController.editRule(null, "id"));
     }
 
     @Test
-    public void createRule() throws Exception {
+    public void createRule() {
         Rule rule = new Rule();
         HttpUtils.initRequestAttributes();
 
-        Rule ruleSaved= new Rule();
+        Rule ruleSaved = new Rule();
         ruleSaved.setNameCondition("NAME");
         when(mockRuleRepository.save(rule)).thenReturn(ruleSaved);
         ResponseEntity<Rule> responseEntity = ruleController.createRule(rule);
@@ -77,7 +78,7 @@ public class RuleControllerTest {
     }
 
     @Test
-    public void get() throws Exception {
+    public void get() {
         Rule rule = new Rule();
         when(mockRuleRepository.findById("id")).thenReturn(Optional.of(rule));
         Rule ruleFound = ruleController.get("id");
@@ -86,14 +87,16 @@ public class RuleControllerTest {
         verify(mockRuleRepository).findById(eq("id"));
     }
 
-    @Test(expected = ResourceNotFoundException.class)
-    public void get_notfound() throws Exception {
+    @Test
+    public void get_notfound() {
         when(mockRuleRepository.findById("id")).thenReturn(Optional.empty());
-        ruleController.get("id");
+        Assertions.assertThrows(ResourceNotFoundException.class, () ->
+                ruleController.get("id"));
     }
 
+
     @Test
-    public void delete() throws Exception {
+    public void delete() {
 
         Rule rule = new Rule();
         when(mockRuleRepository.findById("id")).thenReturn(Optional.of(rule));
@@ -102,10 +105,11 @@ public class RuleControllerTest {
         verify(mockRuleRepository).delete(eq(rule));
     }
 
-    @Test(expected = ResourceNotFoundException.class)
-    public void delete_notfound() throws Exception {
+    @Test
+    public void delete_notfound() {
         when(mockRuleRepository.findById("id")).thenReturn(Optional.empty());
-        ruleController.delete("id");
+        Assertions.assertThrows(ResourceNotFoundException.class, () ->
+                ruleController.get("id"));
     }
 
 }

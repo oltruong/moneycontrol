@@ -2,14 +2,17 @@ package com.oltruong.moneycontrol.fileupload;
 
 import com.oltruong.moneycontrol.analyzer.BudgetAnalyzer;
 import com.oltruong.moneycontrol.exception.BadRequestException;
+import com.oltruong.moneycontrol.exception.ResourceNotFoundException;
 import com.oltruong.moneycontrol.operation.Operation;
 import com.oltruong.moneycontrol.operation.OperationRepository;
 import com.oltruong.moneycontrol.parser.BankParser;
 import com.oltruong.moneycontrol.rule.Rule;
 import com.oltruong.moneycontrol.rule.RuleRepository;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -23,9 +26,9 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class FileUploadControllerTest {
 
 
@@ -43,7 +46,7 @@ public class FileUploadControllerTest {
 
     private FileUploadController fileUploadController;
 
-    @Before
+    @BeforeEach
     public void setup() {
         fileUploadController = new FileUploadController(mockOperationRepository, mockRuleRepository, mockBankParser, mockBudgetAnalyzer);
     }
@@ -88,9 +91,10 @@ public class FileUploadControllerTest {
 
     }
 
-    @Test(expected = BadRequestException.class)
-    public void uploadBadRequest() throws Exception {
-        fileUploadController.upload(null);
+    @Test
+    public void uploadBadRequest() {
+        Assertions.assertThrows(BadRequestException.class, () ->
+        fileUploadController.upload(null));
     }
 
 }

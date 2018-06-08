@@ -3,7 +3,7 @@ package com.oltruong.moneycontrol.parser;
 import com.oltruong.moneycontrol.operation.Operation;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;

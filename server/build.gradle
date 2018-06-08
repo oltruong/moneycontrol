@@ -4,7 +4,7 @@ apply plugin: 'maven'
 group = 'com.oltruong'
 version = '0.0.2-SNAPSHOT'
 
-description = """"""
+description = "Simple app to see where money goes"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -12,26 +12,33 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-
-
 repositories {
-
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
     maven { url "http://repo.maven.apache.org/maven2" }
 }
+
 dependencies {
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.0.M1') {
+    def springVersion = '2.0.2.RELEASE'
+    def embedMongoVersion = '2.0.0'
+    def guavaVersion = '23.6.1-jre'
+    def junitVersion = '5.2.0'
+    def assertJVersion = '3.10.0'
+    def mockitoVersion = '2.18.3'
+
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springVersion) {
         exclude(module: 'spring-boot-starter-tomcat')
     }
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty', version: '2.0.0.M1'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.0.0.M1'
-    compile group: 'com.google.guava', name: 'guava', version: '18.0'
-    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.0.0.M1') {
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty', version: springVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: springVersion
+    compile group: 'com.google.guava', name: 'guava', version: guavaVersion
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springVersion) {
         exclude(module: 'commons-logging')
     }
-    testCompile group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: '2.0.0'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.2.0'
-    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.8.9'
+    testCompile group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: embedMongoVersion
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+    testCompile group: 'org.assertj', name: 'assertj-core', version: assertJVersion
+    testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: mockitoVersion
+    testCompile group: 'org.mockito', name: 'mockito-core', version: mockitoVersion
 }

@@ -6,30 +6,27 @@ import com.oltruong.moneycontrol.exception.ResourceNotFoundException;
 import com.oltruong.moneycontrol.rule.Rule;
 import com.oltruong.moneycontrol.rule.RuleRepository;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class OperationControllerTest {
 
     @Mock
@@ -44,14 +41,14 @@ public class OperationControllerTest {
     private OperationController operationController;
 
 
-    @Before
-    public void setup() throws Exception {
+    @BeforeEach
+    public void setup(){
         operationController = new OperationController(mockOperationRepository, mockRuleRepository, mockBudgetAnalyzer);
     }
 
 
     @Test
-    public void findAll() throws Exception {
+    public void findAll(){
         List<Operation> operationList = Collections.singletonList(new Operation());
         when(mockOperationRepository.findAll()).thenReturn(operationList);
 
@@ -62,7 +59,7 @@ public class OperationControllerTest {
     }
 
     @Test
-    public void findAll_year() throws Exception {
+    public void findAll_year(){
         List<Operation> operationList = Collections.singletonList(new Operation());
         when(mockOperationRepository.findByYear(2016)).thenReturn(operationList);
 
@@ -73,7 +70,7 @@ public class OperationControllerTest {
     }
 
     @Test
-    public void findAll_monthyear() throws Exception {
+    public void findAll_monthyear(){
         List<Operation> operationList = Collections.singletonList(new Operation());
         when(mockOperationRepository.findByYearAndMonth(2015, 9)).thenReturn(operationList);
 
@@ -84,7 +81,7 @@ public class OperationControllerTest {
     }
 
     @Test
-    public void findAll_empty() throws Exception {
+    public void findAll_empty(){
         List<Operation> operationList = Collections.singletonList(new Operation());
         when(mockOperationRepository.findByCategoryNull()).thenReturn(operationList);
 
@@ -95,7 +92,7 @@ public class OperationControllerTest {
     }
 
     @Test
-    public void editOperation() throws Exception {
+    public void editOperation(){
 
         when(mockOperationRepository.findById(anyString())).thenReturn(Optional.of(new Operation()));
 
@@ -107,14 +104,15 @@ public class OperationControllerTest {
         verify(mockOperationRepository).save(eq(operation));
     }
 
-    @Test(expected = ResourceNotFoundException.class)
-    public void editOperation_notfound() throws Exception {
+    @Test
+    public void editOperation_notfound() {
         when(mockOperationRepository.findById(anyString())).thenReturn(Optional.empty());
-        operationController.editOperation(new Operation(), "id");
+        Assertions.assertThrows(ResourceNotFoundException.class, () ->
+                operationController.editOperation(new Operation(), "id"));
     }
 
     @Test
-    public void createOperation() throws Exception {
+    public void createOperation(){
         Operation operation = getOperation();
 
         Operation operationCreated = getOperation();
@@ -132,9 +130,8 @@ public class OperationControllerTest {
     }
 
 
-
     @Test
-    public void get() throws Exception {
+    public void get() {
         Operation operation = getOperation();
         when(mockOperationRepository.findById("id")).thenReturn(Optional.of(operation));
 
@@ -145,14 +142,15 @@ public class OperationControllerTest {
     }
 
 
-    @Test(expected = ResourceNotFoundException.class)
-    public void get_notfound() throws Exception {
+    @Test
+    public void get_notfound() {
         when(mockOperationRepository.findById("id")).thenReturn(Optional.empty());
-        operationController.get("id");
+        Assertions.assertThrows(ResourceNotFoundException.class, () ->
+                operationController.get("id"));
     }
 
     @Test
-    public void delete() throws Exception {
+    public void delete() {
         Operation operation = getOperation();
 
         when(mockOperationRepository.findById(anyString())).thenReturn(Optional.of(operation));
@@ -161,14 +159,15 @@ public class OperationControllerTest {
         verify(mockOperationRepository).delete(eq(operation));
     }
 
-    @Test(expected = ResourceNotFoundException.class)
-    public void delete_notfound() throws Exception {
+    @Test
+    public void delete_notfound() {
         when(mockOperationRepository.findById(anyString())).thenReturn(Optional.empty());
-        operationController.delete("id");
+        Assertions.assertThrows(ResourceNotFoundException.class, () ->
+                operationController.delete("id"));
     }
 
     @Test
-    public void refresh() throws Exception {
+    public void refresh() {
 
 
         List<Rule> ruleList = Collections.singletonList(new Rule());

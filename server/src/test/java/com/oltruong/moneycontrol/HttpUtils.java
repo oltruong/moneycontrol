@@ -12,7 +12,7 @@ import static org.mockito.Mockito.when;
 
 public final class HttpUtils {
 
-    private HttpUtils(){
+    private HttpUtils() {
         //Utility class
     }
 
@@ -23,7 +23,7 @@ public final class HttpUtils {
         when(mockHttpServletRequest.getQueryString()).thenReturn("");
 
 
-        Enumeration<String> mockEnum = mock(Enumeration.class);
+        @SuppressWarnings("unchecked") Enumeration<String> mockEnum = mock(Enumeration.class);
         when(mockHttpServletRequest.getHeaderNames()).thenReturn(mockEnum);
         ServletRequestAttributes servletRequestAttributes = new ServletRequestAttributes(mockHttpServletRequest);
         RequestContextHolder.setRequestAttributes(servletRequestAttributes);

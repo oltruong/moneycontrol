@@ -3,8 +3,8 @@ package com.oltruong.moneycontrol.analyzer;
 import com.oltruong.moneycontrol.operation.Operation;
 import com.oltruong.moneycontrol.rule.Rule;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -16,7 +16,7 @@ public class BudgetAnalyzerImplTest {
 
     private BudgetAnalyzer budgetAnalyzer;
 
-    @Before
+    @BeforeEach
     public void setup() {
         budgetAnalyzer = new BudgetAnalyzerImpl();
     }
