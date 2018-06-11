@@ -13,15 +13,20 @@ tasks.withType(JavaCompile) {
 }
 
 repositories {
-    maven { url "https://repo.spring.io/snapshot" }
-    maven { url "https://repo.spring.io/milestone" }
-    maven { url "http://repo.maven.apache.org/maven2" }
+    jcenter()
+}
+
+jar {
+    manifest {
+        attributes('Implementation-Title': project.name,
+                'Implementation-Version': project.version)
+    }
 }
 
 dependencies {
     def springVersion = '2.0.2.RELEASE'
-    def embedMongoVersion = '2.0.0'
     def guavaVersion = '23.6.1-jre'
+    def embedMongoTestVersion = '2.0.0'
     def junitVersion = '5.2.0'
     def assertJVersion = '3.10.0'
     def mockitoVersion = '2.18.3'
@@ -35,7 +40,7 @@ dependencies {
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springVersion) {
         exclude(module: 'commons-logging')
     }
-    testCompile group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: embedMongoVersion
+    testCompile group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: embedMongoTestVersion
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
     testCompile group: 'org.assertj', name: 'assertj-core', version: assertJVersion
