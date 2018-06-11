@@ -13,7 +13,7 @@ task assemble(type: Exec) {
 task check(type: Exec) {
 
   executable "bash"
-  args "-c", "ng test --watch=false"
+  args "-c", "ng test --watch=false --browsers=ChromeHeadlessNoSandbox"
 }
 
 
