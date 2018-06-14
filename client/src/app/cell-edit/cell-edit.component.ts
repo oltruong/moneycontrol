@@ -10,7 +10,7 @@ export class CellEditComponent implements OnInit {
   @Input() editableValue: string;
   @Output() valueClicked = new EventEmitter<string>();
 
-  private editMode: Boolean;
+  editMode: Boolean;
 
   constructor() {
   }

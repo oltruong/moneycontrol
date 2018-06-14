@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-file-upload',
@@ -12,7 +13,7 @@ export class FileUploadComponent implements OnInit {
   private url: string;
 
   constructor(private http: HttpClient, private router: Router) {
-    this.url = 'http://localhost:8080/rest/bankfileupload';
+    this.url = environment.backendUrl + '/bankfileupload';
   }
 
 

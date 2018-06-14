@@ -12,11 +12,11 @@ export class OperationsComponent implements OnInit {
 
   operations: Array<OperationModel> = [];
   categories: Map<string, number> = new Map();
-  private year: number;
+  year: number;
   private month: number;
   private category: string;
 
-  private query: string;
+  query: string;
 
   constructor(private operationService: OperationService, private route: ActivatedRoute) {
   }

@@ -14,7 +14,7 @@ export class RulesComponent implements OnInit {
   rules: Array<RuleModel> = [];
 
   private orderProp: string = 'nameCondition';
-  private query: string;
+   query: string;
 
   constructor(private ruleService: RuleService, private operationService:OperationService, private router:Router) {
   }

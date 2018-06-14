@@ -2,14 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {RuleModel} from "./models/rule.model";
+import {environment} from '../environments/environment';
 
 @Injectable()
 export class RuleService {
   private url: string;
 
   constructor(private http: HttpClient) {
-    // this.url = './rest/rules';
-    this.url = 'http://localhost:8080/rest/rules';
+    this.url = environment.backendUrl + '/rules';
   }
 
   list(): Observable<Array<RuleModel>> {
