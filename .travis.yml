@@ -1,14 +1,5 @@
 language: java
 sudo: false
-
-#
-#
-#jdk:
-# - oraclejdk8
-#
-#node_js:
-# - "iojs"
-
 matrix:
   include:
     - language: nodejs
@@ -19,16 +10,8 @@ matrix:
 
       addons:
       apt:
-#        sources:
-#          - google-chrome
         packages:
           - google-chrome-stable
-#          - google-chrome-beta
-
-#      before_install:
-#        - export CHROME_BIN=chromium-browser
-#        - export DISPLAY=:99.0
-#        - sh -e /etc/init.d/xvfb start
 
       before_script:
         - cd client
@@ -45,21 +28,3 @@ matrix:
         - (cd server; gradle assemble)
       script:
         - (cd server; gradle check)
-
-
-#
-#addons:
-#  sonarqube:
-#      token:
-#        secure: "nwGyaUGMrFCwEFJQYNsm2MDppsdIw5ll7WJdDXoY6cdKGKHJNHMX6TSySLXHSxMEmVzQyOsT/aVGvTFEpTlc9OdxybwPzzzIm3dTgJPZRpC6K2TlWHUDi7LGWhgiSs2jgKwSWEOSjC/f9T6Aiz56J2zOPC8WYARNtYLam7BQkCcGmw1XCiJ0uH/Hn4UO7JdqQswc5nF3gZctbYmVCh1AT9VU6zifYQdITRsANrVmLchzOxncBfG1/Gqs1PAfUeh/RAH76/hhyoZNhzJF65nDuJUiWE15VUCKBdlvVeSieg25EZfRj4NFahMnfnU8t6za8r+CvUyXfgg7gzdLry7e9y9pC7j/6vGXkLt2BMCUfpeYPXxh9RaOVkP0+mhMVTNDs/DT6BC3FXE7N2pzcgzp3+YQc8CEihSDBgdxOJWnALGlH1eC3KXP9N2oPkpKvPcebD9g6YiuSt56m4cT2jJ2soLJHcIFX6eVZArpkVAeHaB7/BsL7aea8bjyDQB+aRDWrNONINXn1fy+7teq3jywVzHh+n+HNUDVdN8f96u3Lgw43mOU984gTDD4PU9sF5JmxlGRp3qDWPlDKfR3Rike9qNvZaMtEzKgnqz9oUOrRZQ1lmfwAuI12N5bb47ZtGJUMWcqhsvp/UNY2Z2J7pFbYmJHNWN2IJ9QvKfaUezfJVQ="
-#script:
-#  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
-#
-#after_success:
-#- mvn cobertura:cobertura
-#- bash <(curl -s https://codecov.io/bash)
-#
-#cache:
-#  directories:
-#    - '$HOME/.m2/repository'
-#    - '$HOME/.sonar/cache'

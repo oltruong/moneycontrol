@@ -6,7 +6,7 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'com.oltruong'
 
-version = '0.0.3-SNAPSHOT'
+version = '0.1.0-SNAPSHOT'
 
 description = "Simple app to see where money goes"
 
