@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-12">
+    <h1>Règles</h1>
+  </div>
+  <div class="col-2">
+    <h2>Filtre</h2>
+    <input class="form-control" [(ngModel)]="query">
+
+    <button class="btn btn-success" (click)="refresh()"><i class="fas fa-sync"></i>&nbsp; Recharger
+    </button>
+  </div>
+  <div class="col-10">
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Nom</th>
+        <th scope="col">Montant</th>
+        <th scope="col">Cat&eacute;gorie</th>
+        <th scope="col">Ss. Cat.</th>
+        <th scope="col">Destinataire</th>
+        <th scope="col">Commentaire</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let rule of getRules()">
+        <td>
+          <app-cell-edit [editableValue]="rule.nameCondition"
+                         (valueClicked)="updateNameCondition($event,rule)"></app-cell-edit>
+        </td>
+        <td>
+          <app-cell-edit [editableValue]="rule.amount"
+                         (valueClicked)="updateAmount($event,rule)"></app-cell-edit>
+        </td>
+        <td>
+          <app-cell-edit [editableValue]="rule.category"
+                         (valueClicked)="updateCategory($event,rule)"></app-cell-edit>
+        </td>
+        <td>
+          <app-cell-edit [editableValue]="rule.subcategory"
+                         (valueClicked)="updateSubcategory($event,rule)"></app-cell-edit>
+        </td>
+        <td>
+          <app-cell-edit [editableValue]="rule.recipient"
+                         (valueClicked)="updateRecipient($event,rule)"></app-cell-edit>
+        </td>
+        <td>
+          <app-cell-edit [editableValue]="rule.comment"
+                         (valueClicked)="updateComment($event,rule)"></app-cell-edit>
+        </td>
+        <td>
+          <button type="button" class="btn btn-info" (click)="duplicate(rule)"><i
+            class="fas fa-plus-circle"></i></button>
+          <button type="button" class="btn btn-danger" (click)="delete(rule)"><i
+            class="fas fa-trash"></i></button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+

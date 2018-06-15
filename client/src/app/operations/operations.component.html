@@ -1,0 +1,239 @@
+<div class="row">
+  <div class="col-12">
+    <h1>{{operations.length}} Opération<span *ngIf="operations.length>1">s</span> - Total :
+      {{sumTotal() | number:'.2'}} &euro;
+    </h1>
+
+    <h2><a href="" routerLink="/operations"
+           [queryParams]="{ year: yearMinusMonth(),month:previousMonth() }">
+      <i class="fas fa-step-backward"></i>
+    </a><a href="" routerLink="/operations"
+           [queryParams]="{ year: year }">
+      <i class="fas fa-calendar-alt"></i>
+    </a><a href="" routerLink="/operations"
+           [queryParams]="{ year: yearPlusMonth(),month:nextMonth() }">
+      <i class="fas fa-step-forward"></i>
+    </a></h2>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="operation-tab" data-toggle="tab" href="#operation" role="tab"
+           aria-controls="home" aria-selected="true">Opération</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="category-tab" data-toggle="tab" href="#category" role="tab"
+           aria-controls="profile" aria-selected="false">Catégories</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#expense" role="tab"
+           aria-controls="contact" aria-selected="false">Détail dépense</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="income-tab" data-toggle="tab" href="#income" role="tab"
+           aria-controls="contact" aria-selected="false">Détail recettes</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="operation" role="tabpanel"
+           aria-labelledby="operation-tab">
+
+        <div class="row">
+          <div class="col-2">
+            <h2>Filtre</h2>
+            <input class="form-control" [(ngModel)]="query">
+            <h5>{{getOperations().length}} opération<span *ngIf="getOperations().length>1">s</span>
+            </h5>
+            <h5>{{sumFiltered() | number:'.2'}} &euro;</h5>
+
+          </div>
+
+          <div class="col-10">
+
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Montant</th>
+                <th scope="col">Cat&eacute;gorie</th>
+                <th scope="col">Ss. Cat.</th>
+                <th scope="col">Destinataire</th>
+                <th scope="col">Commentaire</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let operation of getOperations()">
+                <td>
+                  <app-cell-edit
+                    [editableValue]="operation.creationDate | date:'dd/MM/yyyy'"></app-cell-edit>
+                </td>
+                <td>
+                  <app-cell-edit [editableValue]="operation.name"
+                                 (valueClicked)="updateName($event,operation)"></app-cell-edit>
+                </td>
+                <td>
+                  <app-cell-edit [editableValue]="operation.amount"></app-cell-edit>
+                </td>
+                <td>
+                  <app-cell-edit [editableValue]="operation.category"
+                                 (valueClicked)="updateCategory($event,operation)"></app-cell-edit>
+                </td>
+                <td>
+                  <app-cell-edit [editableValue]="operation.subcategory"
+                                 (valueClicked)="updateSubcategory($event,operation)"></app-cell-edit>
+                </td>
+                <td>
+                  <app-cell-edit [editableValue]="operation.recipient"
+                                 (valueClicked)="updateRecipient($event,operation)"></app-cell-edit>
+                </td>
+                <td>
+                  <app-cell-edit [editableValue]="operation.comment"
+                                 (valueClicked)="updateComment($event,operation)"></app-cell-edit>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="category-tab">
+        <div class="row">
+
+          <div class="col-6"><h2>Dépenses</h2>
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Montant</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let category of getNegativeCategories()">
+                <td>{{category[0]}}</td>
+                <td>{{-category[1]| number:'.2'}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-6"><h2>Recettes</h2>
+            <table class="table table-striped">
+              <thead>
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Montant</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let category of getPositiveCategories()">
+                <td>{{category[0]}}</td>
+                <td>{{category[1]| number:'.2'}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="expense" role="tabpanel" aria-labelledby="expense-tab">À
+        venir
+      </div>
+      <div class="tab-pane fade" id="income" role="tabpanel" aria-labelledby="income-tab">À venir
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-12">
+
+  </div>
+
+
+  <!--<div class="col-2">-->
+  <!--<h2>Filtre</h2>-->
+  <!--<input class="form-control" [(ngModel)]="query">-->
+  <!--<h5>{{getOperations().length}} opération<span *ngIf="getOperations().length>1">s</span></h5>-->
+  <!--<h5>{{sumFiltered() | number:'.2'}} &euro;</h5>-->
+
+  <!--</div>-->
+  <!--<div class="col-10">-->
+
+  <!--<ul class="nav nav-tabs" id="myTab" role="tablist">-->
+  <!--<li class="nav-item">-->
+  <!--<a class="nav-link active" id="operation-tab" data-toggle="tab" href="#operation" role="tab"-->
+  <!--aria-controls="home" aria-selected="true">Opération</a>-->
+  <!--</li>-->
+  <!--<li class="nav-item">-->
+  <!--<a class="nav-link" id="category-tab" data-toggle="tab" href="#category" role="tab"-->
+  <!--aria-controls="profile" aria-selected="false">Catégories</a>-->
+  <!--</li>-->
+  <!--<li class="nav-item">-->
+  <!--<a class="nav-link" id="contact-tab" data-toggle="tab" href="#expense" role="tab"-->
+  <!--aria-controls="contact" aria-selected="false">Détail dépense</a>-->
+  <!--</li>-->
+  <!--<li class="nav-item">-->
+  <!--<a class="nav-link" id="income-tab" data-toggle="tab" href="#income" role="tab"-->
+  <!--aria-controls="contact" aria-selected="false">Détail recettes</a>-->
+  <!--</li>-->
+  <!--</ul>-->
+  <!--<div class="tab-content" id="myTabContent">-->
+  <!--<div class="tab-pane fade show active" id="operation" role="tabpanel"-->
+  <!--aria-labelledby="operation-tab">-->
+  <!--<table class="table table-striped">-->
+  <!--<thead>-->
+  <!--<tr>-->
+  <!--<th scope="col">Date</th>-->
+  <!--<th scope="col">Nom</th>-->
+  <!--<th scope="col">Montant</th>-->
+  <!--<th scope="col">Cat&eacute;gorie</th>-->
+  <!--<th scope="col">Ss. Cat.</th>-->
+  <!--<th scope="col">Destinataire</th>-->
+  <!--<th scope="col">Commentaire</th>-->
+  <!--</tr>-->
+  <!--</thead>-->
+  <!--<tbody>-->
+  <!--<tr *ngFor="let operation of getOperations()">-->
+  <!--<td>-->
+  <!--<app-cell-edit-->
+  <!--[editableValue]="operation.creationDate | date:'dd/MM/yyyy'"></app-cell-edit>-->
+  <!--</td>-->
+  <!--<td>-->
+  <!--<app-cell-edit [editableValue]="operation.name"-->
+  <!--(valueClicked)="updateName($event,operation)"></app-cell-edit>-->
+  <!--</td>-->
+  <!--<td>-->
+  <!--<app-cell-edit [editableValue]="operation.amount"></app-cell-edit>-->
+  <!--</td>-->
+  <!--<td>-->
+  <!--<app-cell-edit [editableValue]="operation.category"-->
+  <!--(valueClicked)="updateCategory($event,operation)"></app-cell-edit>-->
+  <!--</td>-->
+  <!--<td>-->
+  <!--<app-cell-edit [editableValue]="operation.subcategory"-->
+  <!--(valueClicked)="updateSubcategory($event,operation)"></app-cell-edit>-->
+  <!--</td>-->
+  <!--<td>-->
+  <!--<app-cell-edit [editableValue]="operation.recipient"-->
+  <!--(valueClicked)="updateRecipient($event,operation)"></app-cell-edit>-->
+  <!--</td>-->
+  <!--<td>-->
+  <!--<app-cell-edit [editableValue]="operation.comment"-->
+  <!--(valueClicked)="updateComment($event,operation)"></app-cell-edit>-->
+  <!--</td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+  <!--<div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="category-tab">-->
+  <!--<div class="col-6">Dépenses</div>-->
+  <!--<div class="col-6">Recettes</div>-->
+  <!--</div>-->
+  <!--<div class="tab-pane fade" id="expense" role="tabpanel" aria-labelledby="expense-tab">CONTACT-->
+  <!--</div>-->
+  <!--<div class="tab-pane fade" id="income" role="tabpanel" aria-labelledby="income-tab">CONTACT-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--</div>-->
+</div>
+

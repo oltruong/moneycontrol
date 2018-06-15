@@ -5,3 +5,12 @@ build/
 bower_components
 .log
 node_modules
+\.gradle/
+
+server/out/
+
+client/package-lock\.json
+
+client/yarn\.lock
+
+client/results/
