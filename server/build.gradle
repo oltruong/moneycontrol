@@ -13,7 +13,10 @@ description = "Simple app to see where money goes"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-def springVersion = '2.0.2.RELEASE'
+ext {
+    springVersion = '2.0.2.RELEASE'
+}
+
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -26,10 +29,10 @@ bootJar {
 
 buildscript {
     repositories {
-        mavenCentral()
+        jcenter()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.0.2.RELEASE'
     }
 }
 
