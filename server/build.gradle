@@ -1,8 +1,9 @@
 apply plugin: 'java'
-apply plugin: 'maven'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: "jacoco"
+
 
 group = 'com.oltruong'
 
@@ -16,7 +17,6 @@ targetCompatibility = 1.8
 ext {
     springVersion = '2.0.2.RELEASE'
 }
-
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -36,9 +36,12 @@ buildscript {
     }
 }
 
-
 repositories {
     jcenter()
+}
+
+test {
+    useJUnitPlatform()
 }
 
 dependencies {
@@ -55,13 +58,13 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty', version: springVersion
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: springVersion
     compile group: 'com.google.guava', name: 'guava', version: guavaVersion
-    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springVersion) {
-        exclude(module: 'commons-logging')
-    }
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springVersion
     testCompile group: 'de.flapdoodle.embed', name: 'de.flapdoodle.embed.mongo', version: embedMongoTestVersion
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
     testCompile group: 'org.assertj', name: 'assertj-core', version: assertJVersion
     testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: mockitoVersion
     testCompile group: 'org.mockito', name: 'mockito-core', version: mockitoVersion
+
+    testRuntime group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
 }

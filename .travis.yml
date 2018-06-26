@@ -24,7 +24,28 @@ matrix:
 
     - language: java
       jdk: oraclejdk8
-      before_script:
-        - (cd server; gradle assemble)
       script:
-        - (cd server; gradle check)
+        - ./gradlew :server:check  --scan -s
+
+    - language: java
+      jdk: oraclejdk8
+      node_js: "lts/*"
+      install: true
+      addons:
+        sonarcloud:
+          organization: "nadeva"
+          token:
+            secure: "LRVr80h+PBgd8QE7tsR5z25mAKQoHe64JXsDp+NB6d+Ijk2Yed+8mxGMLdqIcNenK0ODC4+LrYdaxYaju+KMkWbNVBw+yRj/aZw3r+ypsXpvb9rqCP2M33gKEPDqcB/wErI5rHjShkBo5FcWjpfEtd4xFjDxx5VDO9EJsTChXf0JNNaEGczCP3IMzdRRmxkCLx1lEvghAnxqpRxSODNQ+DPZ3fyMpq1UdJHAnICOQ3YEqZzyp5zgrELfJ2aKJrk9uLbx9Y3kCBpBp5Yg6ADADQf2/qSkbXdvuN7p6/80IvSN7cI3Vemer8RDldG2c9QFOi4bQOAuYNXo5bb9+eVdwP/sXyhXd/be4HoyW24iHwODwPVDU5eay9dyzEyt2wugaB7G21cgLqDluM3PV1dgdZ91wnGOb88p5kpxP6k6l83DqLCB/DeHyL2GtoHwHDcErdLQrptaSEUmal/DXknpogHD4rNkzs8aOWpfuc1/RPV27aYhkgBzWW3q9C57QvAg8Td+eRMRUlidT3ja67jhztedgKOqv/AQejT43ZqnaRmstavLF0Pp5XN+8z6R8hIR8SAJK/HMN8J9ex+dbjLCmU4WXPGA8HHIoLBS925X+feeN+VUsNpxZyp1LR8gAZhbsCDkkF2Mx3bOHXjDa9jFMPVVh0fSFuj3GdTOnFIXaX0="
+      before_script:
+        - yarn global add @angular/cli@6.0.3
+        - yarn global add karma
+        - (cd client; yarn install)
+        - (cd client; ng test --watch=false --browsers=ChromeHeadlessNoSandbox --code-coverage)
+      script:
+        - ./gradlew sonarqube --scan -s
+      cache:
+          directories:
+            - '$HOME/.m2/repository'
+            - '$HOME/.sonar/cache'
+            - '$HOME/.gradle'
+            - '.gradle'
