@@ -11,8 +11,8 @@ version = '0.1.0-SNAPSHOT'
 
 description = "Simple app to see where money goes"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.10
+targetCompatibility = 1.10
 
 ext {
     springVersion = '2.0.2.RELEASE'
