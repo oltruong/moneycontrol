@@ -23,12 +23,12 @@ matrix:
         - ng build --prod --build-optimizer
 
     - language: java
-      jdk: openjdk10
+      jdk: openjdk11
       script:
         - ./gradlew :server:check  --scan -s
 
     - language: java
-      jdk: openjdk10
+      jdk: openjdk11
       node_js: "lts/*"
       install: true
       addons:
