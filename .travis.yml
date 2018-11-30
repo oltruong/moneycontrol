@@ -6,7 +6,6 @@ matrix:
       node_js:
         - "node"
         - "lts/*"
-        - "8"
 
       addons:
       apt:
