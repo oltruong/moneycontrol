@@ -19,12 +19,6 @@ public final class HttpUtils {
     public static void initRequestAttributes() {
         HttpServletRequest mockHttpServletRequest = mock(HttpServletRequest.class);
 
-        when(mockHttpServletRequest.getRequestURL()).thenReturn(new StringBuffer());
-        when(mockHttpServletRequest.getQueryString()).thenReturn("");
-
-
-        @SuppressWarnings("unchecked") Enumeration<String> mockEnum = mock(Enumeration.class);
-        when(mockHttpServletRequest.getHeaderNames()).thenReturn(mockEnum);
         ServletRequestAttributes servletRequestAttributes = new ServletRequestAttributes(mockHttpServletRequest);
         RequestContextHolder.setRequestAttributes(servletRequestAttributes);
     }

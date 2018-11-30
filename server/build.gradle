@@ -11,11 +11,11 @@ version = '0.1.0-SNAPSHOT'
 
 description = "Simple app to see where money goes"
 
-sourceCompatibility = 1.10
-targetCompatibility = 1.10
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
 
 ext {
-    springVersion = '2.0.2.RELEASE'
+    springVersion = '2.1.1.RELEASE'
 }
 
 tasks.withType(JavaCompile) {
@@ -32,7 +32,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.0.2.RELEASE'
+        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '2.1.1.RELEASE'
     }
 }
 
