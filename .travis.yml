@@ -16,7 +16,7 @@ matrix:
 
       before_script:
         - cd client
-        - yarn global add @angular/cli@7.1.1
+        - yarn global add @angular/cli@7.1.0
         - yarn global add karma
         - yarn install
       script:
@@ -39,7 +39,7 @@ matrix:
           organization: "oltruong-github"
           token: $SONAR_TOKEN
       before_script:
-        - yarn global add @angular/cli@7.1.1
+        - yarn global add @angular/cli@7.1.0
         - yarn global add karma
         - (cd client; yarn install)
         - (cd client; ng test --watch=false --browsers=ChromeHeadlessNoSandbox --code-coverage)
