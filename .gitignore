@@ -11,6 +11,4 @@ server/out/
 
 client/package-lock\.json
 
-client/yarn\.lock
-
 client/results/
