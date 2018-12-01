@@ -6,8 +6,8 @@ apply plugin: "jacoco"
 
 
 group = 'com.oltruong'
-
 version = '0.2.0-SNAPSHOT'
+
 
 description = "Simple app to see where money goes"
 

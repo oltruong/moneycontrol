@@ -6,7 +6,7 @@
     <h2>Filtre</h2>
     <input class="form-control" [(ngModel)]="query">
 
-    <button class="btn btn-success" (click)="refresh()"><i class="fas fa-sync"></i>&nbsp; Recharger
+    <button class="btn btn-success" (click)="refresh()"><em class="fas fa-sync"></em>&nbsp; Recharger
     </button>
   </div>
   <div class="col-10">
@@ -50,10 +50,10 @@
                          (valueClicked)="updateComment($event,rule)"></app-cell-edit>
         </td>
         <td>
-          <button type="button" class="btn btn-info" (click)="duplicate(rule)"><i
-            class="fas fa-plus-circle"></i></button>
-          <button type="button" class="btn btn-danger" (click)="delete(rule)"><i
-            class="fas fa-trash"></i></button>
+          <button type="button" class="btn btn-info" (click)="duplicate(rule)"><em
+            class="fas fa-plus-circle"></em></button>
+          <button type="button" class="btn btn-danger" (click)="delete(rule)"><em
+            class="fas fa-trash"></em></button>
         </td>
       </tr>
       </tbody>
