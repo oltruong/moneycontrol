@@ -31,7 +31,6 @@ public class OperationController {
 
     private final BudgetAnalyzer budgetAnalyzer;
 
-
     @Autowired
     public OperationController(OperationRepository operationRepository, RuleRepository ruleRepository, BudgetAnalyzer budgetAnalyzer) {
         this.operationRepository = operationRepository;
@@ -102,10 +101,9 @@ public class OperationController {
     void refresh() {
         Iterable<Rule> ruleList = ruleRepository.findAll();
 
-        operationRepository.findByCategoryNull().forEach(operation ->
-                operationRepository.save(budgetAnalyzer.analyzeOperation(operation, ruleList))
-        );
+        operationRepository.findByCategoryNull()
+                           .forEach(operation ->
+                operationRepository.save(budgetAnalyzer.analyzeOperation(operation, ruleList)));
 
     }
-
 }
