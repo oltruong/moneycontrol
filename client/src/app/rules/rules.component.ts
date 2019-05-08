@@ -16,7 +16,7 @@ export class RulesComponent implements OnInit {
   private orderProp: string = 'nameCondition';
    query: string;
 
-  constructor(private ruleService: RuleService, private operationService:OperationService, private router:Router) {
+  constructor(private ruleService: RuleService, private operationService:OperationService) {
   }
 
   ngOnInit() {
@@ -51,7 +51,7 @@ export class RulesComponent implements OnInit {
         let name = rule.nameCondition.toLowerCase();
         let category = rule.category ? rule.category.toLowerCase() : "";
         let subcategory = rule.subcategory ? rule.subcategory.toLowerCase() : "";
-        let amount = rule.amount ? rule.amount.toString() : "";
+        let amount = rule.amountCondition ? rule.amountCondition.toString() : "";
 
         return name.indexOf(query) >= 0 || category.indexOf(query) >= 0 || subcategory.indexOf(query) >= 0
           || amount.toString().indexOf(query) >= 0;
@@ -69,8 +69,8 @@ export class RulesComponent implements OnInit {
   }
 
   updateAmount(event: string, rule: RuleModel) {
-    if (rule.amount.toString() != event) {
-      rule.amount = +event;
+    if (rule.amountCondition.toString() != event) {
+      rule.amountCondition = +event;
       this.ruleService.update(rule);
     }
   }
@@ -116,8 +116,6 @@ export class RulesComponent implements OnInit {
 
   refresh(){
     this.operationService.refresh();
-    this.router.navigate(['/operations'], {queryParams: {category: 'empty'}});
-
   }
 
 }

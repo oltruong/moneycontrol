@@ -1,7 +1,7 @@
 export interface RuleModel {
   id: number;
   nameCondition: string;
-  amount: number;
+  amountCondition: number;
   category: string;
   subcategory: string;
   recipient: string;
