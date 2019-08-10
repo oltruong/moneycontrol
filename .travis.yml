@@ -6,7 +6,7 @@ matrix:
     - name: "front office"
       language: nodejs
       node_js:
-        - "node"
+        - "10.16.2"
 
       addons:
       apt:
