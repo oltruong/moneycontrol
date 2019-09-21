@@ -37,7 +37,7 @@ jobs:
       - name: Build with Gradle
         working-directory: back
         run: |
-          ./gradlew build  --scan
+          ./gradlew build  -scan
       env:
         CI: true
 
