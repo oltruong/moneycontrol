@@ -12,16 +12,17 @@ jobs:
         node-version: [12.x]
 
     steps:
-    - working-directory: client
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - name: npm install
+      working-directory: client
       run: |
         npm install
     - name: unit test
+      working-directory: client
       run: |
         npm run test:unit
       env:
