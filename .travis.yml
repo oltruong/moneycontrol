@@ -3,24 +3,7 @@ sudo: false
 matrix:
   include:
 
-    - name: "front office"
-      language: nodejs
-      node_js:
-        - "10.16.2"
 
-      addons:
-      apt:
-        packages:
-          - google-chrome-stable
-
-      before_script:
-        - cd client
-        - npm install -g @angular/cli@7.1.0
-        - npm install -g karma
-        - npm install
-      script:
-        - ng test --watch=false --browsers=ChromeHeadlessNoSandbox
-        - ng build --prod --build-optimizer
 
     - name: "back office"
       language: java
@@ -28,22 +11,22 @@ matrix:
       script:
         - ./gradlew :server:check  --scan -s
 
-    - name: "sonar analysis"
-      language: java
-      jdk: openjdk11
-      node_js: "lts/*"
-      install: true
-      addons:
-        sonarcloud:
-          organization: "oltruong-github"
-          token: $SONAR_TOKEN
-      before_script:
-        - npm install -g @angular/cli@7.1.0
-        - npm install -g karma
-        - (cd client; yarn install)
-        - (cd client; ng test --watch=false --browsers=ChromeHeadlessNoSandbox --code-coverage)
-      script:
-        - ./gradlew sonarqube --scan -s
+#    - name: "sonar analysis"
+#      language: java
+#      jdk: openjdk11
+#      node_js: "lts/*"
+#      install: true
+#      addons:
+#        sonarcloud:
+#          organization: "oltruong-github"
+#          token: $SONAR_TOKEN
+#      before_script:
+#        - npm install -g @angular/cli@7.1.0
+#        - npm install -g karma
+#        - (cd client; yarn install)
+#        - (cd client; ng test --watch=false --browsers=ChromeHeadlessNoSandbox --code-coverage)
+#      script:
+#        - ./gradlew sonarqube --scan -s
       cache:
           directories:
             - '$HOME/.m2/repository'

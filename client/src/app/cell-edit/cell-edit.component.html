@@ -1,5 +1,0 @@
-<span [hidden]="editMode" (click)="edit()">{{editableValue}}<span
-  *ngIf="editableValue==null || editableValue==''"><em class="fas fa-edit"></em></span>  </span>
-<input class="form-control" *ngIf="editMode" (blur)="clear()" (changed)="changed()"
-       [(ngModel)]="editableValue">
-
