@@ -5,16 +5,13 @@ on: [push]
 jobs:
   build-front:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
 
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 12.x
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 12.x
     - name: NPM install
       working-directory: front
       run: |
@@ -39,6 +36,7 @@ jobs:
       with:
         java-version: 11.0.4
     - name: Gradle build
+      working-directory: back
       run: ./gradlew build --scan
       env:
         CI: true
