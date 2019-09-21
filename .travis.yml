@@ -9,7 +9,7 @@ matrix:
       language: java
       jdk: openjdk11
       script:
-        - ./gradlew :server:check  --scan -s
+        - (cd back && ./gradlew build  --scan)
 
 #    - name: "sonar analysis"
 #      language: java

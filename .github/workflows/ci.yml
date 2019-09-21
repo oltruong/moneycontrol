@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build-front:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -18,12 +17,29 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: npm install
-      working-directory: client
+      working-directory: front
       run: |
         npm install
     - name: unit test
-      working-directory: client
+      working-directory: front
       run: |
         npm run test:unit
       env:
         CI: true
+
+  build-back:
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11.0.4
+      - name: Build with Gradle
+        working-directory: back
+        run: ./gradlew build  --scan
+      env:
+        CI: true
+
