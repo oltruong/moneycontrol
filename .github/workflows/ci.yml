@@ -36,7 +36,7 @@ jobs:
           java-version: 11.0.4
       - name: Build with Gradle
         working-directory: back
-        run: ./gradlew build  --scan
+        run: "./gradlew build  --scan"
       env:
         CI: true
 
