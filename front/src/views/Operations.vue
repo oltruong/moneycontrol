@@ -4,10 +4,10 @@
             <h1>Opérations
             </h1>
             <h2>
-                <router-link to="/operations/2019/8">
+                <router-link :to="previous">
                     <em class="fas fa-step-backward"></em>
                 </router-link>
-                <router-link to="/operations/2019/10">
+                <router-link :to="next">
                     <em class="fas fa-step-forward"></em>
                 </router-link>
             </h2>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
     import moment from 'moment';
     import OperationsList from "../components/OperationsList";
 
@@ -26,8 +27,13 @@
         components: {OperationsList},
         data: function () {
             return {
-                operations: this.get_operations(),
+                operations: [],
+                previous: "",
+                next: ""
             }
+        },
+        mounted() {
+            this.load_operations()
         },
         watch: {
             $route(to, from) {
@@ -35,15 +41,44 @@
                 console.log(to);
                 console.log(from);
                 console.log("-------");
-                this.operations = this.get_operations();
+                this.load_operations()
             }
         },
         methods: {
+            load_operations() {
+                let currentmonth = Number(this.$route.params.month);
+                let variable = process.env.VUE_APP_BACKOFFICE_URL
+                               + "rest/operations?year=" + this.$route.params.year + "&month="
+                               + currentmonth;
+                console.log(variable);
+                axios
+                    .get(variable)
+                    .then(response => (this.operations = response.data));
+                if (currentmonth === 1) {
+                    this.previous = "/operations/" + (Number(this.$route.params.year) - 1) + "/12";
+                } else {
+                    this.previous =
+                        "/operations/" + this.$route.params.year + "/" + (
+                        currentmonth - 1);
+                }
+
+                if (currentmonth === 12) {
+                    this.next = "/operations/" + (Number(this.$route.params.year) + 1) + "/1";
+                } else {
+                    this.next =
+                        "/operations/" + this.$route.params.year + "/" + (Number(
+                        this.$route.params.month)
+                        + 1);
+                }
+            },
             get_operations() {
                 console.log("GETTT OPERATIONS");
                 console.log(this.$route.params.category);
                 console.log(this.$route.params.year);
                 console.log(this.$route.params.month);
+                console.log("AAAAA");
+                // console.log(this.$process.env.BACKOFFICE_URL);
+                console.log(process.env.VUE_APP_BACKOFFICE_URL);
 
                 console.log("current month" + moment().month());
                 // console.log(this.params.year);

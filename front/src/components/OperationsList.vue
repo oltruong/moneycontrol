@@ -3,7 +3,8 @@
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="operation-tab" data-toggle="tab" href="#operation" role="tab"
+                <a class="nav-link active" id="operation-tab" data-toggle="tab" href="#operation"
+                   role="tab"
                    aria-controls="home" aria-selected="true">Opération</a>
             </li>
             <li class="nav-item">
@@ -45,35 +46,47 @@
                             <tr>
                                 <th scope="col" @click="set_sort_by('creationDate')">Date
                                     <i
-                                            class="fas fa-caret-up" v-show="sort_by=='creationDate' && asc"></i><i
+                                            class="fas fa-caret-up"
+                                            v-show="sort_by=='creationDate' && asc"></i><i
                                             class="fas fa-caret-down"
                                             v-show="sort_by=='creationDate' && !asc"></i>
                                 </th>
                                 <th scope=" col" @click="set_sort_by('name')">Nom
                                     <i class="fas fa-caret-up" v-show="sort_by=='name' && asc"></i>
-                                    <i class="fas fa-caret-down" v-show="sort_by=='name' && !asc"></i>
+                                    <i class="fas fa-caret-down"
+                                       v-show="sort_by=='name' && !asc"></i>
                                 </th>
                                 <th scope="col" @click="set_sort_by('amount')">Montant
-                                    <i class="fas fa-caret-up" v-show="sort_by=='amount' && asc"></i>
-                                    <i class="fas fa-caret-down" v-show="sort_by=='amount' && !asc"></i>
+                                    <i class="fas fa-caret-up"
+                                       v-show="sort_by=='amount' && asc"></i>
+                                    <i class="fas fa-caret-down"
+                                       v-show="sort_by=='amount' && !asc"></i>
 
                                 </th>
                                 <th scope="col" @click="set_sort_by('category')">Cat&eacute;gorie
-                                    <i class="fas fa-caret-up" v-show="sort_by=='category' && asc"></i>
-                                    <i class="fas fa-caret-down" v-show="sort_by=='category' && !asc"></i>
+                                    <i class="fas fa-caret-up"
+                                       v-show="sort_by=='category' && asc"></i>
+                                    <i class="fas fa-caret-down"
+                                       v-show="sort_by=='category' && !asc"></i>
 
                                 </th>
                                 <th scope="col" @click="set_sort_by('subcategory')">Ss. Cat.
-                                    <i class="fas fa-caret-up" v-show="sort_by=='subcategory' && asc"></i>
-                                    <i class="fas fa-caret-down" v-show="sort_by=='subcategory' && !asc"></i>
+                                    <i class="fas fa-caret-up"
+                                       v-show="sort_by=='subcategory' && asc"></i>
+                                    <i class="fas fa-caret-down"
+                                       v-show="sort_by=='subcategory' && !asc"></i>
                                 </th>
                                 <th scope="col" @click="set_sort_by('recipient')">Destinataire
-                                    <i class="fas fa-caret-up" v-show="sort_by=='recipient' && asc"></i>
-                                    <i class="fas fa-caret-down" v-show="sort_by=='recipient' && !asc"></i>
+                                    <i class="fas fa-caret-up"
+                                       v-show="sort_by=='recipient' && asc"></i>
+                                    <i class="fas fa-caret-down"
+                                       v-show="sort_by=='recipient' && !asc"></i>
                                 </th>
                                 <th scope="col" @click="set_sort_by('comment')">Commentaire
-                                    <i class="fas fa-caret-up" v-show="sort_by=='comment' && asc"></i>
-                                    <i class="fas fa-caret-down" v-show="sort_by=='comment' && !asc"></i>
+                                    <i class="fas fa-caret-up"
+                                       v-show="sort_by=='comment' && asc"></i>
+                                    <i class="fas fa-caret-down"
+                                       v-show="sort_by=='comment' && !asc"></i>
 
                                 </th>
                             </tr>
@@ -243,7 +256,6 @@
         font-weight: bold
 </style>
 <script>
-    import moment from 'moment';
 
     export default {
         name: "OperationsList",
@@ -253,7 +265,7 @@
         data: function () {
             return {
                 filter: "",
-                sort_by: "name",
+                sort_by: "creationDate",
                 asc: true,
             }
         },
@@ -266,7 +278,8 @@
                     } else if (this.sort_by === "category") {
                         result = this.wrapper(a.category).localeCompare(this.wrapper(b.category));
                     } else if (this.sort_by === "subcategory") {
-                        result = this.wrapper(a.subcategory).localeCompare(this.wrapper(b.subcategory));
+                        result =
+                            this.wrapper(a.subcategory).localeCompare(this.wrapper(b.subcategory));
                     } else if (this.sort_by === "comment") {
                         result = this.wrapper(a.comment).localeCompare(this.wrapper(b.comment));
                     } else if (this.sort_by === "recipient") {
@@ -283,27 +296,30 @@
                 });
             },
             sum_filtered_operations() {
-                return this.sum_amount(this.filtered_operations_by_name());
+                return this.sum_amount(this.filtered_operations_by_name()).toFixed(2);
             },
             positive_categories() {
-                return this.group_by_categories(i => i > 0).sort((a, b) => this.wrapper(a.name).localeCompare(this.wrapper(b.name)));
+                return this.group_by_categories(i => i > 0)
+                    .sort((a, b) => this.wrapper(a.name).localeCompare(this.wrapper(b.name)));
             },
             positive_categories_total() {
-                return this.sum_amount(this.group_by_categories(i => i > 0));
+                return this.sum_amount(this.group_by_categories(i => i > 0)).toFixed(2);
             },
             negative_categories() {
-                return this.group_by_categories(i => i <= 0).sort((a, b) => this.wrapper(a.name).localeCompare(this.wrapper(b.name)));
+                return this.group_by_categories(i => i <= 0)
+                    .sort((a, b) => this.wrapper(a.name).localeCompare(this.wrapper(b.name)));
             },
             negative_categories_total() {
-                return this.sum_amount(this.group_by_categories(i => i <= 0));
+                return this.sum_amount(this.group_by_categories(i => i <= 0)).toFixed(2);
             },
             positive_subcategories() {
-                return this.group_by_subcategories(i => i > 0).sort((a, b) => this.wrapper(a.category).localeCompare(this.wrapper(b.category)));
+                return this.group_by_subcategories(i => i > 0).sort(
+                    (a, b) => this.wrapper(a.category).localeCompare(this.wrapper(b.category)));
             },
             negative_subcategories() {
-                return this.group_by_subcategories(i => i <= 0).sort((a, b) => this.wrapper(a.category).localeCompare(this.wrapper(b.category)));
+                return this.group_by_subcategories(i => i <= 0).sort(
+                    (a, b) => this.wrapper(a.category).localeCompare(this.wrapper(b.category)));
             }
-
 
         },
         created: function () {
@@ -318,14 +334,15 @@
             },
             operation_matches(operation) {
                 return this.contains(operation, 'name')
-                    || this.contains(operation, 'category')
-                    || this.contains(operation, 'subcategory')
-                    || this.contains(operation, 'recipient')
-                    || this.contains(operation, 'amount')
-                    || this.contains(operation, 'comment');
+                       || this.contains(operation, 'category')
+                       || this.contains(operation, 'subcategory')
+                       || this.contains(operation, 'recipient')
+                       || this.contains(operation, 'amount')
+                       || this.contains(operation, 'comment');
             },
             contains(operation, item) {
-                return this.wrapper(operation[item]).toLowerCase().indexOf(this.filter.toLowerCase()) > -1
+                return this.wrapper(operation[item]).toLowerCase()
+                           .indexOf(this.filter.toLowerCase()) > -1
             },
             set_sort_by(criteria) {
 
@@ -361,9 +378,9 @@
                     const total = this.sum_amount(categories[category]);
                     if (filter(total)) {
                         results.push({
-                            name: category,
-                            amount: total
-                        });
+                                         name: category,
+                                         amount: total
+                                     });
                     }
                 }
                 return results;
@@ -383,10 +400,10 @@
                         const total = this.sum_amount(subcategories[subcategory]);
                         if (filter(total)) {
                             results.push({
-                                category: category,
-                                subcategory: subcategory,
-                                amount: total
-                            });
+                                             category: category,
+                                             subcategory: subcategory,
+                                             amount: total
+                                         });
                         }
                     }
 
@@ -396,247 +413,6 @@
             sum_amount(operation_list) {
                 return operation_list.map(i => i.amount).reduce((a, b) => a + b, 0);
             },
-            get_operations() {
-                console.log("GETTT OPERATIONS");
-                console.log(this.$route.params.category);
-                console.log(this.$route.params.year);
-                console.log(this.$route.params.month);
-
-                console.log("current month" + moment().month());
-                // console.log(this.params.year);
-                // console.log(this.params.month);
-
-                return [
-                    {
-                        "id": "5ccdb3c127f60f195d57903c",
-                        "creationDate": "2019-05-03T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "VIR SEPA ALAN",
-                        "amount": 56.45,
-                        "category": "Santé",
-                        "subcategory": "Mutuelle Alan",
-                        "recipient": "Alan",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d57903d",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "PRLV SEPA SURAVENIR",
-                        "amount": -200.0,
-                        "category": "Epargne",
-                        "subcategory": "Assurance Vie",
-                        "recipient": "Yomoni",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d57903e",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "PRLV SEPA SURAVENIR",
-                        "amount": -50.0,
-                        "category": "Epargne",
-                        "subcategory": "Assurance Vie Eva",
-                        "recipient": "Yomoni",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d57903f",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "PRLV SEPA SURAVENIR",
-                        "amount": -50.0,
-                        "category": "Epargne",
-                        "subcategory": "Assurance Vie Nathan",
-                        "recipient": "Yomoni",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d579040",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "PRLV SEPA SURAVENIR",
-                        "amount": -100.0,
-                        "category": "Epargne",
-                        "subcategory": "Assurance Vie",
-                        "recipient": "Yomoni",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d579041",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "CARTE 30/04/19 44 LECLERC        CB*0975",
-                        "amount": -31.37,
-                        "category": "Nourriture",
-                        "subcategory": "Supermarché",
-                        "recipient": "Leclerc Nantes",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d579042",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "CARTE 30/04/19 44 FIVES GUYS FRA CB*2981",
-                        "amount": -8.5,
-                        "category": "Loisirs",
-                        "subcategory": "Restaurant",
-                        "recipient": "Five Guys",
-                        "comment": ""
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d579043",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "CARTE 01/05/19 44 PETITE BOULANG CB*2981",
-                        "amount": -6.83,
-                        "category": "Nourriture",
-                        "subcategory": "Boulangerie",
-                        "recipient": "La Petite Boulangerie",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d579044",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "PRLV SEPA SURAVENIR",
-                        "amount": -50.0,
-                        "category": "Epargne",
-                        "subcategory": "Assurance Vie",
-                        "recipient": "Yomoni",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d579045",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "CARTE 30/04/19 44 HETM041        CB*0975",
-                        "amount": -4.99,
-                        "category": null,
-                        "subcategory": null,
-                        "recipient": null,
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d579046",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "VIR SEPA MAISON BLANCHE PAROLE DE VIE",
-                        "amount": -90.0,
-                        "category": "Dîme",
-                        "subcategory": "PDV",
-                        "recipient": "Alex & Ingrid",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d579047",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "VIR SEPA EGLISE NANTES",
-                        "amount": -300.0,
-                        "category": "Dîme",
-                        "subcategory": "EPENB",
-                        "recipient": "EPENB",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d579048",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "VIR SEPA Mission et Entraide Bonne Nouve",
-                        "amount": -100.0,
-                        "category": "Dîme",
-                        "subcategory": "Bonne nouvelle Mission",
-                        "recipient": "JP & Ely",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d579049",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "PRLV SEPA PARNASSE-MAIF",
-                        "amount": -5.0,
-                        "category": "Vie Courante",
-                        "subcategory": "Prévoyance Claudia",
-                        "recipient": "MAIF",
-                        "comment": "Assurance"
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d57904a",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "VIR SEPA PEA OLIVIER",
-                        "amount": -50.0,
-                        "category": "Epargne",
-                        "subcategory": "PEA",
-                        "recipient": "PEA Olivier",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d57904b",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "PRLV SEPA FREE MOBILE",
-                        "amount": -15.99,
-                        "category": "Charges",
-                        "subcategory": "Téléphone",
-                        "recipient": "Free",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d57904c",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "VIR PERIODIQUE - CEFP",
-                        "amount": -50.0,
-                        "category": "Epargne",
-                        "subcategory": "CEFP",
-                        "recipient": "Boursorama",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d57904d",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "VIR PERIODIQUE - ASSURANCE VIE EVA",
-                        "amount": -50.0,
-                        "category": "Epargne",
-                        "subcategory": "Assurance Vie Eva",
-                        "recipient": "Boursorama",
-                        "comment": null
-                    },
-                    {
-                        "id": "5ccdb3c127f60f195d57904e",
-                        "creationDate": "2019-05-02T00:00:00.000+0000",
-                        "year": 2019,
-                        "month": 5,
-                        "name": "VIR PERIODIQUE - ASSURANCE VIE NATHAN",
-                        "amount": -50.0,
-                        "category": "Epargne",
-                        "subcategory": "Assurance Vie Nathan",
-                        "recipient": "Boursorama",
-                        "comment": null
-                    }
-                ];
-            }
 
         }
     };

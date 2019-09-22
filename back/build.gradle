@@ -5,13 +5,13 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: "jacoco"
 
 
-buildScan {
-    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
-    termsOfServiceAgree = 'yes'
-
-    publishAlways()
-}
-
+//buildScan {
+//    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+//    termsOfServiceAgree = 'yes'
+//
+//    publishAlways()
+//}
+//
 
 group = 'com.oltruong'
 version = '0.3.0-SNAPSHOT'
