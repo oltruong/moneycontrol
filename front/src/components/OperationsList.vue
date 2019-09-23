@@ -184,7 +184,7 @@
             </div>
             <div class="tab-pane fade" id="income" role="tabpanel" aria-labelledby="income-tab">
                 <div class="row">
-                    <div class="col-12"><h2>Dépenses</h2>
+                    <div class="col-12"><h2>Recettes</h2>
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -207,45 +207,6 @@
 
                 </div>
             </div>
-
-            <!--                            <table class="table table-striped">-->
-            <!--                                <thead>-->
-            <!--                                <tr>-->
-            <!--                                    <th scope="col">Nom</th>-->
-            <!--                                    <th scope="col">Montant</th>-->
-            <!--                                </tr>-->
-            <!--                                </thead>-->
-            <!--                                <tbody>-->
-            <!--                                <tr *ngFor="let category of getNegativeCategories()">-->
-            <!--                                    <td>{{category[0]}}</td>-->
-            <!--                                    <td>{{-category[1]| number:'.2'}}</td>-->
-            <!--                                </tr>-->
-            <!--                                </tbody>-->
-            <!--                            </table>-->
-            <!--                        </div>-->
-            <!--                        <div class="col-6"><h2>Recettes</h2>-->
-            <!--                            <table class="table table-striped">-->
-            <!--                                <thead>-->
-            <!--                                <tr>-->
-            <!--                                    <th scope="col">Nom</th>-->
-            <!--                                    <th scope="col">Montant</th>-->
-            <!--                                </tr>-->
-            <!--                                </thead>-->
-            <!--                                <tbody>-->
-            <!--                                <tr *ngFor="let category of getPositiveCategories()">-->
-            <!--                                    <td>{{category[0]}}</td>-->
-            <!--                                    <td>{{category[1]| number:'.2'}}</td>-->
-            <!--                                </tr>-->
-            <!--                                </tbody>-->
-            <!--                            </table>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--                <div class="tab-pane fade" id="expense" role="tabpanel" aria-labelledby="expense-tab">À-->
-            <!--                    venir-->
-            <!--                </div>-->
-            <!--                <div class="tab-pane fade" id="income" role="tabpanel" aria-labelledby="income-tab">À venir-->
-            <!--                </div>-->
         </div>
 
     </div>
@@ -254,6 +215,10 @@
 <style lang="sass">
     tfoot, thead
         font-weight: bold
+
+    .tab-content
+        margin-top: 20px
+
 </style>
 <script>
 
@@ -322,12 +287,6 @@
             }
 
         },
-        created: function () {
-            console.log("CREATED");
-        },
-        updated: function () {
-            console.log("UPDATED");
-        },
         methods: {
             filtered_operations_by_name() {
                 return this.operations.filter(operation => this.operation_matches(operation));
@@ -367,19 +326,11 @@
                 let results = [];
                 let category;
                 for (category in categories) {
-                    // console.log(ia);
-                    // console.log("sdsd [" + ia + "]");
-                    // if (ia === undefined) {
-                    //     console.log("AROB");
-                    //     ia = "Non classé";
-                    // }
-                    //
-                    //
                     const total = this.sum_amount(categories[category]);
                     if (filter(total)) {
                         results.push({
                                          name: category,
-                                         amount: total
+                                         amount: total.toFixed(2)
                                      });
                     }
                 }
@@ -402,7 +353,7 @@
                             results.push({
                                              category: category,
                                              subcategory: subcategory,
-                                             amount: total
+                                             amount: total.toFixed(2)
                                          });
                         }
                     }
@@ -411,7 +362,7 @@
                 return results;
             },
             sum_amount(operation_list) {
-                return operation_list.map(i => i.amount).reduce((a, b) => a + b, 0);
+                return operation_list.map(i => Number(i.amount)).reduce((a, b) => a + b, 0);
             },
 
         }

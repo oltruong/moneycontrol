@@ -26,13 +26,13 @@ public class RuleController {
         this.ruleRepository = ruleRepository;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/rest/rules", method = RequestMethod.GET)
     Iterable<Rule> findAll() {
         return ruleRepository.findAll();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/rest/rules/{id}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void editRule(@RequestBody Rule rule, @PathVariable String id) {
@@ -43,7 +43,7 @@ public class RuleController {
 
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/rest/rules", method = RequestMethod.POST)
     ResponseEntity<Rule> createRule(@RequestBody Rule rule) {
         rule.setId(null);
@@ -67,7 +67,7 @@ public class RuleController {
         return ruleRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/rest/rules/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void delete(@PathVariable String id) {

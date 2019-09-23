@@ -19,7 +19,7 @@
                     <router-link class="nav-link" to="/about">Charger un fichier</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/about">Règles</router-link>
+                    <router-link class="nav-link" to="/rules">Règles</router-link>
                 </li>
             </ul>
         </div>

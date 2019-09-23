@@ -7,6 +7,9 @@
                 <router-link :to="previous">
                     <em class="fas fa-step-backward"></em>
                 </router-link>
+
+                {{current}}
+
                 <router-link :to="next">
                     <em class="fas fa-step-forward"></em>
                 </router-link>
@@ -28,6 +31,7 @@
         data: function () {
             return {
                 operations: [],
+                current: "",
                 previous: "",
                 next: ""
             }
@@ -37,39 +41,53 @@
         },
         watch: {
             $route(to, from) {
-                console.log("WATCH ROUTE ");
-                console.log(to);
-                console.log(from);
-                console.log("-------");
                 this.load_operations()
             }
         },
         methods: {
             load_operations() {
                 let currentmonth = Number(this.$route.params.month);
+                const month_parameter = this.$route.params.month
+                                        == undefined ? "" : "&month=" + this.$route.params.month;
+
                 let variable = process.env.VUE_APP_BACKOFFICE_URL
-                               + "rest/operations?year=" + this.$route.params.year + "&month="
-                               + currentmonth;
-                console.log(variable);
+                               + "rest/operations?year=" + this.$route.params.year
+                               + month_parameter;
+
+                this.current = this.$route.params.month
+                               == undefined ? moment(this.$route.params.year,
+                                                     "YYYY", 'fr').format('YYYY') :
+                               moment(this.$route.params.month + "/" + this.$route.params.year,
+                                      "MM/YYYY", 'fr').format('MMMM YYYY');
                 axios
                     .get(variable)
                     .then(response => (this.operations = response.data));
-                if (currentmonth === 1) {
-                    this.previous = "/operations/" + (Number(this.$route.params.year) - 1) + "/12";
+
+                if (this.$route.params.month
+                    == undefined) {
+                    this.previous = "/operations/" + (Number(this.$route.params.year) - 1);
+                    this.next = "/operations/" + (Number(this.$route.params.year) + 1);
+
                 } else {
-                    this.previous =
-                        "/operations/" + this.$route.params.year + "/" + (
-                        currentmonth - 1);
+                    if (currentmonth === 1) {
+                        this.previous =
+                            "/operations/" + (Number(this.$route.params.year) - 1) + "/12";
+                    } else {
+                        this.previous =
+                            "/operations/" + this.$route.params.year + "/" + (
+                            currentmonth - 1);
+                    }
+
+                    if (currentmonth === 12) {
+                        this.next = "/operations/" + (Number(this.$route.params.year) + 1) + "/1";
+                    } else {
+                        this.next =
+                            "/operations/" + this.$route.params.year + "/" + (Number(
+                            this.$route.params.month)
+                            + 1);
+                    }
                 }
 
-                if (currentmonth === 12) {
-                    this.next = "/operations/" + (Number(this.$route.params.year) + 1) + "/1";
-                } else {
-                    this.next =
-                        "/operations/" + this.$route.params.year + "/" + (Number(
-                        this.$route.params.month)
-                        + 1);
-                }
             },
             get_operations() {
                 console.log("GETTT OPERATIONS");
