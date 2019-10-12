@@ -15,7 +15,7 @@
                     </router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/operations/unclassified">Opérations non
+                    <router-link class="nav-link" to="/unclassifiedoperations">Opérations non
                         classées
                     </router-link>
                 </li>

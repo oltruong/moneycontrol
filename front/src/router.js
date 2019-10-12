@@ -5,6 +5,7 @@ import Homey from "./views/Homey.vue";
 import Operations from "./views/Operations";
 import Rules from "./views/Rules";
 import OperationsUpload from "./views/OperationsUpload";
+import UnclassifiedOperations from "./views/UnclassifiedOperations";
 
 Vue.use(Router);
 
@@ -40,6 +41,11 @@ export default new Router({
                                       path: "/operations/:year",
                                       name: "operations",
                                       component: Operations
+                                  },
+                                  {
+                                      path: "/unclassifiedoperations",
+                                      name: "unclassifiedOperations",
+                                      component: UnclassifiedOperations
                                   },
                                   {
                                       path: "/about",

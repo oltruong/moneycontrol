@@ -16,18 +16,18 @@
             </h2>
         </div>
 
-        <operations-list :operations="operations"></operations-list>
+        <operations-overview :operations="operations"></operations-overview>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
     import moment from 'moment';
-    import OperationsList from "../components/OperationsList";
+    import OperationsOverview from "../components/OperationsOverview";
 
     export default {
         name: "operations",
-        components: {OperationsList},
+        components: {OperationsOverview},
         data: function () {
             return {
                 operations: [],

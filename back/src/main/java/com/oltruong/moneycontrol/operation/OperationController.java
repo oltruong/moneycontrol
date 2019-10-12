@@ -42,7 +42,7 @@ public class OperationController {
     @RequestMapping(value = "/rest/operations", method = RequestMethod.GET)
     Iterable<Operation> findAll(@RequestParam(value = "year", required = false) Integer year, @RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "category", required = false) String category) {
 
-        if ("empty".equals(category)) {
+        if ("null".equals(category)) {
             return operationRepository.findByCategoryNull();
         } else if (year != null && month != null) {
             return operationRepository.findByYearAndMonth(year, month);
@@ -95,7 +95,7 @@ public class OperationController {
         operationRepository.delete(operation);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/rest/operations/refresh", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void refresh() {
