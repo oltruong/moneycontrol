@@ -47,7 +47,7 @@ public class FileUploadController {
         this.budgetAnalyzer = budgetAnalyzer;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/rest/bankfileupload", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void upload(@RequestParam("operations") MultipartFile multipartFile) throws IOException {

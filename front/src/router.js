@@ -4,6 +4,7 @@ import Home from "./views/Home.vue";
 import Homey from "./views/Homey.vue";
 import Operations from "./views/Operations";
 import Rules from "./views/Rules";
+import OperationsUpload from "./views/OperationsUpload";
 
 Vue.use(Router);
 
@@ -17,9 +18,9 @@ export default new Router({
                                       component: Home
                                   },
                                   {
-                                      path: "/homey",
-                                      name: "home",
-                                      component: Homey
+                                      path: "/operationsupload",
+                                      name: "operationsUpload",
+                                      component: OperationsUpload
                                   },
                                   {
                                       path: "/operations",

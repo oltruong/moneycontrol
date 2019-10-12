@@ -32,11 +32,6 @@
                                 v-if="filtered_operations.length > 1">s</span>
                         </h5>
                         <h5>{{sum_filtered_operations}} &euro;</h5>
-                        <!--                            <input class="form-control" [(ngModel)]="query">-->
-                        <!--                            <h5>{{getOperations().length}} opération<span *ngIf="getOperations().length>1">s</span>-->
-                        <!--                            </h5>-->
-                        <!--                            <h5>{{sumFiltered() | number:'.2'}} &euro;</h5>-->
-
                     </div>
 
                     <div class="col-10">
@@ -221,7 +216,6 @@
 
 </style>
 <script>
-
     export default {
         name: "OperationsList",
         props: {
