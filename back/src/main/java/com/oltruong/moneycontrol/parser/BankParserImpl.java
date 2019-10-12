@@ -36,12 +36,12 @@ public class BankParserImpl implements BankParser {
 
     private static Operation parseOperation(String[] str) {
         Operation operation = new Operation();
-        LocalDateTime localDate = LocalDate.parse(str[0], DateTimeFormatter.ofPattern("dd/MM/yyyy")).atStartOfDay();
+        LocalDateTime localDate = LocalDate.parse(str[0], DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
         operation.setCreationDate(Date.from(localDate.toInstant(ZoneOffset.UTC)));
         operation.setMonth(localDate.getMonthValue());
         operation.setYear(localDate.getYear());
         operation.setName(str[2].replace("\"", "").trim());
-        operation.setAmount(Float.valueOf(str[6].replace(',', '.').replace("\"", "").replace(" ", "")));
+        operation.setAmount(Float.valueOf(str[5].replace(',', '.').replace("\"", "").replace(" ", "")));
         return operation;
     }
 }
