@@ -85,7 +85,7 @@ public class OperationControllerTest {
         List<Operation> operationList = Collections.singletonList(new Operation());
         when(mockOperationRepository.findByCategoryNull()).thenReturn(operationList);
 
-        Iterable<Operation> operationsReturned = operationController.findAll(null, null, "empty");
+        Iterable<Operation> operationsReturned = operationController.findAll(null, null, "null");
 
         assertThat(operationList).isEqualTo(operationsReturned);
         verify(mockOperationRepository).findByCategoryNull();
