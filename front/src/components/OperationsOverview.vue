@@ -23,7 +23,8 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="operation" role="tabpanel"
                  aria-labelledby="operation-tab">
-                <operations-list :operations="operations"></operations-list>
+                <operations-list :operations="operations" :filter="filter"
+                                 :asc="asc"></operations-list>
 
             </div>
             <div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="category-tab">
@@ -157,34 +158,6 @@
             }
         },
         computed: {
-            filtered_operations() {
-                return this.filtered_operations_by_name().sort((a, b) => {
-                    let result = 0;
-                    if (this.sort_by === "name") {
-                        result = this.wrapper(a.name).localeCompare(this.wrapper(b.name));
-                    } else if (this.sort_by === "category") {
-                        result = this.wrapper(a.category).localeCompare(this.wrapper(b.category));
-                    } else if (this.sort_by === "subcategory") {
-                        result =
-                            this.wrapper(a.subcategory).localeCompare(this.wrapper(b.subcategory));
-                    } else if (this.sort_by === "comment") {
-                        result = this.wrapper(a.comment).localeCompare(this.wrapper(b.comment));
-                    } else if (this.sort_by === "recipient") {
-                        result = this.wrapper(a.recipient).localeCompare(this.wrapper(b.recipient));
-                    } else if (this.sort_by === "amount") {
-                        result = a.amount - b.amount;
-                    }
-
-                    if (result === 0) {
-                        result = Date.parse(a.creationDate) - Date.parse(b.creationDate);
-                    }
-                    return (this.asc ? result : -result);
-
-                });
-            },
-            sum_filtered_operations() {
-                return this.sum_amount(this.filtered_operations_by_name()).toFixed(2);
-            },
             positive_categories() {
                 return this.group_by_categories(i => i > 0)
                     .sort((a, b) => this.wrapper(a.name).localeCompare(this.wrapper(b.name)));

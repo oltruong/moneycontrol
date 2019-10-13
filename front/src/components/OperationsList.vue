@@ -89,13 +89,13 @@
     export default {
         name: "OperationsList",
         props: {
-            operations: Array
+            operations: Array,
+            filter: String,
+            asc: Boolean,
         },
         data: function () {
             return {
-                filter: "",
                 sort_by: "creationDate",
-                asc: true,
             }
         },
         computed: {

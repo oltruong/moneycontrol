@@ -5,7 +5,7 @@
             </h1>
         </div>
         <div class="col-9">
-            <operations-list :operations="operations"></operations-list>
+            <operations-list :operations="operations" :filter="filter" :asc="asc"></operations-list>
         </div>
         <div class="col-3">
             <h2>Ajouter une règle</h2>
@@ -24,6 +24,8 @@
         components: {OperationsList, NewRule},
         data: function () {
             return {
+                filter: "",
+                asc: false,
                 operations: [],
             }
         },
@@ -40,16 +42,10 @@
             },
             add_rule(rule) {
                 axios.post(process.env.VUE_APP_BACKOFFICE_URL + "/rest/rules", rule)
-                    .then(function (response) {
-                        console.log("Refresh");
-
-                        axios.post(process.env.VUE_APP_BACKOFFICE_URL + "/rest/operations/refresh",{})
-                            .then(function (response2) {
-                                this.load_operations();
-                            }.catch(function (error2) {
-                                console.log(error2);
-                            }))
-                    })
+                    .then(response => axios.post(
+                        process.env.VUE_APP_BACKOFFICE_URL + "/rest/operations/refresh", {}))
+                    .then(response => this.load_operations())
+                    .then(response => this.filter = "")
                     .catch(function (error) {
                         console.log(error);
                     });
