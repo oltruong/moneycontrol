@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 /**
  * @author Olivier Truong
  */
+@CrossOrigin(origins = "*")
 @RestController
 public class OperationController {
 
@@ -38,7 +39,6 @@ public class OperationController {
         this.budgetAnalyzer = budgetAnalyzer;
     }
 
-    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/rest/operations", method = RequestMethod.GET)
     Iterable<Operation> findAll(@RequestParam(value = "year", required = false) Integer year, @RequestParam(value = "month", required = false) Integer month, @RequestParam(value = "category", required = false) String category) {
 
@@ -54,7 +54,6 @@ public class OperationController {
 
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void editOperation(@RequestBody Operation operation, @PathVariable String id) {
@@ -95,7 +94,6 @@ public class OperationController {
         operationRepository.delete(operation);
     }
 
-    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/rest/operations/refresh", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     void refresh() {
@@ -103,7 +101,7 @@ public class OperationController {
 
         operationRepository.findByCategoryNull()
                            .forEach(operation ->
-                operationRepository.save(budgetAnalyzer.analyzeOperation(operation, ruleList)));
+                                   operationRepository.save(budgetAnalyzer.analyzeOperation(operation, ruleList)));
 
     }
 }

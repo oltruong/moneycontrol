@@ -24,7 +24,7 @@
             <div class="tab-pane fade show active" id="operation" role="tabpanel"
                  aria-labelledby="operation-tab">
                 <operations-list :operations="operations" :filter="filter"
-                                 :asc="asc"></operations-list>
+                                 :initialSortAsc="asc"></operations-list>
 
             </div>
             <div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="category-tab">

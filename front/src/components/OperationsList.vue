@@ -1,80 +1,94 @@
 <template>
-                <div class="row">
-                    <div class="col-2">
-                        <h2>Filtre</h2>
-                        <input type="text" v-model="filter">
-                        <h5>{{filtered_operations.length}} opération<span
-                                v-if="filtered_operations.length > 1">s</span>
-                        </h5>
-                        <h5>{{sum_filtered_operations}} &euro;</h5>
-                    </div>
+    <div class="row">
+        <div class="col-2">
+            <h2>Filtre</h2>
+            <input type="text" v-model="internalFilter">
+            <h5>{{filtered_operations.length}} opération<span
+                    v-if="filtered_operations.length > 1">s</span>
+            </h5>
+            <h5>{{sum_filtered_operations}} &euro;</h5>
+        </div>
 
-                    <div class="col-10">
+        <div class="col-10">
 
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col" @click="set_sort_by('creationDate')">Date
-                                    <i
-                                            class="fas fa-caret-up"
-                                            v-show="sort_by=='creationDate' && asc"></i><i
-                                            class="fas fa-caret-down"
-                                            v-show="sort_by=='creationDate' && !asc"></i>
-                                </th>
-                                <th scope=" col" @click="set_sort_by('name')">Nom
-                                    <i class="fas fa-caret-up" v-show="sort_by=='name' && asc"></i>
-                                    <i class="fas fa-caret-down"
-                                       v-show="sort_by=='name' && !asc"></i>
-                                </th>
-                                <th scope="col" @click="set_sort_by('amount')">Montant
-                                    <i class="fas fa-caret-up"
-                                       v-show="sort_by=='amount' && asc"></i>
-                                    <i class="fas fa-caret-down"
-                                       v-show="sort_by=='amount' && !asc"></i>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col" @click="set_sort_by('creationDate')">Date
+                        <i
+                                class="fas fa-caret-up"
+                                v-show="sort_by=='creationDate' && asc"></i><i
+                                class="fas fa-caret-down"
+                                v-show="sort_by=='creationDate' && !asc"></i>
+                    </th>
+                    <th scope="col" @click="set_sort_by('name')">Nom
+                        <i class="fas fa-caret-up" v-show="sort_by=='name' && asc"></i>
+                        <i class="fas fa-caret-down"
+                           v-show="sort_by=='name' && !asc"></i>
+                    </th>
+                    <th scope="col" @click="set_sort_by('amount')">Montant
+                        <i class="fas fa-caret-up"
+                           v-show="sort_by=='amount' && asc"></i>
+                        <i class="fas fa-caret-down"
+                           v-show="sort_by=='amount' && !asc"></i>
 
-                                </th>
-                                <th scope="col" @click="set_sort_by('category')">Cat&eacute;gorie
-                                    <i class="fas fa-caret-up"
-                                       v-show="sort_by=='category' && asc"></i>
-                                    <i class="fas fa-caret-down"
-                                       v-show="sort_by=='category' && !asc"></i>
+                    </th>
+                    <th scope="col" @click="set_sort_by('category')">Cat&eacute;gorie
+                        <i class="fas fa-caret-up"
+                           v-show="sort_by=='category' && asc"></i>
+                        <i class="fas fa-caret-down"
+                           v-show="sort_by=='category' && !asc"></i>
 
-                                </th>
-                                <th scope="col" @click="set_sort_by('subcategory')">Ss. Cat.
-                                    <i class="fas fa-caret-up"
-                                       v-show="sort_by=='subcategory' && asc"></i>
-                                    <i class="fas fa-caret-down"
-                                       v-show="sort_by=='subcategory' && !asc"></i>
-                                </th>
-                                <th scope="col" @click="set_sort_by('recipient')">Destinataire
-                                    <i class="fas fa-caret-up"
-                                       v-show="sort_by=='recipient' && asc"></i>
-                                    <i class="fas fa-caret-down"
-                                       v-show="sort_by=='recipient' && !asc"></i>
-                                </th>
-                                <th scope="col" @click="set_sort_by('comment')">Commentaire
-                                    <i class="fas fa-caret-up"
-                                       v-show="sort_by=='comment' && asc"></i>
-                                    <i class="fas fa-caret-down"
-                                       v-show="sort_by=='comment' && !asc"></i>
+                    </th>
+                    <th scope="col" @click="set_sort_by('subcategory')">Ss. Cat.
+                        <i class="fas fa-caret-up"
+                           v-show="sort_by=='subcategory' && asc"></i>
+                        <i class="fas fa-caret-down"
+                           v-show="sort_by=='subcategory' && !asc"></i>
+                    </th>
+                    <th scope="col" @click="set_sort_by('recipient')">Destinataire
+                        <i class="fas fa-caret-up"
+                           v-show="sort_by=='recipient' && asc"></i>
+                        <i class="fas fa-caret-down"
+                           v-show="sort_by=='recipient' && !asc"></i>
+                    </th>
+                    <th scope="col" @click="set_sort_by('comment')">Commentaire
+                        <i class="fas fa-caret-up"
+                           v-show="sort_by=='comment' && asc"></i>
+                        <i class="fas fa-caret-down"
+                           v-show="sort_by=='comment' && !asc"></i>
 
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="operation of filtered_operations">
-                                <td>{{moment(operation.creationDate).format('DD/MM/YYYY')}}</td>
-                                <td>{{operation.name}}</td>
-                                <td>{{operation.amount}}</td>
-                                <td>{{operation.category}}</td>
-                                <td>{{operation.subcategory}}</td>
-                                <td>{{operation.recipient}}</td>
-                                <td>{{operation.comment}}</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="operation of filtered_operations" @click="editOperation(operation)">
+                    <td>{{moment(operation.creationDate).format('DD/MM/YYYY')}}</td>
+                    <td>{{operation.name}}
+                    </td>
+                    <td>{{operation.amount}}</td>
+                    <td>{{operation.category}}
+                        <editable-field :parent-object="operation" :attribute="'category'"
+                                        :edit-mode="editable"
+                                        @new-value="saveOperation"></editable-field>
+                    </td>
+                    <td>{{operation.subcategory}}
+                        <!--                        <editable-field :value="operation.subcategory"-->
+                        <!--                                        :edit-mode="editable"></editable-field>-->
+                    </td>
+                    <td>{{operation.recipient}}
+                        <!--                        <editable-field :value="operation.recipient"-->
+                        <!--                                        :edit-mode="editable"></editable-field>-->
+                    </td>
+                    <td>{{operation.comment}}
+                        <!--                        <editable-field :value="operation.comment"-->
+                        <!--                                        :edit-mode="editable"></editable-field>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </template>
 <style lang="sass">
     tfoot, thead
@@ -85,17 +99,29 @@
 
 </style>
 <script>
+    import axios from 'axios';
+
+    import EditableField from "../components/EditableField";
 
     export default {
         name: "OperationsList",
         props: {
             operations: Array,
             filter: String,
-            asc: Boolean,
+            initialSortAsc: Boolean,
         },
+        components: {EditableField},
         data: function () {
             return {
+                internalFilter: this.filter,
                 sort_by: "creationDate",
+                editable: false,
+                asc: this.initialSortAsc
+            }
+        },
+        watch: {
+            filter: function (newVal, oldVal) { // watch it
+                this.internalFilter = newVal
             }
         },
         computed: {
@@ -143,7 +169,7 @@
             },
             contains(operation, item) {
                 return this.wrapper(operation[item]).toLowerCase()
-                           .indexOf(this.filter.toLowerCase()) > -1
+                           .indexOf(this.internalFilter.toLowerCase()) > -1
             },
             set_sort_by(criteria) {
 
@@ -156,15 +182,31 @@
             wrapper(value) {
                 return value ? value.toString() : "";
             },
-            groupBy(group, item) {
-                return group.reduce(function (rv, x) {
-                    (rv[x[item]] = rv[x[item]] || []).push(x);
-                    return rv;
-                }, {});
-            },
             sum_amount(operation_list) {
                 return operation_list.map(i => Number(i.amount)).reduce((a, b) => a + b, 0);
             },
+            editOperation(operation) {
+                console.log("EDIT OPERATION " + operation.name);
+                this.editable = true;
+            },
+            saveOperation(operation, field, newValue) {
+                let oldValue = operation[field];
+
+                if (oldValue !== newValue) {
+                    console.log("THIS IS CHANGED");
+                    operation[field] = newValue;
+                    axios.put(process.env.VUE_APP_BACKOFFICE_URL + "rest/operation/" + operation.id,
+                              operation)
+                        .then(this.$emit('update-operations'))
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+
+                } else {
+                    console.log("Nothing has changed");
+                }
+                this.editable = false;
+            }
 
         }
     };
