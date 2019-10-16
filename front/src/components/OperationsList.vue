@@ -62,27 +62,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="operation of filtered_operations" @click="editOperation(operation)">
+                <tr v-for="operation of filtered_operations">
                     <td>{{moment(operation.creationDate).format('DD/MM/YYYY')}}</td>
                     <td>{{operation.name}}
                     </td>
                     <td>{{operation.amount}}</td>
-                    <td>{{operation.category}}
+                    <td>
                         <editable-field :parent-object="operation" :attribute="'category'"
-                                        :edit-mode="editable"
                                         @new-value="saveOperation"></editable-field>
                     </td>
-                    <td>{{operation.subcategory}}
-                        <!--                        <editable-field :value="operation.subcategory"-->
-                        <!--                                        :edit-mode="editable"></editable-field>-->
+                    <td>
+                        <editable-field :parent-object="operation" :attribute="'subcategory'"
+                                        @new-value="saveOperation"></editable-field>
                     </td>
-                    <td>{{operation.recipient}}
-                        <!--                        <editable-field :value="operation.recipient"-->
-                        <!--                                        :edit-mode="editable"></editable-field>-->
+                    <td>
+                        <editable-field :parent-object="operation" :attribute="'recipient'"
+                                        @new-value="saveOperation"></editable-field>
                     </td>
-                    <td>{{operation.comment}}
-                        <!--                        <editable-field :value="operation.comment"-->
-                        <!--                                        :edit-mode="editable"></editable-field>-->
+                    <td>
+                        <editable-field :parent-object="operation" :attribute="'comment'"
+                                        @new-value="saveOperation"></editable-field>
                     </td>
                 </tr>
                 </tbody>
@@ -115,7 +114,6 @@
             return {
                 internalFilter: this.filter,
                 sort_by: "creationDate",
-                editable: false,
                 asc: this.initialSortAsc
             }
         },
@@ -185,18 +183,15 @@
             sum_amount(operation_list) {
                 return operation_list.map(i => Number(i.amount)).reduce((a, b) => a + b, 0);
             },
-            editOperation(operation) {
-                console.log("EDIT OPERATION " + operation.name);
-                this.editable = true;
-            },
             saveOperation(operation, field, newValue) {
                 let oldValue = operation[field];
 
                 if (oldValue !== newValue) {
                     console.log("THIS IS CHANGED");
                     operation[field] = newValue;
-                    axios.put(process.env.VUE_APP_BACKOFFICE_URL + "rest/operation/" + operation.id,
-                              operation)
+                    axios.put(
+                        process.env.VUE_APP_BACKOFFICE_URL + "rest/operations/" + operation.id,
+                        operation)
                         .then(this.$emit('update-operations'))
                         .catch(function (error) {
                             console.log(error);
@@ -205,7 +200,6 @@
                 } else {
                     console.log("Nothing has changed");
                 }
-                this.editable = false;
             }
 
         }

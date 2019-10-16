@@ -1,6 +1,6 @@
 <template>
     <span>
-        <span v-show="!editMode">{{value}}</span>
+        <span @click="edit" v-show="!editMode">{{wrapValue}}</span>
         <input type="text" v-show="editMode" v-model="value" @blur="save">
     </span>
 
@@ -10,18 +10,49 @@
     export default {
         name: "EditableField",
         props: {
-            parentObject: Object,
-            attribute: String,
-            editMode: Boolean,
+            parentObject: {
+                type: Object,
+                required: true
+            },
+            attribute: {
+                type: String,
+                required: true
+            }
+        },
+        watch: {
+            parentObject: function (newVal, oldVal) {
+                this.value = newVal[this.attribute];
+            }
         },
         data: function () {
             return {
-                value: this.parentObject[this.attribute]
+                value: this.parentObject[this.attribute],
+                editMode: false
+            }
+        },
+        computed: {
+            wrapValue() {
+                if (this.value === null || this.value === "") {
+                    return "N/A"
+                } else {
+                    return this.value
+                }
+                console.log("AAA [" + this.value + "]")
             }
         },
         methods: {
+            edit() {
+                this.editMode = true
+            },
             save() {
-                this.$emit('new-value', this.parentObject, this.attribute, this.value);
+                if (this.parentObject[this.attribute] !== this.value) {
+                    console.log("CHANGEMENT");
+                    this.$emit('new-value', this.parentObject, this.attribute, this.value);
+                } else {
+                    console.log("NADA");
+
+                }
+                this.editMode = false
             }
         }
         //
