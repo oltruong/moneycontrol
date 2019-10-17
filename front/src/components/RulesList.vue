@@ -57,12 +57,30 @@
                     </thead>
                     <tbody>
                     <tr v-for="rule of filtered_rules">
-                        <td>{{rule.nameCondition}}</td>
-                        <td>{{rule.amountCondition}}</td>
-                        <td>{{rule.category}}</td>
-                        <td>{{rule.subcategory}}</td>
-                        <td>{{rule.recipient}}</td>
-                        <td>{{rule.comment}}</td>
+                        <td>
+                            <editable-field :parent-object="rule" :attribute="'nameCondition'"
+                                            @new-value="saveRule"></editable-field>
+                        </td>
+                        <td>
+                            <editable-field :parent-object="rule" :attribute="'amountCondition'"
+                                            @new-value="saveRule"></editable-field>
+                        </td>
+                        <td>
+                            <editable-field :parent-object="rule" :attribute="'category'"
+                                            @new-value="saveRule"></editable-field>
+                        </td>
+                        <td>
+                            <editable-field :parent-object="rule" :attribute="'subcategory'"
+                                            @new-value="saveRule"></editable-field>
+                        </td>
+                        <td>
+                            <editable-field :parent-object="rule" :attribute="'recipient'"
+                                            @new-value="saveRule"></editable-field>
+                        </td>
+                        <td>
+                            <editable-field :parent-object="rule" :attribute="'comment'"
+                                            @new-value="saveRule"></editable-field>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -75,12 +93,16 @@
         font-weight: bold
 </style>
 <script>
+    import axios from 'axios';
+    import EditableField from "../components/EditableField";
 
     export default {
         name: "RulesList",
         props: {
             rules: Array
+
         },
+        components: {EditableField},
         data: function () {
             return {
                 filter: "",
@@ -115,12 +137,6 @@
             },
 
         },
-        created: function () {
-            console.log("CREATED");
-        },
-        updated: function () {
-            console.log("UPDATED");
-        },
         methods: {
             filtered_rules_by_name() {
                 return this.rules.filter(rule => this.rule_matches(rule));
@@ -154,6 +170,15 @@
                     return rv;
                 }, {});
             },
+            saveRule(rule, field, newValue) {
+                rule[field] = newValue;
+                axios.put(
+                    process.env.VUE_APP_BACKOFFICE_URL + "rest/rules/" + rule.id,
+                    rule)
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
         }
     };
 </script>

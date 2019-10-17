@@ -7,8 +7,5 @@ bower_components
 node_modules
 \.gradle/
 
-server/out/
-
-client/package-lock\.json
-
-client/results/
+back/src/main/resources/public/
+back/out/

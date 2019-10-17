@@ -62,7 +62,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="operation of filtered_operations">
+                <tr v-for="operation of filtered_operations" :class="{ 'table-warning': operation.category === null }">
                     <td>{{moment(operation.creationDate).format('DD/MM/YYYY')}}</td>
                     <td>{{operation.name}}
                     </td>
@@ -184,22 +184,14 @@
                 return operation_list.map(i => Number(i.amount)).reduce((a, b) => a + b, 0);
             },
             saveOperation(operation, field, newValue) {
-                let oldValue = operation[field];
-
-                if (oldValue !== newValue) {
-                    console.log("THIS IS CHANGED");
-                    operation[field] = newValue;
-                    axios.put(
-                        process.env.VUE_APP_BACKOFFICE_URL + "rest/operations/" + operation.id,
-                        operation)
-                        .then(this.$emit('update-operations'))
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-
-                } else {
-                    console.log("Nothing has changed");
-                }
+                operation[field] = newValue;
+                axios.put(
+                    process.env.VUE_APP_BACKOFFICE_URL + "rest/operations/" + operation.id,
+                    operation)
+                    .then(this.$emit('update-operations'))
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             }
 
         }

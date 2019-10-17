@@ -5,7 +5,7 @@
             </h1>
         </div>
         <div class="col-9">
-            <operations-list :operations="operations" :filter="filter" :initialSortAsc="asc" @update-operations="load_operations" ></operations-list>
+            <operations-list :operations="operations" :filter="filter" :initialSortAsc="asc"  ></operations-list>
         </div>
         <div class="col-3">
             <h2>Ajouter une règle</h2>

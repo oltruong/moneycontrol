@@ -37,7 +37,6 @@
                 } else {
                     return this.value
                 }
-                console.log("AAA [" + this.value + "]")
             }
         },
         methods: {
@@ -46,11 +45,7 @@
             },
             save() {
                 if (this.parentObject[this.attribute] !== this.value) {
-                    console.log("CHANGEMENT");
                     this.$emit('new-value', this.parentObject, this.attribute, this.value);
-                } else {
-                    console.log("NADA");
-
                 }
                 this.editMode = false
             }
