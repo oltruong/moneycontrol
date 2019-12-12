@@ -47,7 +47,7 @@
         methods: {
             load_operations() {
                 let currentmonth = Number(this.$route.query.month);
-                const year_parameter = this.$route.query.month
+                const year_parameter = this.$route.query.year
                                        == undefined ? "" : "?year=" + this.$route.query.year;
 
                 const month_parameter = this.$route.query.month
@@ -58,7 +58,9 @@
                                + year_parameter
                                + month_parameter;
 
-                this.current = this.$route.query.month
+                this.current = this.$route.query.year
+                               == undefined ? "Tout" :
+                               this.$route.query.month
                                == undefined ? moment(this.$route.query.year,
                                                      "YYYY", 'fr').format('YYYY') :
                                moment(this.$route.query.month + "/" + this.$route.query.year,
@@ -75,7 +77,8 @@
                 } else {
                     if (currentmonth === 1) {
                         this.previous =
-                            "/operations?year=" + (Number(this.$route.query.year) - 1) + "&month=12";
+                            "/operations?year=" + (Number(this.$route.query.year) - 1)
+                            + "&month=12";
                     } else {
                         this.previous =
                             "/operations?year=" + this.$route.query.year + "&month=" + (
@@ -83,7 +86,8 @@
                     }
 
                     if (currentmonth === 12) {
-                        this.next = "/operations?year=" + (Number(this.$route.query.year) + 1) + "&month=1";
+                        this.next =
+                            "/operations?year=" + (Number(this.$route.query.year) + 1) + "&month=1";
                     } else {
                         this.next =
                             "/operations?year=" + this.$route.query.year + "&month=" + (Number(

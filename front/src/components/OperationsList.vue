@@ -2,7 +2,15 @@
     <div class="row">
         <div class="col-2">
             <h2>Filtre</h2>
-            <input type="text" v-model="internalFilter">
+            <div class="input-group">
+                <input class="filterinput" type="text" v-model="internalFilter">
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-light" @click="cleanFilter"><em
+                            class="fas fa-eraser"></em></button>
+                </div>
+            </div>
+
+
             <h5>{{filtered_operations.length}} opération<span
                     v-if="filtered_operations.length > 1">s</span>
             </h5>
@@ -62,7 +70,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="operation of filtered_operations" :class="{ 'table-warning': operation.category === null }">
+                <tr v-for="operation of filtered_operations"
+                    :class="{ 'table-warning': operation.category === null }">
                     <td>{{moment(operation.creationDate).format('DD/MM/YYYY')}}</td>
                     <td>{{operation.name}}
                     </td>
@@ -90,6 +99,9 @@
     </div>
 </template>
 <style lang="sass">
+    .filterinput
+        width: 70%
+
     tfoot, thead
         font-weight: bold
 
@@ -154,6 +166,9 @@
 
         },
         methods: {
+            cleanFilter() {
+                this.internalFilter = "";
+            },
             filtered_operations_by_name() {
                 return this.operations.filter(operation => this.operation_matches(operation));
             },

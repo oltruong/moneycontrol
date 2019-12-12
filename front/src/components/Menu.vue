@@ -10,8 +10,12 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <router-link class="nav-link" :to="current">Opérations du mois<span
+                    <router-link class="nav-link" :to="current_month">Opérations du mois<span
                             class="sr-only">(current)</span>
+                    </router-link>
+                </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" :to="current_year">Opérations de l'année
                     </router-link>
                 </li>
                 <li class="nav-item">
@@ -39,14 +43,18 @@
 
         data: function () {
             return {
-                current: this.build_path()
+                current_year: this.build_year_path(),
+                current_month: this.build_month_path()
             }
 
         },
         methods: {
-            build_path() {
+            build_year_path() {
+                return "/operations?year=" + moment().year();
+            },
+            build_month_path() {
                 let current_month = moment().month() + 1;
-                return "/operations?year=" + moment().year() + "&month=" + current_month;
+                return this.build_year_path() + "&month=" + current_month;
             }
 
             // gogo() {
