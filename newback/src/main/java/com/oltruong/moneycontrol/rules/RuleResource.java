@@ -1,12 +1,25 @@
 package com.oltruong.moneycontrol.rules;
 
+import com.oltruong.moneycontrol.operation.Operation;
+
+import org.bson.types.ObjectId;
+
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * @author Olivier Truong
@@ -26,45 +39,30 @@ public class RuleResource {
     public Rule get(@PathParam("id") String id) {
         return Rule.findByIdOptional(id).orElseThrow(NotFoundException::new);
     }
-//
-//        @RequestMapping(value = "/rest/rules/{id}", method = RequestMethod.DELETE)
-//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    void delete(@PathVariable String id) {
-//        Rule rule = getRuleOrThrowException(id);
-//        ruleRepository.delete(rule);
-//    }
 
+    @DELETE
+    @Path("/{id}")
+    public void delete(@PathParam("id") String id) {
+        Operation.delete("_id", new ObjectId(id));
+    }
 
-//
-//    @RequestMapping(value = "/rest/rules/{id}", method = RequestMethod.PUT)
-//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    void editRule(@RequestBody Rule rule, @PathVariable String id) {
-//
-//        getRuleOrThrowException(id);
-//        rule.setId(id);
-//        ruleRepository.save(rule);
-//
-//    }
-//
-//    @RequestMapping(value = "/rest/rules", method = RequestMethod.POST)
-//    ResponseEntity<Rule> createRule(@RequestBody Rule rule) {
-//        rule.setId(null);
-//
-//        Rule ruleSaved = ruleRepository.save(rule);
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.setLocation(ServletUriComponentsBuilder
-//                .fromCurrentRequest().path("/{id}")
-//                .buildAndExpand(ruleSaved.getId()).toUri());
-//
-//        return new ResponseEntity<>(ruleSaved, httpHeaders, HttpStatus.CREATED);
-//    }
-//
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response add(Rule rule, @Context UriInfo uriInfo) {
+        rule.persist();
+        UriBuilder builder = uriInfo.getAbsolutePathBuilder();
+        builder.path(rule.id.toString());
+        return Response.created(builder.build()).build();
+    }
 
-//
-//    @RequestMapping(value = "/rest/rules/{id}", method = RequestMethod.DELETE)
-//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    void delete(@PathVariable String id) {
-//        Rule rule = getRuleOrThrowException(id);
-//        ruleRepository.delete(rule);
-//    }
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void editRule(Rule rule, @PathParam("id") String id) {
+        ObjectId objectId = new ObjectId(id);
+        Rule.findByIdOptional(objectId).orElseThrow(NotFoundException::new);
+        rule.id = objectId;
+        rule.persistOrUpdate();
+    }
+
 }

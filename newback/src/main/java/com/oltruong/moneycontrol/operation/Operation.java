@@ -34,6 +34,7 @@ public class Operation extends PanacheMongoEntity {
     public String comment;
 
     public static Optional<Operation> findByIdOptional(String id) {
+
         return find("_id", new ObjectId(id)).firstResultOptional();
     }
 }
