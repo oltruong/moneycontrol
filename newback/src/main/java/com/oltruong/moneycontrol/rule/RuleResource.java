@@ -1,6 +1,4 @@
-package com.oltruong.moneycontrol.rules;
-
-import com.oltruong.moneycontrol.operation.Operation;
+package com.oltruong.moneycontrol.rule;
 
 import org.bson.types.ObjectId;
 
@@ -21,11 +19,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
+import static com.oltruong.moneycontrol.rule.Rule.findByIdOptional;
+
 /**
  * @author Olivier Truong
  */
 @Path("/rest/rules")
-//@Consumes("application/json")
 @Produces("application/json")
 public class RuleResource {
 
@@ -37,13 +36,13 @@ public class RuleResource {
     @GET
     @Path("/{id}")
     public Rule get(@PathParam("id") String id) {
-        return Rule.findByIdOptional(id).orElseThrow(NotFoundException::new);
+        return findByIdOptional(id).orElseThrow(NotFoundException::new);
     }
 
     @DELETE
     @Path("/{id}")
     public void delete(@PathParam("id") String id) {
-        Operation.delete("_id", new ObjectId(id));
+        Rule.delete("_id", new ObjectId(id));
     }
 
     @POST
@@ -60,7 +59,7 @@ public class RuleResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public void editRule(Rule rule, @PathParam("id") String id) {
         ObjectId objectId = new ObjectId(id);
-        Rule.findByIdOptional(objectId).orElseThrow(NotFoundException::new);
+        findByIdOptional(objectId).orElseThrow(NotFoundException::new);
         rule.id = objectId;
         rule.persistOrUpdate();
     }

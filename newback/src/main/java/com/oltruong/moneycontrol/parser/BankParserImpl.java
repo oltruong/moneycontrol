@@ -15,15 +15,15 @@ import javax.enterprise.context.ApplicationScoped;
  */
 @ApplicationScoped
 public class BankParserImpl implements BankParser {
-    private static final int FIRST_ACTIVE_LINE = 1;
+    private static final int FIRST_ACTIVE_LINE = 2;
 
     @Override
     public List<Operation> parseString(String fileContent) {
         String[] lines = fileContent.split("\n");
         List<Operation> operationList = new ArrayList<>(lines.length - -FIRST_ACTIVE_LINE + 1);
-        for (int i = FIRST_ACTIVE_LINE; i < lines.length; i++) {
+        for (int i = 0; i < lines.length; i++) {
             String[] str = lines[i].split(";");
-            if (str.length > 4) {
+            if (str.length > 4 && str[0].startsWith("20")) {
                 Operation operation = parseOperation(str);
                 operationList.add(operation);
             }

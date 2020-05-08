@@ -9,6 +9,8 @@ repositories {
 }
 
 dependencies {
+    def assertJVersion = '3.16.0'
+
     implementation 'io.quarkus:quarkus-mongodb-panache'
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-resteasy-jsonb'
@@ -17,6 +19,9 @@ dependencies {
 
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
+
+    testCompile group: 'org.assertj', name: 'assertj-core', version: assertJVersion
+
 }
 
 group 'com.oltruong'

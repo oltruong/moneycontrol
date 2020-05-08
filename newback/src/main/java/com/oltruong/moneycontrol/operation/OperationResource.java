@@ -1,7 +1,7 @@
 package com.oltruong.moneycontrol.operation;
 
 import com.oltruong.moneycontrol.analyzer.BudgetAnalyzer;
-import com.oltruong.moneycontrol.rules.Rule;
+import com.oltruong.moneycontrol.rule.Rule;
 
 import org.bson.types.ObjectId;
 

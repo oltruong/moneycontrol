@@ -3,10 +3,9 @@ package com.oltruong.moneycontrol.fileupload;
 import com.oltruong.moneycontrol.analyzer.BudgetAnalyzer;
 import com.oltruong.moneycontrol.operation.Operation;
 import com.oltruong.moneycontrol.parser.BankParser;
-import com.oltruong.moneycontrol.rules.Rule;
+import com.oltruong.moneycontrol.rule.Rule;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,14 +37,14 @@ public class FileUploadResource {
 //        String fileContent = checkInput(multipartFile);
 
         System.out.println(fileContent);
-//        List<Operation> operationList = bankParser.parseString(fileContent);
-//        List<String> existingOperationKeyList = buildOperationKeyList();
+        List<Operation> operationList = bankParser.parseString(fileContent);
+        List<String> existingOperationKeyList = buildOperationKeyList();
 //
-//        Iterable<Rule> ruleList = Rule.listAll();
-//
-//        operationList.stream()
-//                     .filter(operation -> operationMustBeAdded(operation, existingOperationKeyList))
-//                     .forEach(operation -> addOperation(ruleList, operation));
+        Iterable<Rule> ruleList = Rule.listAll();
+
+        operationList.stream()
+                     .filter(operation -> operationMustBeAdded(operation, existingOperationKeyList))
+                     .forEach(operation -> addOperation(ruleList, operation));
     }
 
 //    private String checkInput(MultipartFile multipartFile) throws IOException {
@@ -84,8 +83,7 @@ public class FileUploadResource {
         return operation.creationDate.getYear() >= 2015;
     }
 
-    private String generateKey(Operation operation) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return dateFormat.format(operation.creationDate) + operation.name;
+    public String generateKey(Operation operation) {
+        return operation.creationDate.toString() + operation.name;
     }
 }

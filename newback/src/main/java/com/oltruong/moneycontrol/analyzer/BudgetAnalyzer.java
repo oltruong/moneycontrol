@@ -1,7 +1,7 @@
 package com.oltruong.moneycontrol.analyzer;
 
 import com.oltruong.moneycontrol.operation.Operation;
-import com.oltruong.moneycontrol.rules.Rule;
+import com.oltruong.moneycontrol.rule.Rule;
 
 public interface BudgetAnalyzer {
 
