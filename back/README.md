@@ -1,5 +1,8 @@
 # moneycontrol project
 
+
+java -Dquarkus.mongodb.database=money -jar back/build/moneycontrol-0.6.0-SNAPSHOT-runner.jar
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
