@@ -71,10 +71,9 @@
                 </thead>
                 <tbody>
                 <tr v-for="operation of filtered_operations"
-                    :class="{ 'table-warning': operation.category === null }">
+                    :class="{ 'table-warning': operation.category === undefined }">
                     <td>{{moment(operation.creationDate).format('DD/MM/YYYY')}}</td>
-                    <td>{{operation.name}}
-                    </td>
+                    <td>{{operation.name}}</td>
                     <td>{{operation.amount}}</td>
                     <td>
                         <editable-field :parent-object="operation" :attribute="'category'"
@@ -93,6 +92,9 @@
                                         @new-value="saveOperation"></editable-field>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="7" v-show="filtered_operations.length==0">Pas d'opérations.</td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -102,11 +104,11 @@
     .filterinput
         width: 70%
 
-    tfoot, thead
-        font-weight: bold
+        tfoot, thead
+            font-weight: bold
 
-        .tab-content
-            margin-top: 20px
+            .tab-content
+                margin-top: 20px
 
 </style>
 <script>
@@ -208,8 +210,6 @@
                         console.log(error);
                     });
             }
-
         }
     };
 </script>
-
