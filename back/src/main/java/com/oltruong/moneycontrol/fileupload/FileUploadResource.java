@@ -33,30 +33,14 @@ public class FileUploadResource {
     public void upload(String fileContent) throws IOException {
 
 
-//        String fileContent = IOUtils.toString(inputStream, StandardCharsets.ISO_8859_1.name());
-//        String fileContent = checkInput(multipartFile);
-
-        System.out.println(fileContent);
         List<Operation> operationList = bankParser.parseString(fileContent);
         List<String> existingOperationKeyList = buildOperationKeyList();
-//
         Iterable<Rule> ruleList = Rule.listAll();
 
         operationList.stream()
                      .filter(operation -> operationMustBeAdded(operation, existingOperationKeyList))
                      .forEach(operation -> addOperation(ruleList, operation));
     }
-
-//    private String checkInput(MultipartFile multipartFile) throws IOException {
-//        if (multipartFile == null) {
-//            throw new BadRequestException();
-//        }
-//        String fileContent = new String(multipartFile.getBytes(), "ISO-8859-15");
-//        if (fileContent.isEmpty()) {
-//            throw new BadRequestException();
-//        }
-//        return fileContent;
-//    }
 
     private void addOperation(Iterable<Rule> ruleList, Operation operation) {
         budgetAnalyzer.analyzeOperation(operation, ruleList)

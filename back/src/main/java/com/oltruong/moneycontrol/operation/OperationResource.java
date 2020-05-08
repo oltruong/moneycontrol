@@ -28,7 +28,6 @@ import javax.ws.rs.core.UriInfo;
  * @author Olivier Truong
  */
 @Path("/rest/operations")
-//@Consumes("application/json")
 @Produces("application/json")
 public class OperationResource {
 
@@ -87,32 +86,4 @@ public class OperationResource {
         List<Operation> unCategorizedOperations = Operation.list("category is null");
         unCategorizedOperations.forEach(operation -> budgetAnalyzer.analyzeOperation(operation, ruleList));
     }
-
-
-//
-//    @RequestMapping(value = "/rest/operations/{id}", method = RequestMethod.PUT)
-//    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-//    void editOperation(@RequestBody Operation operation, @PathVariable String id) {
-//
-//        getOperationOrThrowException(id);
-//        operation.setId(id);
-//        operationRepository.save(operation);
-//
-//    }
-//
-//    @RequestMapping(value = "/rest/operations", method = RequestMethod.POST)
-//    ResponseEntity<Operation> createOperation(@RequestBody Operation operation) {
-//        operation.setId(null);
-//
-//        Operation operationSaved = operationRepository.save(operation);
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.setLocation(ServletUriComponentsBuilder
-//                .fromCurrentRequest().path("/{id}")
-//                .buildAndExpand(operationSaved.getId()).toUri());
-//
-//        return new ResponseEntity<>(operationSaved, httpHeaders, HttpStatus.CREATED);
-//    }
-//
-
-//
 }
