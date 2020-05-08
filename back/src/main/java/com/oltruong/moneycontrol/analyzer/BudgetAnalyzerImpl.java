@@ -3,16 +3,17 @@ package com.oltruong.moneycontrol.analyzer;
 import com.oltruong.moneycontrol.operation.Operation;
 import com.oltruong.moneycontrol.rule.Rule;
 
-import org.springframework.stereotype.Service;
+import javax.enterprise.context.ApplicationScoped;
+
 
 /**
  * @author Olivier Truong
  */
-@Service
+@ApplicationScoped
 public final class BudgetAnalyzerImpl implements BudgetAnalyzer {
 
     @Override
-    public  Operation analyzeOperation(Operation operation, Iterable<Rule> rules) {
+    public Operation analyzeOperation(Operation operation, Iterable<Rule> rules) {
         Operation operationAnalyzed = operation;
         for (Rule rule : rules) {
             operationAnalyzed = analyze(operation, rule);
@@ -20,18 +21,18 @@ public final class BudgetAnalyzerImpl implements BudgetAnalyzer {
         return operationAnalyzed;
     }
 
-    private  Operation analyze(Operation operation, Rule rule) {
+    private Operation analyze(Operation operation, Rule rule) {
         if (operationMatchesRule(operation, rule)) {
-            operation.setCategory(rule.getCategory());
-            operation.setSubcategory(rule.getSubcategory());
-            operation.setRecipient(rule.getRecipient());
-            operation.setComment(rule.getComment());
+            operation.category = rule.category;
+            operation.subcategory = rule.subcategory;
+            operation.recipient = rule.recipient;
+            operation.comment = rule.comment;
         }
         return operation;
     }
 
-    private  boolean operationMatchesRule(Operation operation, Rule rule) {
-        return operation.getName().toLowerCase().contains(rule.getNameCondition().toLowerCase())
-                && (rule.getAmountCondition() == null || rule.getAmountCondition().equals(operation.getAmount()));
+    private boolean operationMatchesRule(Operation operation, Rule rule) {
+        return operation.name.toLowerCase().contains(rule.nameCondition.toLowerCase())
+                && (rule.amountCondition == null || rule.amountCondition.equals(operation.amount));
     }
 }

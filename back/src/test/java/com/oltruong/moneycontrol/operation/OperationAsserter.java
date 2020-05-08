@@ -1,7 +1,9 @@
 package com.oltruong.moneycontrol.operation;
 
 import org.assertj.core.api.Assertions;
+import org.bson.types.ObjectId;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class OperationAsserter {
@@ -26,61 +28,61 @@ public class OperationAsserter {
 
     public OperationAsserter hasName(String name) {
         checkNotNull();
-        Assertions.assertThat(operation.getName()).as("Operation name").isEqualTo(name);
+        Assertions.assertThat(operation.name).as("Operation name").isEqualTo(name);
         return this;
     }
 
     public OperationAsserter hasAmount(float amount) {
         checkNotNull();
-        Assertions.assertThat(operation.getAmount()).as("Operation amount").isEqualTo(amount);
+        Assertions.assertThat(operation.amount).as("Operation amount").isEqualTo(amount);
         return this;
     }
 
     public OperationAsserter hasYear(int year) {
         checkNotNull();
-        Assertions.assertThat(operation.getYear()).as("Operation year").isEqualTo(year);
+        Assertions.assertThat(operation.year).as("Operation year").isEqualTo(year);
         return this;
     }
 
     public OperationAsserter hasMonth(int month) {
         checkNotNull();
-        Assertions.assertThat(operation.getMonth()).as("Operation month").isEqualTo(month);
+        Assertions.assertThat(operation.month).as("Operation month").isEqualTo(month);
         return this;
     }
 
     public OperationAsserter hasCategory(String category) {
         checkNotNull();
-        Assertions.assertThat(operation.getCategory()).as("Operation category").isEqualTo(category);
+        Assertions.assertThat(operation.category).as("Operation category").isEqualTo(category);
         return this;
     }
 
     public OperationAsserter hasSubcategory(String subcategory) {
         checkNotNull();
-        Assertions.assertThat(operation.getSubcategory()).as("Operation category").isEqualTo(subcategory);
+        Assertions.assertThat(operation.subcategory).as("Operation category").isEqualTo(subcategory);
         return this;
     }
 
     public OperationAsserter hasComment(String comment) {
         checkNotNull();
-        Assertions.assertThat(operation.getComment()).as("Operation comment").isEqualTo(comment);
+        Assertions.assertThat(operation.comment).as("Operation comment").isEqualTo(comment);
         return this;
     }
 
-    public OperationAsserter hasCreationDate(Date creationDate) {
+    public OperationAsserter hasCreationDate(LocalDate creationDate) {
         checkNotNull();
-        Assertions.assertThat(operation.getCreationDate()).as("Operation creation date").isEqualTo(creationDate);
+        Assertions.assertThat(operation.creationDate).as("Operation creation date").isEqualTo(creationDate);
         return this;
     }
 
-    public OperationAsserter hasId(String id) {
+    public OperationAsserter hasId(ObjectId id) {
         checkNotNull();
-        Assertions.assertThat(operation.getId()).as("Operation id").isEqualTo(id);
+        Assertions.assertThat(operation.id).as("Operation id").isEqualTo(id);
         return this;
     }
 
     public OperationAsserter hasRecipient(String recipient) {
         checkNotNull();
-        Assertions.assertThat(operation.getRecipient()).as("Operation recipient").isEqualTo(recipient);
+        Assertions.assertThat(operation.recipient).as("Operation recipient").isEqualTo(recipient);
         return this;
     }
 }

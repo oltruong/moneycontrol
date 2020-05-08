@@ -1,5 +1,5 @@
 # moneycontrol
 Simple web-app to manage budget
 
-Based on SpringBoot 2 and VueJs
+Based on https://quarkus.io/[Quarkus] and http://vuejs.org/[VueJs].
 

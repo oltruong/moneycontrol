@@ -32,7 +32,7 @@
         },
         computed: {
             wrapValue() {
-                if (this.value === null || this.value === "") {
+                if (this.value === null || this.value === "" || this.value === undefined) {
                     return "N/A"
                 } else {
                     return this.value

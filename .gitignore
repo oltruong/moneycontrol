@@ -10,5 +10,5 @@ node_modules
 front/dist
 
 
-back/src/main/resources/public/
+back/src/main/resources/META-INF/resources/
 back/out/

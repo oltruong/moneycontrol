@@ -1,79 +1,29 @@
 package com.oltruong.moneycontrol.rule;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.types.ObjectId;
 
-/**
- * @author Olivier Truong
- */
+import java.util.Optional;
 
-@Document
-public class Rule {
+import io.quarkus.mongodb.panache.MongoEntity;
+import io.quarkus.mongodb.panache.PanacheMongoEntityBase;
 
-    @Id
-    private String id;
+@MongoEntity(collection = "rule")
+public class Rule extends PanacheMongoEntityBase {
 
-    private String nameCondition;
-    private Float amountCondition;
-    private String category;
-    private String subcategory;
-    private String recipient;
-    private String comment;
+    @BsonId
+    public ObjectId id;
 
+    public String nameCondition;
+    public Float amountCondition;
+    public String category;
+    public String subcategory;
+    public String recipient;
+    public String comment;
 
-    public String getId() {
-        return id;
+    public static Optional<Rule> findByIdOptional(String id) {
+        return find("_id", new ObjectId(id)).firstResultOptional();
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
-    public String getNameCondition() {
-        return nameCondition;
-    }
-
-    public void setNameCondition(String nameCondition) {
-        this.nameCondition = nameCondition;
-    }
-
-    public Float getAmountCondition() {
-        return amountCondition;
-    }
-
-    public void setAmountCondition(Float amountCondition) {
-        this.amountCondition = amountCondition;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getSubcategory() {
-        return subcategory;
-    }
-
-    public void setSubcategory(String subcategory) {
-        this.subcategory = subcategory;
-    }
-
-    public String getRecipient() {
-        return recipient;
-    }
-
-    public void setRecipient(String recipient) {
-        this.recipient = recipient;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
 }

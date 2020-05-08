@@ -36,16 +36,15 @@
                                }
                            }
                 ).then(function () {
-                    console.log('SUCCESS!!');
+                    console.info('SUCCESS!!');
                 })
                     .catch(function () {
-                        console.log('FAILURE!!');
+                        console.error('FAILURE!!');
                     });
+
+                console.info("FINI");
             },
 
-            /*
-              Handles a change on the file upload
-            */
             handleFileUpload() {
                 this.file = this.$refs.file.files[0];
             }
