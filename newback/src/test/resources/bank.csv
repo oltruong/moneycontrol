@@ -1,5 +1,0 @@
-dateOp;dateVal;label;category;categoryParent;amount;supplierFound;;comment;accountNum;accountLabel;accountBalance
-2017-03-02;2017-03-02;"SUPERMARKET";ok;;-16,80;;;12345678901;;"MANDATORY";"948,79"
-2016-03-02;2016-03-02;"MARKET";ok;;-24,85;;;12345678901;"MANDATORY";"948,79"
-2016-03-02;2016-03-02;"TRANSFER";ok;;"-1 000,00";;;12345678901;"MANDATORY";"948,79"
-2016-03-01;2016-03-01;"TRANSFER";cat;;400,00;;;12345678901;"MANDATORY";"948,79"

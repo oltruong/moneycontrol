@@ -7,22 +7,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - name: NPM install
-      working-directory: front
-      run: |
-        npm install
-    - name: Unit test
-      working-directory: front
-      run: |
-        npm run test:unit
-    - name: Build
-      working-directory: front
-      run: |
-        npm run build
-      env:
-        CI: true
+      - uses: actions/checkout@v1
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: NPM install
+        working-directory: front
+        run: |
+          npm install
+      - name: Unit test
+        working-directory: front
+        run: |
+          npm run test:unit
+      - name: Build
+        working-directory: front
+        run: |
+          npm run build
+        env:
+          CI: true
