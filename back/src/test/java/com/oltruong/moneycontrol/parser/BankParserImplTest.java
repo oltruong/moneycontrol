@@ -2,7 +2,6 @@ package com.oltruong.moneycontrol.parser;
 
 import com.oltruong.moneycontrol.operation.Operation;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.nio.file.Files;
@@ -10,15 +9,13 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static com.oltruong.moneycontrol.operation.OperationAsserter.assertThat;
+import org.assertj.core.api.Assertions;
 
 
-/**
- * @author Olivier Truong
- */
-public class BankParserImplTest {
+class BankParserImplTest {
 
     @Test
-    public void parseString() throws Exception {
+    void parseString()  throws Exception {
         String fileContent = new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("bank.csv").toURI())));
 
         BankParserImpl bankParserImpl = new BankParserImpl();
@@ -47,6 +44,4 @@ public class BankParserImplTest {
                                         .hasYear(2016)
                                         .hasMonth(3);
     }
-
-
 }

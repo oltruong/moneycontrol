@@ -41,7 +41,7 @@ jobs:
       env:
         CI: true
 
-  build-new-back:
+  build-old-back:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -50,7 +50,7 @@ jobs:
       with:
         java-version: 11.0.7
     - name: Gradle build
-      working-directory: newback
+      working-directory: old-back
       run: ./gradlew build --scan
       env:
         CI: true
