@@ -15,7 +15,7 @@ jobs:
       - name: NPM install
         working-directory: front
         run: |
-          npm install
+          npm ci
       - name: Unit test
         working-directory: front
         run: |
