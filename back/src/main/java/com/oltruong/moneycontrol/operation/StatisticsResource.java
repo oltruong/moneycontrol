@@ -40,6 +40,7 @@ public class StatisticsResource {
 
         List toto = new ArrayList();
         aggregate.forEach(tr -> toto.add(tr));
+        System.out.println("UUUU " + toto.size());
 //
 //        System.out.println("AAAAAA ");
         return toto;
