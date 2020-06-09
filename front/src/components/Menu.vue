@@ -30,6 +30,9 @@
                 <li class="nav-item">
                     <router-link class="nav-link" to="/rules">Règles</router-link>
                 </li>
+                <li class="nav-item">
+                    <router-link class="nav-link" to="/statistics">Statistiques</router-link>
+                </li>
             </ul>
         </div>
     </nav>

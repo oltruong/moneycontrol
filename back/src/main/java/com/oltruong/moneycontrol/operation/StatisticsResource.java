@@ -9,6 +9,8 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -25,14 +27,40 @@ import static com.mongodb.client.model.Accumulators.sum;
 public class StatisticsResource {
 
     @GET
-    public Iterable listAll(@QueryParam(value = "year") Integer year, @QueryParam(value = "month") Integer month, @QueryParam(value = "category") String category) {
+    public Iterable<Statistic> listAll(@QueryParam(value = "year") Integer year, @QueryParam(value = "month") Integer month, @QueryParam(value = "category") String category) {
+        System.out.println("BBBBB");
+
+        final MongoIterable<Statistic> mapy = Operation.mongoDatabase().getCollection("operation")
+                                                       .aggregate(
+                                                               Arrays.asList(
+                                                                       Aggregates.match(Filters.eq("year", 2020)),
+//                                                                         Aggregates.match(Filters.eq("category", "Nourriture")),
+                                                                       Aggregates.group(new Document("category", "$category").append("month", "$month").append("year", "$year"),
+                                                                               sum("totalAmount", "$amount")))
+                                                       ).map(Statistic::build);
+
+        return StreamSupport.stream(mapy.spliterator(), false)
+                            .collect(Collectors.toList());
+
+//        List<Statistic> target = new ArrayList<>();
+//        mapy.forEach(target::add);
+
+//        System.out.println("AAAAAA " + mapy);
+//        return target;
+//        return toto;
+
+    }
+
+    @Path("/old")
+    @GET
+    public Iterable listAll2(@QueryParam(value = "year") Integer year, @QueryParam(value = "month") Integer month, @QueryParam(value = "category") String category) {
         System.out.println("BBBBB");
 
         final MongoIterable<String> aggregate = Operation.mongoDatabase().getCollection("operation")
                                                          .aggregate(
                                                                  Arrays.asList(
                                                                          Aggregates.match(Filters.eq("year", 2020)),
-                                                                         Aggregates.match(Filters.eq("category", "Nourriture")),
+//                                                                         Aggregates.match(Filters.eq("category", "Nourriture")),
                                                                          Aggregates.group(new Document("category", "$category").append("month", "$month").append("year", "$year"),
                                                                                  sum("totalAmount", "$amount")))
                                                          ).map(Document::toJson);
