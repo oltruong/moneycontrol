@@ -84,6 +84,6 @@ public class OperationResource {
     public void refresh() {
         Iterable<Rule> ruleList = Rule.listAll();
         List<Operation> unCategorizedOperations = Operation.list("category is null");
-        unCategorizedOperations.forEach(operation -> budgetAnalyzer.analyzeOperation(operation, ruleList));
+        unCategorizedOperations.forEach(operation -> budgetAnalyzer.analyzeOperation(operation, ruleList).persistOrUpdate());
     }
 }

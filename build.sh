@@ -3,6 +3,6 @@
 (cd front && npm run build)
 
 rm -rf back/src/main/resources/public/*
-cp -r front/dist/* back/src/main/resources/public/
+cp -R front/dist/ back/src/main/resources/META-INF/resources/
 
-(cd back && ./gradlew build --scan)
+(cd back && ./gradlew quarkusBuild --uber-jar --scan)
