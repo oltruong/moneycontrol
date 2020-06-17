@@ -6,7 +6,10 @@
         </div>
 
         <div class="col-12">
-            <highcharts class="chart" :options="chartOptions" :updateArgs="updateArgs"></highcharts>
+            <highcharts class="chart" :options="incomeChart" :updateArgs="updateArgs"></highcharts>
+            <!--            <highcharts class="chart" :options="incomePie" :updateArgs="updateArgs"></highcharts>-->
+            <highcharts class="chart" :options="expenseChart" :updateArgs="updateArgs"></highcharts>
+            <!--            <highcharts class="chart" :options="expensePie" :updateArgs="updateArgs"></highcharts>-->
         </div>
 
     </div>
@@ -14,14 +17,14 @@
 
 <script>
     import axios from 'axios';
+    import _ from 'lodash';
 
-    Array.prototype.groupBy = function (prop) {
-        return this.reduce(function (groups, item) {
-            const val = item[prop]
-            groups[val] = groups[val] || []
-            groups[val].push(item)
-            return groups
-        }, {})
+    function positiveAmount() {
+        return x => x.amount > 0;
+    }
+
+    function negativeAmount() {
+        return x => x.amount <= 0;
     }
 
     export default {
@@ -31,15 +34,42 @@
                 statistics: [],
                 statistics2: [],
                 updateArgs: [true, true, {duration: 1000}],
-                chartOptions: {
+                incomeChart: {
                     chart: {
                         type: 'column'
                     },
                     title: {
-                        text: 'Catégories'
+                        text: 'Produits'
                     },
                     series: []
-                }
+                },
+                incomePie: {
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Produits'
+                    },
+                    series: []
+                },
+                expenseChart: {
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'Dépenses'
+                    },
+                    series: []
+                },
+                expensePie: {
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Dépense'
+                    },
+                    series: []
+                },
             }
         },
         mounted() {
@@ -49,47 +79,45 @@
             load_statistics() {
                 axios
                     .get(process.env.VUE_APP_BACKOFFICE_URL
-                         + "rest/statistics")
+                         + "rest/statistics?year=2020")
                     .then(response => {
                         this.statistics = response.data;
-                        this.statistics2 = this.statistics.groupBy('category');
-
-                        console.info(this.statistics);
-
-                        for (let category in this.statistics2) {
-                            let serie = {
-                                name: category,
-                                color: '#6fcd98',
-                            }
-                            console.info(category)
-                            var points = this.statistics2[category]
-                            points.sort(function (a, b) {
-                                return a.month - b.month
-                            });
-                            console.log("AAA");
-                            console.log(points);
-                            let data = [];
-                            let total = 0;
-                            for (let i in points) {
-                                const point = points[i];
-                                // console.info("BB");
-                                // console.info(point["amount"] + " / " + point["month"]);
-                                data.push([point["month"], -point["amount"]]);
-                                total += point["amount"];
-                            }
-                            console.info("TOOOTAL " + total + " " + category);
-                            if (category!="")
-                            serie.data = data;
-                            this.chartOptions.series.push(serie);
-
-                            if (total < 0) {
-                                console.warn("HEYYY " + total + " " + category);
-                            }
-
-                        }
+                        this.incomeChart.series = this.compute_series(positiveAmount(), 1);
+                        this.incomePie.series = this.compute_pie(positiveAmount(), 1);
+                        this.expenseChart.series = this.compute_series(negativeAmount(), -1);
+                        this.expensePie.series = this.compute_pie(negativeAmount(), -1);
                     });
-            }
+            },
 
+            compute_series(filterAmount, factor) {
+                return _(this.statistics)
+                    .sortBy(['category', 'year', 'month'])
+                    .filter(filterAmount)
+                    .groupBy('category')
+                    .map((values, category) => {
+                        return {
+                            name: category,
+                            // color: '#6fcd98',
+                            data: _(values).map(data => {
+                                return [data.month, factor * data.amount]
+                            }).value(),
+                        }
+                    })
+                    .value();
+            },
+
+            compute_pie(filterAmount, factor) {
+                return _(this.statistics)
+                    .filter(filterAmount)
+                    .groupBy('category')
+                    .map((values, category) => {
+                        return {
+                            name: category,
+                            data: [_.sumBy(values, 'amount')],
+                        }
+                    })
+                    .value();
+            },
         }
     };
 

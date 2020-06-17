@@ -27,13 +27,13 @@ import static com.mongodb.client.model.Accumulators.sum;
 public class StatisticsResource {
 
     @GET
-    public Iterable<Statistic> listAll(@QueryParam(value = "year") Integer year, @QueryParam(value = "month") Integer month, @QueryParam(value = "category") String category) {
+    public Iterable<Statistic> listAll(@QueryParam(value = "year") Integer year) {
         System.out.println("BBBBB");
 
         final MongoIterable<Statistic> mapy = Operation.mongoDatabase().getCollection("operation")
                                                        .aggregate(
                                                                Arrays.asList(
-                                                                       Aggregates.match(Filters.eq("year", 2020)),
+                                                                       Aggregates.match(Filters.eq("year", year)),
 //                                                                         Aggregates.match(Filters.eq("category", "Nourriture")),
                                                                        Aggregates.group(new Document("category", "$category").append("month", "$month").append("year", "$year"),
                                                                                sum("totalAmount", "$amount")))
