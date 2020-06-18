@@ -35,8 +35,6 @@ public class Statistic {
 
     public static Statistic build(Document document) {
         final Document id = document.get("_id", Document.class);
-        final Statistic statistic = new Statistic(document.getDouble("totalAmount"), id.getString("category"), id.getInteger("month"), id.getInteger("year"));
-        System.out.println(document);
-        return statistic;
+        return new Statistic(document.getDouble("totalAmount"), id.getString("category"), id.getInteger("month"), id.getInteger("year"));
     }
 }

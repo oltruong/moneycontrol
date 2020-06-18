@@ -6,6 +6,7 @@ import com.mongodb.client.model.Filters;
 
 import org.bson.Document;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,19 +29,38 @@ public class StatisticsResource {
 
     @GET
     public Iterable<Statistic> listAll(@QueryParam(value = "year") Integer year) {
-        System.out.println("BBBBB");
+        LocalDate now = LocalDate.now();
+        int currentYear = now.getYear();
+        int currentMonth = now.getMonthValue();
 
-        final MongoIterable<Statistic> mapy = Operation.mongoDatabase().getCollection("operation")
-                                                       .aggregate(
-                                                               Arrays.asList(
-                                                                       Aggregates.match(Filters.eq("year", year)),
+
+        if (year == currentYear) {
+            final MongoIterable<Statistic> mapy = Operation.mongoDatabase().getCollection("operation")
+                                                           .aggregate(
+                                                                   Arrays.asList(
+                                                                           Aggregates.match(Filters.eq("year", year)),
+                                                                           Aggregates.match(Filters.lt("month", currentMonth)),
 //                                                                         Aggregates.match(Filters.eq("category", "Nourriture")),
-                                                                       Aggregates.group(new Document("category", "$category").append("month", "$month").append("year", "$year"),
-                                                                               sum("totalAmount", "$amount")))
-                                                       ).map(Statistic::build);
+                                                                           Aggregates.group(new Document("category", "$category").append("month", "$month").append("year", "$year"),
+                                                                                   sum("totalAmount", "$amount")))
+                                                           ).map(Statistic::build);
 
-        return StreamSupport.stream(mapy.spliterator(), false)
-                            .collect(Collectors.toList());
+            return StreamSupport.stream(mapy.spliterator(), false)
+                                .collect(Collectors.toList());
+        } else {
+            final MongoIterable<Statistic> mapy = Operation.mongoDatabase().getCollection("operation")
+                                                           .aggregate(
+                                                                   Arrays.asList(
+                                                                           Aggregates.match(Filters.eq("year", year)),
+//                                                                         Aggregates.match(Filters.eq("category", "Nourriture")),
+                                                                           Aggregates.group(new Document("category", "$category").append("month", "$month").append("year", "$year"),
+                                                                                   sum("totalAmount", "$amount")))
+                                                           ).map(Statistic::build);
+
+            return StreamSupport.stream(mapy.spliterator(), false)
+                                .collect(Collectors.toList());
+        }
+
 
 //        List<Statistic> target = new ArrayList<>();
 //        mapy.forEach(target::add);
