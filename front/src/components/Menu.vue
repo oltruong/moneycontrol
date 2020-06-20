@@ -31,15 +31,20 @@
                     <router-link class="nav-link" to="/rules">Règles</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" :to="current_year_statistics">Statistiques</router-link>
+                    <router-link class="nav-link" :to="current_year_statistics">Statistiques
+                    </router-link>
                 </li>
             </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <span>{{currentDatabase}}</span>
+            </form>
         </div>
     </nav>
 </template>
 
 <script>
     import moment from 'moment';
+    import axios from 'axios';
 
     export default {
         name: "Menu",
@@ -48,9 +53,13 @@
             return {
                 current_year: this.build_year_path(),
                 current_year_statistics: this.build_statistics_year_path(),
-                current_month: this.build_month_path()
+                current_month: this.build_month_path(),
+                currentDatabase: '',
             }
 
+        },
+        mounted() {
+            this.load_database_name()
         },
         methods: {
             build_year_path() {
@@ -62,13 +71,15 @@
             build_month_path() {
                 let current_month = moment().month() + 1;
                 return this.build_year_path() + "&month=" + current_month;
-            }
+            },
+            load_database_name() {
+                axios
+                    .get(process.env.VUE_APP_BACKOFFICE_URL + "/health/live")
+                    .then(response => (this.currentDatabase =
+                        response.data.checks[0]['data']['database']));
+            },
+        },
 
-            // gogo() {
-            //     this.$router.push({name: 'operations', params: {year: 2019, month: 9}})
-            // }
-
-        }
     };
 </script>
 

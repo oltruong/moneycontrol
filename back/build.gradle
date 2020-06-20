@@ -17,6 +17,8 @@ dependencies {
     implementation 'io.quarkus:quarkus-resteasy'
     implementation 'org.jboss.resteasy:resteasy-multipart-provider'
 
+    implementation 'io.quarkus:quarkus-smallrye-health'
+
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
 
@@ -25,7 +27,7 @@ dependencies {
 }
 
 group 'com.oltruong'
-version '0.6.0-SNAPSHOT'
+version '0.7.0-SNAPSHOT'
 
 compileJava {
     options.encoding = 'UTF-8'
