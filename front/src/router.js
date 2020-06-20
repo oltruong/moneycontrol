@@ -5,6 +5,7 @@ import Operations from "./views/Operations";
 import Rules from "./views/Rules";
 import OperationsUpload from "./views/OperationsUpload";
 import UnclassifiedOperations from "./views/UnclassifiedOperations";
+import Statistics from "./views/Statistics";
 
 Vue.use(Router);
 
@@ -26,10 +27,16 @@ export default new Router({
                                       path: "/operations",
                                       name: "operations",
                                       component: Operations
-                                  }, {
+                                  },
+                                  {
                                       path: "/rules",
                                       name: "rules",
                                       component: Rules
+                                  },
+                                  {
+                                      path: "/statistics",
+                                      name: "statistics",
+                                      component: Statistics
                                   },
                                   {
                                       path: "/operations/:year/:month",
