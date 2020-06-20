@@ -155,7 +155,7 @@
                 },
                 expenseChart: {
                     chart: {
-                        type: 'line'
+                        type: 'column'
                     },
                     title: {
                         text: 'Dépenses'
