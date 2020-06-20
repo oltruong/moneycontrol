@@ -12,3 +12,5 @@ front/dist
 
 back/src/main/resources/META-INF/resources/
 back/out/
+
+secret.sh
