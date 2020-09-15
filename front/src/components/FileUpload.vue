@@ -1,55 +1,47 @@
 <template>
-    <div class="col-12">
-        <form>
-            <div class="form-group">
-                <label for="file">File</label>
-                <input type="file" class="form-control-file" id="file" ref="file"
-                       @change="handleFileUpload()">
-                <button @click="submitFile()">Submit</button>
-            </div>
-        </form>
-    </div>
+  <div class="col-12">
+    <form>
+      <div class="form-group">
+        <label for="file">File</label>
+        <input type="file" class="form-control-file" id="file" ref="file"
+               @change="handleFileUpload()">
+        <button @click="submitFile()">Submit</button>
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
+import BackendService from "@/services/BackendService";
 
-    import axios from 'axios';
+export default {
+  name: "FileUpload",
+  data() {
+    return {
+      file: ''
+    }
+  },
+  methods: {
+    submitFile() {
+      let formData = new FormData();
+      formData.append('operations', this.file);
 
-    export default {
-        name: "FileUpload",
-        data() {
-            return {
-                file: ''
-            }
-        },
-        methods: {
-            submitFile() {
-                let formData = new FormData();
-                formData.append('operations', this.file);
+      BackendService.uploadOperations(formData)
+          .then(function () {
+            console.info('SUCCESS!!');
+          })
+          .catch(function () {
+            console.error('FAILURE!!');
+          });
 
-                const url = process.env.VUE_APP_BACKOFFICE_URL + "/rest/bankfileupload";
-                axios.post(url,
-                           formData,
-                           {
-                               headers: {
-                                   'Content-Type': 'multipart/form-data'
-                               }
-                           }
-                ).then(function () {
-                    console.info('SUCCESS!!');
-                })
-                    .catch(function () {
-                        console.error('FAILURE!!');
-                    });
+      console.info("FINI");
+    },
 
-                console.info("FINI");
-            },
-
-            handleFileUpload() {
-                this.file = this.$refs.file.files[0];
-            }
-        }
-    };
+    handleFileUpload() {
+      this.file = this.$refs.file.files[0];
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
