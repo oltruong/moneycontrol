@@ -35,6 +35,7 @@ export default {
           });
 
       console.info("FINI");
+      this.$router.push( {name: "unclassifiedOperations"});
     },
 
     handleFileUpload() {
