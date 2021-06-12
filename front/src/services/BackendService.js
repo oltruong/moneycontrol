@@ -24,8 +24,8 @@ export default {
     refreshOperations() {
         return apiClient.post("/rest/operations/refresh", {})
     },
-    updateOperation(operation){
-      return    apiClient.put( "rest/operations/" + operation.id,operation)
+    updateOperation(operation) {
+        return apiClient.put("rest/operations/" + operation.id, operation)
     },
     getRules() {
         return apiClient.get('/rest/rules')
@@ -37,17 +37,24 @@ export default {
         return apiClient.put("/rest/rules/" + rule.id,
                              rule)
     },
+    updateClassification(classification_request) {
+        return apiClient.post("/rest/classification",
+                              classification_request)
+    },
     getStatistics(year_parameter) {
         return apiClient.get("rest/statistics" + year_parameter)
     },
-    uploadOperations(formData){
-        return  apiClient.post( "/rest/bankfileupload",
-                           formData,
-                           {
-                               headers: {
-                                   'Content-Type': 'multipart/form-data'
-                               }
-                           }
+    getClassifications(year_parameter) {
+        return apiClient.get("rest/classification" + year_parameter)
+    },
+    uploadOperations(formData) {
+        return apiClient.post("/rest/bankfileupload",
+                              formData,
+                              {
+                                  headers: {
+                                      'Content-Type': 'multipart/form-data'
+                                  }
+                              }
         )
     }
 }

@@ -31,6 +31,10 @@
           <router-link class="nav-link" :to="{ name: 'rules' }">Règles</router-link>
         </li>
         <li class="nav-item">
+          <router-link class="nav-link" :to="current_year_classifications">Classification
+          </router-link>
+        </li>
+        <li class="nav-item">
           <router-link class="nav-link" :to="current_year_statistics">Statistiques
           </router-link>
         </li>
@@ -53,6 +57,7 @@ export default {
     return {
       current_year: this.build_year_path(),
       current_year_statistics: this.build_statistics_year_path(),
+      current_year_classifications: this.build_classifications_year_path(),
       current_month: this.build_month_path(),
       currentDatabase: '',
     }
@@ -67,6 +72,9 @@ export default {
     },
     build_statistics_year_path() {
       return "/statistics?year=" + moment().year();
+    },
+    build_classifications_year_path() {
+      return "/classifications?year=" + moment().year();
     },
     build_month_path() {
       let current_month = moment().month() + 1;
