@@ -37,4 +37,20 @@ public class Operation extends PanacheMongoEntity {
 
         return find("_id", new ObjectId(id)).firstResultOptional();
     }
+
+    @Override
+    public String toString() {
+        return "Operation{" +
+                "id=" + id +
+                ", creationDate=" + creationDate +
+                ", year=" + year +
+                ", month=" + month +
+                ", name='" + name + '\'' +
+                ", amount=" + amount +
+                ", category='" + category + '\'' +
+                ", subcategory='" + subcategory + '\'' +
+                ", recipient='" + recipient + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
 }

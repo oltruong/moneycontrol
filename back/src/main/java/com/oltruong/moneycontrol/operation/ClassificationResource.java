@@ -7,6 +7,7 @@ import com.oltruong.moneycontrol.rule.Rule;
 
 import org.bson.Document;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -17,11 +18,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
+
+import io.quarkus.mongodb.panache.PanacheQuery;
 
 /**
  * @author Olivier Truong
@@ -65,9 +65,23 @@ public class ClassificationResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response add(ClassificationChange classificationChange) {
-        System.out.println(classificationChange);
+        PanacheQuery<Operation> panacheMongoEntityBasePanacheQuery = Operation.find("year = ?1 and category = ?2 and subcategory= ?3", classificationChange.getYear(), classificationChange.getCategory(), classificationChange.getSubcategory());
+        panacheMongoEntityBasePanacheQuery.stream().forEach(operation -> {
+            operation.category = classificationChange.getNewCategory();
+            operation.subcategory = classificationChange.getNewSubcategory();
+            operation.update();
+        });
+
+        if (LocalDate.now().getYear() == classificationChange.getYear()) {
+
+            PanacheQuery<Rule> panacheRuleQuery = Rule.find("category = ?1 and subcategory= ?2", classificationChange.getCategory(), classificationChange.getSubcategory());
+            panacheRuleQuery.stream().forEach(rule -> {
+                rule.category = classificationChange.getNewCategory();
+                rule.subcategory = classificationChange.getNewSubcategory();
+                rule.update();
+            });
+        }
         return Response.accepted().build();
-//        return Response.created(builder.build()).build();
     }
 
 
