@@ -41,8 +41,18 @@
               <table class="table table-striped">
                 <thead>
                 <tr>
-                  <th scope="col">Catégorie</th>
-                  <th scope="col">Total</th>
+                  <th scope="col" @click="set_sort_by('name')">Catégorie
+                    <em
+                        class="fas fa-caret-up"
+                        v-show="sort_by==='name' && asc"></em><em
+                        class="fas fa-caret-down"
+                        v-show="sort_by==='name' && !asc"></em></th>
+                  <th scope="col" @click="set_sort_by('sum')">Total
+                    <em
+                        class="fas fa-caret-up"
+                        v-show="sort_by==='sum' && asc"></em><em
+                        class="fas fa-caret-down"
+                        v-show="sort_by==='sum' && !asc"></em></th>
                   <th scope="col">%</th>
                   <th scope="col">Moyenne</th>
                   <th scope="col">Écart type</th>
@@ -50,13 +60,12 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="expense of expenseStatistics">
+                <tr v-for="expense of orderedExpenseStatistics">
                   <td>{{ expense.name }}</td>
                   <td>{{ expense.sum }}</td>
                   <td>{{ expense.percentage }}</td>
                   <td>{{ expense.average }}</td>
                   <td>{{ expense.standardDeviation }}</td>
-
                 </tr>
                 </tbody>
               </table>
@@ -79,21 +88,30 @@
               <table class="table table-striped">
                 <thead>
                 <tr>
-                  <th scope="col">Catégorie</th>
-                  <th scope="col">Total</th>
+                  <th scope="col" @click="set_sort_by('name')">Catégorie
+                    <em
+                        class="fas fa-caret-up"
+                        v-show="sort_by==='name' && asc"></em><em
+                        class="fas fa-caret-down"
+                        v-show="sort_by==='name' && !asc"></em></th>
+                  <th scope="col" @click="set_sort_by('sum')">Total
+                    <em
+                        class="fas fa-caret-up"
+                        v-show="sort_by==='sum' && asc"></em><em
+                        class="fas fa-caret-down"
+                        v-show="sort_by==='sum' && !asc"></em></th>
                   <th scope="col">%</th>
                   <th scope="col">Moyenne</th>
                   <th scope="col">Écart type</th>
-
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="expense of incomeStatistics">
-                  <td>{{ expense.name }}</td>
-                  <td>{{ expense.sum }}</td>
-                  <td>{{ expense.percentage }}</td>
-                  <td>{{ expense.average }}</td>
-                  <td>{{ expense.standardDeviation }}</td>
+                <tr v-for="income of orderedIncomeStatistics">
+                  <td>{{ income.name }}</td>
+                  <td>{{ income.sum | formatNumber }}</td>
+                  <td>{{ income.percentage }}</td>
+                  <td>{{ income.average }}</td>
+                  <td>{{ income.standardDeviation }}</td>
 
                 </tr>
                 </tbody>
@@ -135,18 +153,53 @@ export default {
       expenseStatistics: [],
       incomeStatistics: [],
       updateArgs: [true, true, {duration: 1000}],
+      sort_by: "sum",
+      asc: false,
       incomeChart: {
         chart: {
-          type: 'column'
+          type: 'column',
+          height: "600px",
         },
         title: {
           text: 'Produits'
+        },
+        xAxis: {
+          categories: this.loadMonths(),
+        },
+        // yAxis: {
+        //   min: 0,
+        //   title: {
+        //     text: 'Total fruit consumption'
+        //   },
+        //   stackLabels: {
+        //     enabled: true,
+        //     style: {
+        //       fontWeight: 'bold',
+        //       color: ( // theme
+        //                  Highcharts.defaultOptions.title.style &&
+        //                  Highcharts.defaultOptions.title.style.color
+        //              ) || 'gray'
+        //     }
+        //   }
+        // },
+        plotOptions: {
+          column: {
+            stacking: 'normal',
+            dataLabels: {
+              enabled: true,
+              format: "{point.y:,.0f}",
+              style: {
+                fontFamily: 'Avenir',
+                fontSize: '1.4em'
+              }
+            }
+          }
         },
         series: []
       },
       incomePie: {
         chart: {
-          type: 'pie'
+          type: 'pie',
         },
         title: {
           text: 'Produits'
@@ -155,10 +208,28 @@ export default {
       },
       expenseChart: {
         chart: {
-          type: 'column'
+          type: 'column',
+          height: "800px",
         },
         title: {
           text: 'Dépenses'
+        },
+        xAxis: {
+          categories: this.loadMonths(),
+        },
+
+        plotOptions: {
+          column: {
+            stacking: 'normal',
+            dataLabels: {
+              enabled: true,
+              format: "{point.y:,.0f}",
+              style: {
+                fontFamily: 'Avenir',
+                fontSize: '1.4em'
+              }
+            }
+          }
         },
         series: []
       },
@@ -181,7 +252,39 @@ export default {
   mounted() {
     this.load_statistics()
   },
+  computed: {
+
+    orderedExpenseStatistics() {
+      return this.ordered(this.expenseStatistics);
+    },
+    orderedIncomeStatistics() {
+      return this.ordered(this.incomeStatistics);
+    },
+
+  },
   methods: {
+    loadMonths() {
+      return ['', 'Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jui', 'Jul','Aou','Sep','Oct','Nov','Dec'];
+    },
+    set_sort_by(criteria) {
+      if (this.sort_by === criteria) {
+        this.asc = !this.asc;
+      } else {
+        this.sort_by = criteria;
+      }
+    },
+    ordered(statistics_list) {
+      console.info(statistics_list);
+      return statistics_list.sort((a, b) => {
+        let result = 0;
+        if (this.sort_by === "name") {
+          result = a.name.localeCompare(b.name);
+        } else if (this.sort_by === "sum") {
+          result = a.raw_sum - b.raw_sum;
+        }
+        return (this.asc ? result : -result);
+      });
+    },
     load_statistics() {
       const year_parameter = this.$route.query.year
                              == undefined ? "" : "?year=" + this.$route.query.year;
@@ -237,6 +340,10 @@ export default {
           .value();
     },
 
+    format_number(value) {
+      return new Intl.NumberFormat('fr-FR').format(value);
+    },
+
     compute_table(filterAmount, factor) {
 
       const total = factor * _(this.statistics)
@@ -253,14 +360,16 @@ export default {
             let population = values.length;
             return {
               name: category,
-              sum: sum.toFixed(2),
+              raw_sum: sum,
+              sum: this.format_number(sum.toFixed(2)),
               percentage: (sum * 100 / total).toFixed(2),
-              average: average.toFixed(2),
-              standardDeviation: Math.sqrt(_(values)
-                                               .map(i => (Math.pow(
-                                                   factor * i.amount - average, 2)
-                                                          / population))
-                                               .sum()).toFixed(2),
+              average: this.format_number(average.toFixed(2)),
+              standardDeviation: this.format_number(Math.sqrt(_(values)
+                                                                  .map(i => (Math.pow(
+                                                                      factor * i.amount - average,
+                                                                      2)
+                                                                             / population))
+                                                                  .sum()).toFixed(2)),
             }
           })
           .value();

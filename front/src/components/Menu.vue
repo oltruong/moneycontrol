@@ -39,10 +39,10 @@
           </router-link>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <span>{{ currentDatabase }}</span>
-      </form>
     </div>
+    <form class="form-inline my-2 my-lg-0 additional_info">
+      <span>{{ currentDatabase }}</span>
+    </form>
   </nav>
 </template>
 
@@ -94,5 +94,9 @@ export default {
 li
   .router-link-exact-active
     color: #42b983 !important
+
+.additional_info
+  text-align: right
+  padding-right: 20px
 
 </style>

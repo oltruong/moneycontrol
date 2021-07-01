@@ -18,7 +18,6 @@ Vue.use(HighchartsVue)
 Vue.prototype.moment = moment;
 // Vue.prototype.axios = axios;
 Vue.config.productionTip = false;
-
 new Vue({
             router,
             render: h => h(App)

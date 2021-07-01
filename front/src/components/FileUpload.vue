@@ -1,13 +1,18 @@
 <template>
-  <div class="col-12">
-    <form>
-      <div class="form-group">
-        <label for="file">File</label>
-        <input type="file" class="form-control-file" id="file" ref="file"
-               @change="handleFileUpload()">
-        <button @click="submitFile()">Submit</button>
-      </div>
-    </form>
+  <div class="row">
+
+    <div class="col-12">
+      <form>
+        <div class="form-group">
+          <!--          <label for="file">File</label>-->
+          <br><br>
+          <input type="file" class="form-control-file" id="file" ref="file"
+                 @change="handleFileUpload()">
+          <br><br>
+          <button @click="submitFile()" class="submitfile">Charger les opérations</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -35,7 +40,7 @@ export default {
           });
 
       console.info("FINI");
-      this.$router.push( {name: "unclassifiedOperations"});
+      this.$router.push({name: "unclassifiedOperations"});
     },
 
     handleFileUpload() {
@@ -45,6 +50,10 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="sass">
+.submitfile
+  color: white
+  padding: 10px
+  background-color: green
 
 </style>
